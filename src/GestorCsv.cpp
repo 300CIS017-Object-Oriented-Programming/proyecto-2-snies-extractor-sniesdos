@@ -52,6 +52,9 @@ vector<vector<string>> GestorCsv::leerArchivoPrimera(string &rutaBase, string &a
         int columna;
         vector<int>::iterator it;
 
+        // Conseguir posiciones de las columnas
+        map <string, int> posicionesColumnasMap = conseguirPosicionesColumnas(rutaCompleta);
+
         // Primera iteracion del ciclo para guardar las etiquetas
         getline(archivoPrimero, fila);
         vectorFila = vector<string>(39);
@@ -559,4 +562,45 @@ bool GestorCsv::crearArchivoExtra(string &ruta, vector<vector<string>> datosAImp
 
     archivoExtra.close();
     return estadoCreacion;
+}
+
+map<string, int> GestorCsv::conseguirPosicionesColumnas(string &rutaArchivo) {
+    map<string, int> mapaConPosiciones;
+
+    ifstream archivo(rutaArchivo);
+    // TODO: manejar la excepción. Throw a dónde? Al SNIESController?
+    if (!(archivo.is_open()))
+    {
+        cout << "Archivo " << rutaArchivo << " no se pudo abrir correctamente" << endl;
+    }
+    else {
+        string fila;
+        string dato;
+        vector<string> vectorFila;
+        stringstream streamFila;
+        int columna;
+
+
+        // Primera iteracion del ciclo para guardar las etiquetas
+        getline(archivo, fila);
+        streamFila = stringstream(fila);
+        columna = 0;
+        while ((getline(streamFila, dato, ';')))
+        {
+            mapaConPosiciones[dato] = columna;
+            columna++;
+        }
+    }
+    archivo.close();
+
+    // Imprimir el mapa
+    /*
+    for (const auto& par : mapaConPosiciones) {
+        cout << "Nombre: " << par.first << ", Posicion: " << par.second << endl;
+    }
+    */
+
+    return mapaConPosiciones;
+
+
 }

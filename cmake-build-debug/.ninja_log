@@ -1,0 +1,18 @@
+# ninja log v6
+39	837	7505569585235330	CMakeFiles/SNIES_extractor_V2.dir/src/Consolidado.cpp.obj	9dddbdd4a993b614
+35	863	7505569585190246	CMakeFiles/SNIES_extractor_V2.dir/src/ProgramaAcademico.cpp.obj	ad742ba3ed27de44
+16	430	7505570494294938	CMakeFiles/SNIES_extractor_V2.dir/src/main.cpp.obj	89669990f3be3091
+7	805	7505570494204935	CMakeFiles/SNIES_extractor_V2.dir/src/GestorCsv.cpp.obj	ebde5a7e959bf91a
+10	887	7505570494244938	CMakeFiles/SNIES_extractor_V2.dir/src/SNIESController.cpp.obj	a3cf667b45d6be5d
+7	511	7505570680979783	CMakeFiles/SNIES_extractor_V2.dir/src/View.cpp.obj	4e8a6452f9ae5d3d
+512	815	7505570686035971	SNIES_extractor_V2.exe	a807ba14c2262554
+18	507	7505575935925818	CMakeFiles/SNIES_extractor_V2.dir/src/main.cpp.obj	89669990f3be3091
+15	663	7505575935885816	CMakeFiles/SNIES_extractor_V2.dir/src/View.cpp.obj	4e8a6452f9ae5d3d
+11	997	7505575935855789	CMakeFiles/SNIES_extractor_V2.dir/src/SNIESController.cpp.obj	a3cf667b45d6be5d
+13	789	7505576040736961	CMakeFiles/SNIES_extractor_V2.dir/src/GestorCsv.cpp.obj	ebde5a7e959bf91a
+789	1004	7505576048503487	SNIES_extractor_V2.exe	a807ba14c2262554
+116	573	7505579336917398	CMakeFiles/SNIES_extractor_V2.dir/src/main.cpp.obj	89669990f3be3091
+113	722	7505579336897400	CMakeFiles/SNIES_extractor_V2.dir/src/View.cpp.obj	4e8a6452f9ae5d3d
+106	984	7505579336817528	CMakeFiles/SNIES_extractor_V2.dir/src/GestorCsv.cpp.obj	ebde5a7e959bf91a
+110	1052	7505579336867392	CMakeFiles/SNIES_extractor_V2.dir/src/SNIESController.cpp.obj	a3cf667b45d6be5d
+1053	1252	7505579346279539	SNIES_extractor_V2.exe	a807ba14c2262554
