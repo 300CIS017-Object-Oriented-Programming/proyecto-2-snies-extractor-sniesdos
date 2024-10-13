@@ -186,6 +186,13 @@ direction BT
         +getMatriculados()
         +getGraduados()
     }
+    
+    class GestorDatos{
+    # GestorDatos();
+    # ~GestorDatos();
+    # virtual void exportarDatos(const string & filePath)
+    }
+    
     class GestorCsv {
         +GestorCsv() = default
         +vector<int> leerProgramasCsv(string &ruta)
@@ -195,7 +202,14 @@ direction BT
         +bool crearArchivo(string &ruta, map <int, ProgramaAcademico*> &mapadeProgramasAcademicos, vector<string> etiquetasColumnas)
         +bool crearArchivoBuscados(string &ruta, list<ProgramaAcademico*> &programasBuscados, vector<string> etiquetasColumnas)
         +bool crearArchivoExtra(string &ruta,vector<vector<string>> datosAImprimir)
+        # void exportarDatos(const string & filePath) override
     }
+    
+    class GestorJson{
+     # GestorJson();
+    # ~GestorJson();
+    # void exportarDatos(const string & filePath) override
+     }
     class SNIESController {
         -map <int, ProgramaAcademico*> programasAcademicos
         -GestorCsv gestorCsvObj
@@ -222,6 +236,7 @@ direction BT
         +static const string DELIMITADOR
 
     }
+
     class View {
         SNIESController controlador
         +View()
@@ -240,6 +255,8 @@ ProgramaAcademico o-- Consolidado : tiene varios
 View <.. Main : usa
 View --> SNIESController : tiene un
 SNIESController --> GestorCsv: tiene un
+GestorCsv <|-- GestorDatos : Es un
+GestorJson <|-- GestorDatos : Es un
 SNIESController o-- Consolidado
 Consolidado <.. GestorCsv: usa
 ```
