@@ -75,16 +75,22 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
         programaAcademico->setCodigoDelMunicipioPrograma(stoi(programasAcademicosVector[i][32]));    // CÓDIGO DEL MUNICIPIO (PROGRAMA)
         programaAcademico->setMunicipioDeOfertaDelPrograma(programasAcademicosVector[i][33]);        // MUNICIPIO DE OFERTA DEL PROGRAMA
         Consolidado *consolidado[4];
-        for (int m = 0; m < 4; ++m)
-        {
-            consolidado[m] = new Consolidado();
-            consolidado[m]->setIdSexo(stoi(programasAcademicosVector[i + m][34]));
-            consolidado[m]->setSexo(programasAcademicosVector[i + m][35]);
-            consolidado[m]->setAno(stoi(programasAcademicosVector[i + m][36]));
-            consolidado[m]->setSemestre(stoi(programasAcademicosVector[i + m][37]));
-            consolidado[m]->setAdmitidos(stoi(programasAcademicosVector[i + m][38]));
+        for (int m = 0; m < 4; ++m) {
+            DatosEstudiantes datos;
+            datos.inscritos = stoi(programasAcademicosVector[i + m][36]);
+            datos.admitidos = stoi(programasAcademicosVector[i + m][37]);
+            datos.primeraMatricula = stoi(programasAcademicosVector[i + m][38]);
+            datos.totalMatriculados = stoi(programasAcademicosVector[i + m][39]);
+            datos.graduados = stoi(programasAcademicosVector[i + m][40]);
+
+            consolidado[m] = new Consolidado(stoi(programasAcademicosVector[i + m][34]),
+                                             programasAcademicosVector[i + m][35],
+                                             stoi(programasAcademicosVector[i + m][36]),
+                                             stoi(programasAcademicosVector[i + m][37]),
+                                             datos);
             programaAcademico->setConsolidado(consolidado[m], m);
         }
+
         programasAcademicos.emplace(programaAcademico->getCodigoSniesDelPrograma(), programaAcademico);
     }
     // cout << "despues crear programas academicos" << endl;
@@ -100,12 +106,18 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
             Consolidado *consolidado[4];
             for (int m = 0; m < 4; ++m)
             {
-                consolidado[m] = new Consolidado();
-                consolidado[m]->setIdSexo(stoi(programasAcademicosVector[j + m][1]));
-                consolidado[m]->setSexo(programasAcademicosVector[j + m][2]);
-                consolidado[m]->setAno(stoi(programasAcademicosVector[j + m][3]));
-                consolidado[m]->setSemestre(stoi(programasAcademicosVector[j + m][4]));
-                consolidado[m]->setAdmitidos(stoi(programasAcademicosVector[j + m][5]));
+                DatosEstudiantes datos;
+                datos.admitidos = stoi(programasAcademicosVector[j + m][5]);
+                datos.inscritos = 0;
+                datos.primeraMatricula = 0;
+                datos.totalMatriculados = 0;
+                datos.graduados = 0;
+
+                consolidado[m] = new Consolidado(stoi(programasAcademicosVector[j + m][1]),
+                                                 programasAcademicosVector[j + m][2],
+                                                 stoi(programasAcademicosVector[j + m][3]),
+                                                 stoi(programasAcademicosVector[j + m][4]),
+                                                 datos);
                 programa->setConsolidado(consolidado[m], m + 4);
             }
         }
