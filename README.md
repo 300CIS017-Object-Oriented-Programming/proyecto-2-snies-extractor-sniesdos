@@ -213,6 +213,15 @@ direction BT
         +void calcularDatosExtra(bool)
         +void buscarProgramas(bool, string &, int)
     }
+    class Settings {
+        +static const string ADMITIDOS_FILE_PATH
+        +static const string MATRICULADOS_FILE_PATH
+        +static const string INSCRITOS_FILE_PATH
+        +static const string PROGRAMAS_FILTRAR_FILE_PATH
+        +static const string BASE_PATH
+        +static const string DELIMITADOR
+
+    }
     class View {
         SNIESController controlador
         +View()
