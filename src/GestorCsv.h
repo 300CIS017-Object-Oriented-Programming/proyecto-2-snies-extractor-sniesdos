@@ -28,6 +28,8 @@ public:
     bool crearArchivoBuscados(string &ruta, list<ProgramaAcademico *> &programasBuscados, vector<string> etiquetasColumnas);
     bool crearArchivoExtra(string &ruta, vector<vector<string>> datosAImprimir);
     map<string, int> conseguirPosicionesColumnas(string &rutaArchivo);
+    int conseguirCantColumnas(map<string, int>);
+    string quitarEspacioYAgregarMayus(string cadena);
 };
 
 #endif
