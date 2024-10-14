@@ -44,6 +44,12 @@ Se implemento una nueva clase que permite exportar documentos de tipo .Txt.
 
    ### 4) Refactorización clases Consolidado y ProgramaAcademico :
    Se refactorizo las clases Consolidado y ProgramaAcademico para adecuarlas a los principios GRASP.
+   ### 5) Creacion clase Settings :
+   se implemento una nueva clase en el proyecto donde el usuario es libre de la configuracion.
+   ### 6) Modificación de los prototipos de las clases :
+   Se modificaron diferentes atributos y metodos de las clases Consolidado, ProgramaAcademico, GestorCSV y SNIESController con el objetivo de reducir la complejidad, aumentar la cohesión y disminuir la codependencia.
+   ### 7) Creacion de clase GestorDatos :
+   Se implemento una nueva clase quien es la clase padre de GestorCsv, GestorJson, GestorTXT.
 # Diagrama Mermaid
 
 *El vector de Consolidados tendrá siempre 8 posiciones [0-7] donde:*
