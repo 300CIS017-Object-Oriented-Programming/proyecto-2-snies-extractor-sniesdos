@@ -9,6 +9,8 @@
 #include <vector>
 #include <map>
 
+#include "Settings.h" // lo agrego pero no se muy bien como utilizara la clase aqui.
+
 using std::string;
 using std::map;
 using std::vector;

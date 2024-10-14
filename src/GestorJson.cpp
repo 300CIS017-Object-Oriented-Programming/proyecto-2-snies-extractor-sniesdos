@@ -16,11 +16,9 @@
 #include <vector>
 #include <map>
 
-using std::string;
-using std::map;
-using std::vector;
+using namespace std;
 
-void GestorJson::exportarDatos(const string& filePath, const vector<std::map<string, string>>& datos) {
+void GestorJson::exportarDatos(const string& filePath, const vector<map<string, string>>& datos) {
     try {
         std::ofstream file(filePath);
         if (!file.is_open()) {
@@ -35,13 +33,17 @@ void GestorJson::exportarDatos(const string& filePath, const vector<std::map<str
             file << "  {\n";
             const auto& entry = datos[i];
             size_t entryCount = 0;
-            for (const auto& [key, value] : entry) {
+
+            for (auto pairIter = entry.begin(); pairIter != entry.end(); ++pairIter) {
+                const auto& key = pairIter->first;
+                const auto& value = pairIter->second;
                 file << "    \"" << key << "\": \"" << value << "\"";
                 if (++entryCount < entry.size()) {
                     file << ",";
                 }
                 file << "\n";
             }
+
             file << "  }";
             if (i < datos.size() - 1) {
                 file << ",";
@@ -53,16 +55,16 @@ void GestorJson::exportarDatos(const string& filePath, const vector<std::map<str
         file << "]\n";
 
         file.close();
-        std::cout << "Exportación a JSON exitosa: " << filePath << std::endl;
+        cout << "Exportación a JSON exitosa: " << filePath << endl;
     }
     catch (const std::ios_base::failure& e) {
-        std::cerr << "Error de archivo: " << e.what() << std::endl;
+        std::cerr << "Error de archivo: " << e.what() << endl;
     }
     catch (const std::exception& e) {
-        std::cerr << "Error inesperado: " << e.what() << std::endl;
+        std::cerr << "Error inesperado: " << e.what() << endl;
     }
     catch (...) {
-        std::cerr << "Ocurrió un error desconocido durante la exportación a JSON." << std::endl;
+        std::cerr << "Ocurrió un error desconocido durante la exportación a JSON." << endl;
     }
 }
 
