@@ -3,25 +3,24 @@
 
 #include <string>
 #include <map>
-#include <iostream>
 #include "Consolidado.h"
 
-using std::cin;
-using std::cout;
-using std::endl;
 using std::string;
 using std::map;
 
 class ProgramaAcademico {
     map<string, string> datos;
-    map<int, Consolidado *> consolidado;
+    map<int, Consolidado *> consolidados;
 
 public:
-    ProgramaAcademico();
+    ProgramaAcademico() = default;
     ~ProgramaAcademico();
-    void setDato(string, string);
-    string getDato(string);
-    Consolidado *getConsolidado(int);
+    void setDato(string const &, string);
+    string getDato(string const &);
+    bool sinMatriculasNuevas() const;
+    void addConsolidado(int, Consolidado *);
+    void mostrarMatriculadosConsolidado(int);
+    void mostrarDataConsolidado(int);
 };
 
 #endif

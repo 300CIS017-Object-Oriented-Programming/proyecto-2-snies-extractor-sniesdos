@@ -9,15 +9,15 @@ using std::map;
 
 class Consolidado {
 private:
-    int idSexo;
+    int idSexo = 0;
     string sexo;
-    int anio;
-    int semestre;
-    int inscritos;
-    int admitidos;
-    int matriculados;
-    int matriculadosPrimerSemestre;
-    int graduados;
+    int anio = 0;
+    int semestre = 0;
+    int inscritos = 0;
+    int admitidos = 0;
+    int matriculados = 0;
+    int matriculadosPrimerSemestre = 0;
+    int graduados = 0;
 
     bool verificarMapaValido(const map<string, string> &) ;
 public:

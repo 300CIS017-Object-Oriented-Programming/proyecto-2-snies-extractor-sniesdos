@@ -11,6 +11,7 @@ using std::map;
 using std::vector;
 using std::cerr;
 using std::endl;
+using std::cout;
 
 Consolidado::Consolidado(const int idSexo, string sexo, int anio, const int semestre) :
 idSexo(idSexo), sexo(std::move(sexo)), anio(anio), semestre(semestre), inscritos(0), admitidos(0), matriculados(0), matriculadosPrimerSemestre(0), graduados(0) {}
@@ -52,11 +53,11 @@ int Consolidado::getGraduados() const {
 }
 
 bool Consolidado::verificarMapaValido(const map<string, string> &parametros) {
-    const vector<string> llavesValidas = {"inscritos", "admitidos", "matriculados", "matriculadosPrimerSemestre", "graduados"};
+    const vector<string> LLAVESVALIDAS  = {"inscritos", "admitidos", "matriculados", "matriculadosprimersemestre", "graduados"};
     int i = 0;
     bool esValido = true;
-    while(i < llavesValidas.size() && esValido) {
-        if(parametros.find(llavesValidas[i]) == parametros.end()) {
+    while(i < LLAVESVALIDAS.size() && esValido) {
+        if(parametros.find(LLAVESVALIDAS[i]) == parametros.end()) {
             esValido = false;
         }
         i++;
@@ -69,11 +70,12 @@ void Consolidado::setParametros(const map<string,string> &parametros) {
         inscritos = stoi(parametros.at("inscritos"));
         admitidos = stoi(parametros.at("admitidos"));
         matriculados = stoi(parametros.at("matriculados"));
-        matriculadosPrimerSemestre = stoi(parametros.at("matriculadosPrimerSemestre"));
+        matriculadosPrimerSemestre = stoi(parametros.at("matriculadosprimersemestre"));
         graduados = stoi(parametros.at("graduados"));
     } else {
-       throw std::invalid_argument("Los parámetros del consolidado no están donde deberían estar.")
+       throw std::invalid_argument("Los parámetros del consolidado no están donde deberían estar.");
     }
 
 }
+
 
