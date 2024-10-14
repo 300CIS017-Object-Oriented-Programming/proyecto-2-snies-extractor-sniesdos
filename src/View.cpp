@@ -20,87 +20,73 @@ View::~View()
     controlador.~SNIESController();
 }
 
+bool View::esEntero(const std::string& str) {
+    if (str.empty()) return false;
+
+    for (char const &c : str) {
+        if (!std::isdigit(c)) {
+            return false; 
+        }
+    }
+    return true;
+}
+
 bool View::mostrarPantallaBienvenido()
 {
-    bool parametrizacionBool = false;
+
+    char userAnswer;
 
     cout << "Bienvenido al SNIES-Extractor!" << endl;
-    cout << "=========================================" << endl;
-    cout << "Recuerde que para el correcto funcionamiento del programa tuvo que haber parametrizado" << endl;
-    cout << "antes la carpeta SNIES_EXTRACTOR en el disco duro C:, con sus respectivas carpetas inputs y outputs" << endl;
+    cout << "====================================================================" << endl;
+    cout << "Recuerde: Los archivos deben estar en una carpeta SNIES_EXTRACTOR" << endl;
+    cout << "en el disco duro C:, con sus respectivas carpetas inputs y outputs" << endl;
     cout << "y todos los archivo CSV del SNIES." << endl;
+    cout << "====================================================================" << endl;
     cout << "Si ya hizo esto, escriba 'Y', de lo contrario 'N', y Enter: " << endl;
-    char userAnswer = 'Y'; // FIXME cuando se arregle el debugger
-    // cin >> userAnswer;
-    // cout << endl;
-    // FIXME verificar que el usuario ingree un valor igual al esperado incluir todo dentro de un while para
-    // para asegurar que el usuario ingrese un valor valido
-    // pasarlo a un método que se pueda usar en otros lugares
+    cin >> userAnswer;
+
     userAnswer = static_cast<char>(tolower(userAnswer));
-    if (userAnswer == 'y')
+
+    if (userAnswer != 'y' && userAnswer != 'n')
     {
-        parametrizacionBool = true;
-
-        string userText;
-        cout << "A continuacion se procesaran los datos de los programas academicos seleccionados en /programas.csv..." << endl;
-
-        string anio1("abc");
-        string ano2("abc");
-        string anoAux;
-        int i = 0;
-        bool anosValido = false;
-        // FIXME pasar la lógica del bucle a un método reutlizable
-        // Usar en el while una bandera y simplificar el código
-        // Bucle para leer un valor valido del año1
-        while (!(isConvetibleToInt(anio1)))
-        {
-            if (i == 1)
-            {
-                cout << "El valor ingresado fue invalido!" << endl;
-                cout << "Por favor ingrese un valor valido la proxima" << endl;
-                cout << "Presione 'OK' y Enter para continuar: " << endl;
-                cin >> userText;
-                cout << endl;
-            }
-            cout << "Escriba el primer ano de busqueda: " << endl;
-            cin >> anio1;
-            cout << endl;
-            i = 1;
-        }
-
-        i = 0;
-        // Bucle para leer un valor valido del año2
-        while (!(isConvetibleToInt(ano2)))
-        {
-            if (i == 1)
-            {
-                cout << "El valor ingresado fue invalido!" << endl;
-                cout << "Por favor ingrese un valor valido la proxima" << endl;
-                cout << "Presione 'OK' y Enter para continuar: " << endl;
-                cin >> userText;
-                cout << endl;
-            }
-            cout << "Escriba el segundo ano de busqueda: " << endl;
-            cin >> ano2;
-            cout << endl;
-            i = 1;
-        }
-
-        // Organizo los años
-        // FIXME: Crear un método para hacer que el segundo año sea siempre
-        // mayor que el primer año
-        if (stoi(ano2) < stoi(anio1))
-        {
-            anoAux = anio1;
-            anio1 = ano2;
-            ano2 = anoAux;
-        }
-
-        cout << "Procesando datos ..." << endl;
-        controlador.procesarDatosCsv(anio1, ano2);
-        cout << "Datos procesados con exito!" << endl;
+        throw std::invalid_argument("La opcion ingresada es incorrecta");
     }
-    return parametrizacionBool;
+
+    if(userAnswer == 'n'){
+        return false;
+    }
+
+
+    string userText;
+    cout << "A continuacion se procesaran los datos de los programas academicos seleccionados en /programas.csv..." << endl;
+
+    string anio1;
+    string anio2;
+    cout << "Escriba el primer anio de busqueda: ";
+    cin >> anio1;
+    cout << endl;
+    
+    if (!esEntero(anio1)){
+        throw std::invalid_argument("El valor ingresado no es correcto");
+    }
+    
+    cout << "Escriba el segundo ano de busqueda: ";
+    cin >> anio2;
+    cout << endl;
+
+    if (!esEntero(anio2)){
+        throw std::invalid_argument("El valor ingresado no es correcto");
+    }
+
+    if(anio1>=anio2){
+        throw std::invalid_argument("El segundo anio debe ser mayor que el primero");
+    }
+
+    cout << "Procesando datos ..." << endl;
+    controlador.procesarDatosCsv(anio1, anio2);
+    cout << "Datos procesados con exito!" << endl;
+    
+    return true;
 }
 
 void View::salir()
