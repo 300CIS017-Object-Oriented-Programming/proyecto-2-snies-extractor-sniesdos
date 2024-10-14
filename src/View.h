@@ -1,8 +1,6 @@
 #ifndef VIEW_H
 #define VIEW_H
 #include "SNIESController.h"
-/*Todo el codigo va entre estas guardas*/
-#include "SNIESController.h"
 #include <cctype>
 
 using namespace std;
