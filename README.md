@@ -33,7 +33,17 @@ En este proyecto se utilizarán 5 clases para cumplir el propósito de extraer l
 
 Más abajo podrán encontrar el diagrama UML de las clases.
 
+# Correción de errores
+   ###  1) Refactorizacion inicial del diagrama de clases : 
+Se añadieron nueva clases en el diagrama UML (GestorJson, GestorDatos) donde GestorDatos es la clase padre que hereda sus metodos a las otras clases.
 
+   ### 2) Creación clase GestorJson :
+Se implemento una nueva clase que permite exportar documentos de tipo .Json.
+   ### 3) Creación clase GestorTxt :
+Se implemento una nueva clase que permite exportar documentos de tipo .Txt.
+
+   ### 4) Refactorización clases Consolidado y ProgramaAcademico :
+   Se refactorizo las clases Consolidado y ProgramaAcademico para adecuarlas a los principios GRASP.
 # Diagrama Mermaid
 
 *El vector de Consolidados tendrá siempre 8 posiciones [0-7] donde:*
@@ -259,4 +269,5 @@ GestorCsv <|-- GestorDatos : Es un
 GestorJson <|-- GestorDatos : Es un
 SNIESController o-- Consolidado
 Consolidado <.. GestorCsv: usa
+
 ```
