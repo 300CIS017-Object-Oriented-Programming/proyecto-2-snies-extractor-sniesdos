@@ -44,7 +44,7 @@ const std::string Settings::ADMITIDOS_FILE_PATH = BASE_PATH + "admitidos";
 const std::string Settings::MATRICULADOS_FILE_PATH = BASE_PATH + "matriculados";
 const std::string Settings::INSCRITOS_FILE_PATH = BASE_PATH + "inscritos";
 const std::string Settings::DELIMITADOR = ";";
-const std::string GRADUADOS_FILE_PATH = BASE_PATH + "graduados";
+const std::string GRADUADOS_FILE_PATH = Settings::BASE_PATH + "graduados";
 
 
 #endif // SETTINGS_H

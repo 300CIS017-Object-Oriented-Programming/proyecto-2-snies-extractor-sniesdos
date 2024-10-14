@@ -3,7 +3,6 @@
 
 #include "SNIESController.h"
 
-// Recomendación Linter: Dejar de usar using namespace std y usar std::.
 using namespace std;
 
 class View {

@@ -7,14 +7,14 @@ View::View()
     // NEW quitar estas variables de aquí y del constructor del SNIESController
     //  estas constantes las leerá el SNIESController del archivo de Settings.h
     //  Completar el archivo con el resto de constantes necesarias
-    string ruta1 = string("C:/SNIES_EXTRACTOR/inputs/programas.csv");
+    /*string ruta1 = string("C:/SNIES_EXTRACTOR/inputs/programas.csv");
     string ruta2 = string("C:/SNIES_EXTRACTOR/inputs/admitidos");
     string ruta3 = string("C:/SNIES_EXTRACTOR/inputs/graduados");
     string ruta4 = string("C:/SNIES_EXTRACTOR/inputs/inscritos");
     string ruta5 = string("C:/SNIES_EXTRACTOR/inputs/matriculados");
     string ruta6 = string("C:/SNIES_EXTRACTOR/inputs/matriculadosPrimerSemestre");
-    string ruta7 = string("C:/SNIES_EXTRACTOR/outputs/");
-    controlador = SNIESController(ruta1, ruta2, ruta3, ruta4, ruta5, ruta6, ruta7);
+    string ruta7 = string("C:/SNIES_EXTRACTOR/outputs/");*/
+    controlador = SNIESController();
 }
 
 // Mantenimiento: No llamar al destructor de la clase controlador, hacer que el destructor
@@ -35,7 +35,7 @@ bool View::mostrarPantallaBienvenido()
     cout << "Recuerde que para el correcto funcionamiento del programa tuvo que haber parametrizado" << endl;
     cout << "antes la carpeta SNIES_EXTRACTOR en el disco duro C:, con sus respectivas carpetas inputs y outputs" << endl;
     cout << "y todos los archivo CSV del SNIES." << endl;
-    cout << "Si ya hizo esto, escriba 'Y', de lo contrario 'N', y Enter: " << end;
+    cout << "Si ya hizo esto, escriba 'Y', de lo contrario 'N', y Enter: " << endl;
     char userAnswer = 'Y';
     // cin >> userAnswer;
     // cout << endl;
