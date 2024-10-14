@@ -6,17 +6,17 @@
 #include <string>
 #include "ProgramaAcademico.h"
 #include "GestorCsv.h"
+#include "Settings.h"
 
 using std::map;
 using std::string;
-#include "Settings.h"
-
 
 class SNIESController {
 
 private:
     map<long, ProgramaAcademico *> programasAcademicos;
     GestorCsv gestorCsvObj;
+    Settings settings;
 
 public:
     SNIESController() = default;
