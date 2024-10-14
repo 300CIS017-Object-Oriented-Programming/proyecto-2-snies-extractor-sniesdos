@@ -37,6 +37,7 @@ public:
     static string GRADUADOS_FILE_PATH;
 
     static void setRutaBase(const string &nuevaRutaBase);
-    static void setDelimitador();
+    static void setAnioProgramas(string anioProgramas);
+    static void setDelimitador(const char &delimitador);
 };
 #endif // SETTINGS_H

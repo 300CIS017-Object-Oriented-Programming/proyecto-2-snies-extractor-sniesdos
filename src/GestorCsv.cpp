@@ -1,12 +1,10 @@
 #include "GestorCsv.h"
 
-void GestorCsv::definirProgramas(string& ruta, string& anio){
+void GestorCsv::definirProgramas(){
     std::unordered_map<std::string,std::string> programas;
     std::unordered_map<std::string,int> encabezados;
 
-    string rutaCompleta = ruta + anio + ".csv";
-
-    std::ifstream archivoBase(rutaCompleta, std::ios::binary);
+    std::ifstream archivoBase(Settings::PROGRAMAS_FILTRAR_FILE_PATH, std::ios::binary);
 
     if (!(archivoBase.is_open()))
     {
@@ -43,7 +41,7 @@ void GestorCsv::definirProgramas(string& ruta, string& anio){
     } 
     archivoBase.close();
 
-    std::string rutaSalida = ruta + "programas" + anio + ".csv";
+    std::string rutaSalida =  Settings::BASE_PATH+"programas.csv";
     std::ofstream archivoSalida(rutaSalida, std::ios::binary); 
 
     if (!archivoSalida.is_open()) {
@@ -87,9 +85,9 @@ vector<int> GestorCsv::leerProgramasCsv(string &ruta)
     }
     archivoProgramasCsv.close();
     // Recorre el vector e imprime cada elemento
-    for (size_t i = 0; i < codigosSniesRetorno.size(); ++i) {
-        std::cout << "Elemento " << i << ": " << codigosSniesRetorno[i] << std::endl;
-    }
+    // for (size_t i = 0; i < codigosSniesRetorno.size(); ++i) {
+    //     std::cout << "Elemento " << i << ": " << codigosSniesRetorno[i] << std::endl;
+    // }
     return codigosSniesRetorno;
 }
 

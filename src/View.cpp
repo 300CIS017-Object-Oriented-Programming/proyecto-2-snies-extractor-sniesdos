@@ -20,12 +20,16 @@ View::~View()
     controlador.~SNIESController();
 }
 
-bool View::esEntero(const std::string& str) {
-    if (str.empty()) return false;
+bool View::esEntero(const std::string &str)
+{
+    if (str.empty())
+        return false;
 
-    for (char const &c : str) {
-        if (!std::isdigit(c)) {
-            return false; 
+    for (char const &c : str)
+    {
+        if (!std::isdigit(c))
+        {
+            return false;
         }
     }
     return true;
@@ -34,24 +38,13 @@ bool View::esEntero(const std::string& str) {
 bool View::mostrarPantallaBienvenido()
 {
     char userAnswer;
-    cout << "Bienvenido al SNIES-Extractor!" << endl;
+    cout << "=================Bienvenido al SNIES-Extractor!=====================" << endl;
     cout << "====================================================================" << endl;
     cout << "Recuerde: Los archivos deben estar en una carpeta SNIES_EXTRACTOR" << endl;
-    cout << "en el disco duro C:, con sus respectivas carpetas inputs y outputs" << endl;
-    cout << "y todos los archivo CSV del SNIES." << endl;
+    cout << "con sus respectivas carpetas inputs y outputs, donde se encuentren" << endl;
+    cout << "todos los archivos CSV del SNIES." << endl;
     cout << "====================================================================" << endl;
-    cout << "Si ya hizo esto, escriba 'Y', de lo contrario 'N', y Enter: " << endl;
-    cin >> userAnswer;
-    userAnswer = static_cast<char>(tolower(userAnswer));
-
-    if (userAnswer != 'y' && userAnswer != 'n')
-    {
-        throw std::invalid_argument("La opcion ingresada es incorrecta");
-    }
-
-    if(userAnswer == 'n'){
-        parametrizacion();
-    }
+    parametrizacion();
 
     string userText;
     cout << endl;
@@ -62,35 +55,73 @@ bool View::mostrarPantallaBienvenido()
     cout << "Escriba el primer anio de busqueda: ";
     cin >> anio1;
     cout << endl;
-    
-    if (!esEntero(anio1)){
+
+    if (!esEntero(anio1))
+    {
         throw std::invalid_argument("El valor ingresado no es correcto");
     }
-    
+
     cout << "Escriba el segundo ano de busqueda: ";
     cin >> anio2;
     cout << endl;
 
-    if (!esEntero(anio2)){
+    if (!esEntero(anio2))
+    {
         throw std::invalid_argument("El valor ingresado no es correcto");
     }
 
-    if(anio1>=anio2){
+    if (anio1 >= anio2)
+    {
         throw std::invalid_argument("El segundo anio debe ser mayor que el primero");
     }
 
     cout << "Procesando datos ..." << endl;
     controlador.procesarDatosCsv(anio1, anio2);
     cout << "Datos procesados con exito!" << endl;
-    
+
     return true;
 }
 
-void View::parametrizacion(){
-    cout << "====================================================================" << endl;
-    cout << "¿Desea indicar una nueva ruta base donde se encuentran las carpetas"<< endl;
-    cout << "INPUT y OUTPUT?"<< endl;
-    cout<<ajustes.BASE_PATH;
+void View::parametrizacion()
+{
+    string anioProgramas;
+    cout << "=============Parametros Por Defecto================" << endl;
+    cout << "Ruta base de la carpeta SNIES_EXTRACTOR/inputs es: " << endl;
+    cout << Settings::BASE_PATH << std::endl;
+    cout << "Delimitador por defecto: " << Settings::DELIMITADOR<< std::endl;
+    cout << "Desea realizar cambios?" << std::endl;
+    cout << "Ingrese 'Y' o 'N' segun corresponda:" << endl;
+    
+    if(eleccionUsuario()){
+        string nuevaRuta;
+        char delimitador;
+        cout<<"Ingrese la nueva ruta base: "<< std::endl;
+        cin >> nuevaRuta;
+        ajustes.setRutaBase(nuevaRuta);
+        
+        cout<<"Ingrese el nuevo delimitador: "<< std::endl;
+        cin >> delimitador;
+        ajustes.setDelimitador(delimitador);
+    }
+
+    cout <<"Ingrese el anio que se va a tomar como base"<<endl;
+    cout <<"para extraer los programas academicos"<<endl;
+    cin >>anioProgramas;
+    ajustes.setAnioProgramas(anioProgramas);
+}
+bool View::eleccionUsuario()
+{
+    char userAnswer;
+    cin >> userAnswer;
+    userAnswer = static_cast<char>(tolower(userAnswer));
+    if (userAnswer != 'y' && userAnswer != 'n')
+    {
+        throw std::invalid_argument("La opcion ingresada es incorrecta");
+    }
+    if (userAnswer == 'y')
+        return true;
+
+    return false;
 }
 void View::salir()
 {

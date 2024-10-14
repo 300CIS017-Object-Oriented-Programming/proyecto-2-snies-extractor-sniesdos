@@ -12,6 +12,7 @@ private:
     SNIESController controlador;
     Settings ajustes;
     bool esEntero(const std::string& str);
+    bool eleccionUsuario();
 public:
     View();
     ~View();
