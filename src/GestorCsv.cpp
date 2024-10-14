@@ -1,4 +1,67 @@
 #include "GestorCsv.h"
+
+void GestorCsv::definirProgramas(string& ruta, string& anio){
+    std::unordered_map<std::string,std::string> programas;
+    std::unordered_map<std::string,int> encabezados;
+
+    string rutaCompleta = ruta + anio + ".csv";
+
+    std::ifstream archivoBase(rutaCompleta, std::ios::binary);
+
+    if (!(archivoBase.is_open()))
+    {
+        throw std::ios_base::failure("No se pudo abrir el archivo");
+    }
+
+    string linea;
+    int indice=0;
+
+    getline(archivoBase, linea);
+    std::stringstream ss(linea);
+    std::string encabezado;
+
+    while (getline(ss, encabezado, ';')) {
+        encabezados[encabezado] = indice++;
+    }
+    
+    int indicadorClave = encabezados["CÓDIGO SNIES DEL PROGRAMA"];
+    int valorInteres = encabezados["PROGRAMA ACADÉMICO"];
+    linea = "";
+
+    while(getline(archivoBase, linea)){
+        std::stringstream ss(linea);
+        std::string item;
+        std::vector<std::string> elementos;
+        
+       
+        while (getline(ss, item, ';')) {
+            elementos.push_back(item);
+        }
+        
+        std::string clave = elementos[indicadorClave];  
+        programas[clave] = elementos[valorInteres];  
+    } 
+    archivoBase.close();
+
+    std::string rutaSalida = ruta + "programas" + anio + ".csv";
+    std::ofstream archivoSalida(rutaSalida, std::ios::binary); 
+
+    if (!archivoSalida.is_open()) {
+        throw std::ios_base::failure("No se pudo abrir el archivo de salida");
+    }
+    //Utiliza UTF-8 BOM para permitir caracteres especiales
+    archivoSalida << "\xEF\xBB\xBF";
+    archivoSalida << "CÓDIGO SNIES DEL PROGRAMA; PROGRAMA ACADÉMICO" << std::endl;
+
+    for (const auto& par : programas) {
+        archivoSalida << par.first << ";" << par.second << std::endl;
+    }
+
+    archivoSalida.close();
+    std::cout << "Programas exportados correctamente a: " << rutaSalida << std::endl;
+
+}
+
 // FIXME: LA LECTURA DE ARCHIVOS CON GETLINE FUNCIONA HORRIBLEMENTE, NO TENEMOS IDEA DE POR QUÉ
 vector<int> GestorCsv::leerProgramasCsv(string &ruta)
 {
@@ -23,6 +86,10 @@ vector<int> GestorCsv::leerProgramasCsv(string &ruta)
         }
     }
     archivoProgramasCsv.close();
+    // Recorre el vector e imprime cada elemento
+    for (size_t i = 0; i < codigosSniesRetorno.size(); ++i) {
+        std::cout << "Elemento " << i << ": " << codigosSniesRetorno[i] << std::endl;
+    }
     return codigosSniesRetorno;
 }
 

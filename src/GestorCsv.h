@@ -7,9 +7,11 @@
 #include <fstream>
 #include <sstream>
 #include <list>
+#include <unordered_map>
 #include <algorithm>
 #include "ProgramaAcademico.h"
 #include "Consolidado.h"
+
 
 using namespace std;
 
@@ -17,6 +19,8 @@ class GestorCsv
 {
 public:
     GestorCsv() = default;
+    void definirProgramas(string& ruta, string& anio);
+    
     vector<int> leerProgramasCsv(string &ruta);
     vector<vector<string>> leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies);
     vector<vector<string>> leerArchivoSegunda(string &rutaBase, string &ano, vector<int> &codigosSnies);

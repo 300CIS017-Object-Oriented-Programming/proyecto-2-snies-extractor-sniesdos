@@ -33,9 +33,7 @@ bool View::esEntero(const std::string& str) {
 
 bool View::mostrarPantallaBienvenido()
 {
-
     char userAnswer;
-
     cout << "Bienvenido al SNIES-Extractor!" << endl;
     cout << "====================================================================" << endl;
     cout << "Recuerde: Los archivos deben estar en una carpeta SNIES_EXTRACTOR" << endl;
@@ -44,7 +42,6 @@ bool View::mostrarPantallaBienvenido()
     cout << "====================================================================" << endl;
     cout << "Si ya hizo esto, escriba 'Y', de lo contrario 'N', y Enter: " << endl;
     cin >> userAnswer;
-
     userAnswer = static_cast<char>(tolower(userAnswer));
 
     if (userAnswer != 'y' && userAnswer != 'n')
@@ -53,12 +50,12 @@ bool View::mostrarPantallaBienvenido()
     }
 
     if(userAnswer == 'n'){
-        return false;
+        parametrizacion();
     }
 
-
     string userText;
-    cout << "A continuacion se procesaran los datos de los programas academicos seleccionados en /programas.csv..." << endl;
+    cout << endl;
+    cout << "A continuacion, se procesaran los datos de los programas academicos seleccionados" << endl;
 
     string anio1;
     string anio2;
@@ -89,6 +86,12 @@ bool View::mostrarPantallaBienvenido()
     return true;
 }
 
+void View::parametrizacion(){
+    cout << "====================================================================" << endl;
+    cout << "¿Desea indicar una nueva ruta base donde se encuentran las carpetas"<< endl;
+    cout << "INPUT y OUTPUT?"<< endl;
+    cout<<ajustes.BASE_PATH;
+}
 void View::salir()
 {
     cout << "Cerrando programa..." << endl;

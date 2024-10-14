@@ -24,12 +24,13 @@ SNIESController::~SNIESController()
     }
 }
 
-void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
+void SNIESController::procesarDatosCsv(string &ano1, string &anio2)
 {
     vector<int> codigosSnies;
     vector<vector<string>> programasAcademicosVector;
     int posicion;
     int columna;
+    gestorCsvObj.definirProgramas(rutaAdmitidos, ano1);
     // cout << "antes leer programas csv" << endl;
     codigosSnies = gestorCsvObj.leerProgramasCsv(rutaProgramasCSV);
     // cout << "despues leer programas csv" << endl;
@@ -88,7 +89,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
         programasAcademicos.emplace(programaAcademico->getCodigoSniesDelPrograma(), programaAcademico);
     }
     // cout << "despues crear programas academicos" << endl;
-    programasAcademicosVector = gestorCsvObj.leerArchivoSegunda(rutaAdmitidos, ano2, codigosSnies);
+    programasAcademicosVector = gestorCsvObj.leerArchivoSegunda(rutaAdmitidos, anio2, codigosSnies);
     // cout << "despues leer archivos segunda" << endl;
     for (int j = 0; j < programasAcademicosVector.size(); j += 4)
     {
@@ -128,7 +129,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
         }
     }
 
-    programasAcademicosVector = gestorCsvObj.leerArchivo(rutaGraduados, ano2, codigosSnies, 13);
+    programasAcademicosVector = gestorCsvObj.leerArchivo(rutaGraduados, anio2, codigosSnies, 13);
 
     for (int k = 0; k < programasAcademicosVector.size(); k += 4)
     {
@@ -161,7 +162,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
         }
     }
 
-    if (ano2 == "2022")
+    if (anio2 == "2022")
     {
         columna = 12;
     }
@@ -170,7 +171,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
         columna = 13;
     }
 
-    programasAcademicosVector = gestorCsvObj.leerArchivo(rutaInscritos, ano2, codigosSnies, columna);
+    programasAcademicosVector = gestorCsvObj.leerArchivo(rutaInscritos, anio2, codigosSnies, columna);
 
     for (int k = 0; k < programasAcademicosVector.size(); k += 4)
     {
@@ -204,7 +205,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
         }
     }
 
-    programasAcademicosVector = gestorCsvObj.leerArchivo(rutaMatriculados, ano2, codigosSnies, 13);
+    programasAcademicosVector = gestorCsvObj.leerArchivo(rutaMatriculados, anio2, codigosSnies, 13);
 
     for (int k = 0; k < programasAcademicosVector.size(); k += 4)
     {
@@ -238,7 +239,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
         }
     }
 
-    programasAcademicosVector = gestorCsvObj.leerArchivo(rutaMatriculadosPrimerSemestre, ano2, codigosSnies, 13);
+    programasAcademicosVector = gestorCsvObj.leerArchivo(rutaMatriculadosPrimerSemestre, anio2, codigosSnies, 13);
 
     for (int k = 0; k < programasAcademicosVector.size(); k += 4)
     {
