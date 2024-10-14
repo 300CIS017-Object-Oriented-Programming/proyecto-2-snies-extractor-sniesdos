@@ -31,8 +31,13 @@
 *.out
 *.app
 
-# Folders
-build/
-.vscode/
-.idea/
+# Cmake
+cmake-build-debug-mingw/
+cmake-build-debug/
 CMakeCache.txt
+CMakePresets.json
+
+# IDE Folders
+build/
+.idea/
+.vscode/
