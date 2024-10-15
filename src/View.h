@@ -10,7 +10,7 @@ private:
     SNIESController controlador;
     bool isConvetibleToInt(const string &);
     bool mostrarPantallaBienvenido();
-    void mostrarDatosExtra();
+    void mostrarDatosProgramaAcademico();
     void filtrarPorPalabrasClaveYFormacion();
     void salirDePrograma();
     string obtenerAnoValido(const string&);

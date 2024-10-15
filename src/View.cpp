@@ -67,28 +67,27 @@ void View::salirDePrograma(){
     cout << "Programa Cerrado con exito!" << endl;
 }
 
-// Mantenimiento: Mejorar el nombre del metodo, es posible hacerlo más claro.
-void View::mostrarDatosExtra()
-{
 
+void View::mostrarDatosProgramaAcademico() {
     char userAnswer;
     cout << "A continuacion vamos a mostrar datos relevantes de los programas academicos seleccionados" << "\n"
          << endl;
     cout << "Desea Convertir los datos a un archivo CSV?(Y/N): " << endl;
     cin >> userAnswer;
-    // Recomendacion Linter: No dejar la conversión implicita de int a char.
-    userAnswer = tolower(userAnswer);
-    cout << "\n";
-    // FIXME verificar que el usuario ingrese un valor igual al esperado, return true si es Y, false si es N, y no sale si no retorna un valor válido
-    // Simplificar el código de acuerdo a ese ajuste
-    if (userAnswer == 'y')
-    {
-        controlador.calcularDatosExtra(true);
-    }
 
-    else
-    {
-        controlador.calcularDatosExtra(false);
+    userAnswer = static_cast<char>(tolower(static_cast<unsigned char>(userAnswer)));
+    cout << endl;
+
+    try {
+        if (userAnswer == 'y') {
+            controlador.calcularDatosExtra(true);
+        } else if (userAnswer == 'n') {
+            controlador.calcularDatosExtra(false);
+        } else {
+            throw invalid_argument("Entrada no válida");
+        }
+    } catch (const invalid_argument &e) {
+        // No hace nada si la entrada no es válida
     }
 }
 
@@ -112,7 +111,7 @@ void View::filtrarPorPalabrasClaveYFormacion()
         {
             cout << "Deseas convertir convertir los datos del programa academico a un CSV?(Y/N): " << endl;
             cin >> opcionCSV;
-            cout << "\n";
+            cout << endl;
             opcionCSV = tolower(opcionCSV);
 
             if (opcionCSV == 'y')
