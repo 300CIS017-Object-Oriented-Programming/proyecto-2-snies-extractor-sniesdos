@@ -49,7 +49,7 @@ bool View::mostrarPantallaBienvenido() {
         string anio1 = obtenerAnoValido("Escriba el primer ano de busqueda:");
         string anio2 = obtenerAnoValido("Escriba el segundo ano de busqueda:");
 
-        // Usar el método ordenarAnios para asegurar el orden correcto
+        // Usar el metodo ordenarAnios para asegurar el orden correcto
         ordenarAnios(anio1, anio2);
 
         cout << "Procesando datos ..." << endl;
