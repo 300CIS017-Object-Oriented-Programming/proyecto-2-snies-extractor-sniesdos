@@ -10,13 +10,14 @@ private:
     SNIESController controlador;
     bool isConvetibleToInt(const string &);
     bool mostrarPantallaBienvenido();
-    void mostrarDatosExtra();
-    void buscarPorPalabraClaveYFormacion();
-    void salir();
+    void mostrarDatosProgramaAcademico();
+    void filtrarPorPalabrasClaveYFormacion();
+    static void salirDePrograma();
+    string obtenerAnoValido(const string&);
+    void ordenarAnios(string&, string&);
 public:
     View();
-    ~View();
-    // Estructura: El View debería tener solo una función pública.
+    ~View() = default;
     void mostrarMenu();
 };
 
