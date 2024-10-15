@@ -12,13 +12,12 @@ private:
     bool mostrarPantallaBienvenido();
     void mostrarDatosProgramaAcademico();
     void filtrarPorPalabrasClaveYFormacion();
-    void salirDePrograma();
+    static void salirDePrograma();
     string obtenerAnoValido(const string&);
     void ordenarAnios(string&, string&);
 public:
     View();
     ~View() = default;
-    // Estructura: El View debería tener solo una función pública.
     void mostrarMenu();
 };
 

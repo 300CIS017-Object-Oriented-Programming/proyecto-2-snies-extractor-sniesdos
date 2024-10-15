@@ -87,6 +87,7 @@ void View::mostrarDatosProgramaAcademico() {
             throw invalid_argument("Entrada no válida");
         }
     } catch (const invalid_argument &e) {
+        cout << "|ERROR| Entrada no válida, por favor ingrese 'Y' o 'N'." << endl;
         // No hace nada si la entrada no es válida
     }
 }
@@ -162,4 +163,12 @@ bool View::isConvetibleToInt(const string &str)
         // No se pudo convertir: el número está fuera del rango de int
         return false;
     }
+}
+
+void View::mostrarMenu(){
+    if (bool archivosParametrizados = mostrarPantallaBienvenido()){
+        mostrarDatosProgramaAcademico();
+        filtrarPorPalabrasClaveYFormacion();
+    }
+    salirDePrograma();
 }
