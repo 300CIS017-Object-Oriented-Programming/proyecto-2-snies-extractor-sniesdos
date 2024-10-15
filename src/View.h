@@ -11,11 +11,13 @@ private:
     bool isConvetibleToInt(const string &);
     bool mostrarPantallaBienvenido();
     void mostrarDatosExtra();
-    void buscarPorPalabraClaveYFormacion();
-    void salir();
+    void filtrarPorPalabrasClaveYFormacion();
+    void salirDePrograma();
+    string obtenerAnoValido(const string&);
+    void ordenarAnios(string&, string&);
 public:
     View();
-    ~View();
+    ~View() = default;
     // Estructura: El View debería tener solo una función pública.
     void mostrarMenu();
 };

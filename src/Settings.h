@@ -32,11 +32,12 @@ class Settings {
         static const string PROGRAMAS_FILTRAR_FILE_PATH;
         static const string ADMITIDOS_FILE_PATH;
         static const string MATRICULADOS_FILE_PATH;
-        static const string MATRICULADOS_PRIMERSEMESTRE_FILE_PATH
+        static const string MATRICULADOS_PRIMERSEMESTRE_FILE_PATH;
         static const string INSCRITOS_FILE_PATH;
         static const string GRADUADOS_FILE_PATH;
         static const string INFORME_FILE_PATH;
         static const string DELIMITADOR;
+        void setBasePath(const string& newPath);
 };
 
 #endif
