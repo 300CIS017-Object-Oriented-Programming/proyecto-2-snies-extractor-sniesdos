@@ -1,22 +1,17 @@
 #include "SNIESController.h"
 
-using namespace std;
-
 SNIESController::SNIESController() {
     gestorCsvObj = GestorCsv();
-    rutaProgramasCSV = settings.PROGRAMAS_FILTRAR_FILE_PATH;
-    rutaAdmitidos = settings.ADMITIDOS_FILE_PATH;
-    rutaGraduados = settings.GRADUADOS_FILE_PATH;
-    rutaInscritos = settings.INSCRITOS_FILE_PATH;
-    rutaMatriculados = settings.MATRICULADOS_FILE_PATH;
-    rutaMatriculadosPrimerSemestre = settings.MATRICULADOS_PRIMERSEMESTRE_FILE_PATH;
-    rutaOutput = settings.OUT_PATH;
+    rutaProgramasCSV = Settings::PROGRAMAS_FILTRAR_FILE_PATH;
+    rutaAdmitidos = Settings::ADMITIDOS_FILE_PATH;
+    rutaGraduados = Settings::GRADUADOS_FILE_PATH;
+    rutaInscritos = Settings::INSCRITOS_FILE_PATH;
+    rutaMatriculados = Settings::MATRICULADOS_FILE_PATH;
+    rutaMatriculadosPrimerSemestre = Settings::MATRICULADOS_PRIMERSEMESTRE_FILE_PATH;
+    rutaOutput = Settings::OUT_PATH;
 }
-
-SNIESController::~SNIESController()
-{
-    for (auto &pair : programasAcademicos)
-    {
+SNIESController::~SNIESController() {
+    for (auto &pair : programasAcademicos) {
         ((pair).second)->~ProgramaAcademico();
         delete pair.second;
     }
