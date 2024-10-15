@@ -30,7 +30,7 @@ class Settings {
         static string PROGRAMAS_FILTRAR_FILE_PATH;
         static string ADMITIDOS_FILE_PATH;
         static string MATRICULADOS_FILE_PATH;
-        static string MATRICULADOS_PRIMERSEMESTRE_FILE_PATH
+        static string MATRICULADOS_PRIMERSEMESTRE_FILE_PATH;
         static string INSCRITOS_FILE_PATH;
         static string GRADUADOS_FILE_PATH;
         static string INFORME_FILE_PATH;

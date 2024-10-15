@@ -10,15 +10,15 @@ SNIESController::SNIESController() {
     rutaMatriculadosPrimerSemestre = Settings::MATRICULADOS_PRIMERSEMESTRE_FILE_PATH;
     rutaOutput = Settings::OUT_PATH;
 }
-SNIESController::~SNIESController() {
+
+SNIESController::~SNIESController(){
     for (auto &pair : programasAcademicos) {
         ((pair).second)->~ProgramaAcademico();
         delete pair.second;
     }
 }
 
-void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
-{
+void SNIESController::procesarDatosCsv(string &ano1, string &ano2){
     vector<int> codigosSnies;
     vector<vector<string>> programasAcademicosVector;
     int posicion;
@@ -30,8 +30,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
     // cout << "despues leer archivos Primera" << endl;
     etiquetasColumnas = programasAcademicosVector[0];
 
-    for (int i = 1; i < programasAcademicosVector.size(); i += 4)
-    {
+    for (int i = 1; i < programasAcademicosVector.size(); i += 4){
         ProgramaAcademico *programaAcademico = new ProgramaAcademico();
         programaAcademico->setCodigoDeLaInstitucion(stoi(programasAcademicosVector[i][0]));          // CÓDIGO DE LA INSTITUCIÓN
         programaAcademico->setIesPadre(stoi(programasAcademicosVector[i][1]));                       // IES_PADRE
@@ -68,8 +67,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
         programaAcademico->setCodigoDelMunicipioPrograma(stoi(programasAcademicosVector[i][32]));    // CÓDIGO DEL MUNICIPIO (PROGRAMA)
         programaAcademico->setMunicipioDeOfertaDelPrograma(programasAcademicosVector[i][33]);        // MUNICIPIO DE OFERTA DEL PROGRAMA
         Consolidado *consolidado[4];
-        for (int m = 0; m < 4; ++m)
-        {
+        for (int m = 0; m < 4; ++m){
             consolidado[m] = new Consolidado();
             consolidado[m]->setIdSexo(stoi(programasAcademicosVector[i + m][34]));
             consolidado[m]->setSexo(programasAcademicosVector[i + m][35]);
@@ -83,11 +81,9 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
     // cout << "despues crear programas academicos" << endl;
     programasAcademicosVector = gestorCsvObj.leerArchivoSegunda(rutaAdmitidos, ano2, codigosSnies);
     // cout << "despues leer archivos segunda" << endl;
-    for (int j = 0; j < programasAcademicosVector.size(); j += 4)
-    {
+    for (int j = 0; j < programasAcademicosVector.size(); j += 4){
         map<int, ProgramaAcademico *>::iterator it = programasAcademicos.find(stoi(programasAcademicosVector[j][0]));
-        if (it != programasAcademicos.end())
-        {
+        if (it != programasAcademicos.end()){
             ProgramaAcademico *programa = it->second;
 
             Consolidado *consolidado[4];
