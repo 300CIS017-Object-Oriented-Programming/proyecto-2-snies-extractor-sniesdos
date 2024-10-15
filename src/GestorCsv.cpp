@@ -615,7 +615,7 @@ map<string, int> GestorCsv::conseguirPosicionesColumnas(string &rutaArchivo) {
 }
 
 int GestorCsv::conseguirCantColumnas(map<string, int> mapa) {
-    int maxPosicion = std::numeric_limits<int>::min(); // El valor más bajo posible para int
+    int maxPosicion = 0;
 
     // Recorrer el mapa y encontrar la posición más grande
     for (const auto& par : mapa) {
