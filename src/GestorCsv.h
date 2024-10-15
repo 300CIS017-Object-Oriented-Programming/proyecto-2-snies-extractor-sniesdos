@@ -1,14 +1,15 @@
 #ifndef GESTOR_CSV_H
 #define GESTOR_CSV_H
 
-#include <string>
-#include <vector>
-#include <map>
-#include <fstream>
-#include <sstream>
-#include <list>
 #include "ProgramaAcademico.h"
 #include "Consolidado.h"
+#include <algorithm>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <list>
+#include <map>
 
 using namespace std;
 
