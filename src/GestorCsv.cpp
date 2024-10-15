@@ -5,41 +5,83 @@ GestorCsv::GestorCsv() {
     this->DELIMITADOR = Settings::DELIMITADOR;
 }
 // FIXME: LA LECTURA DE ARCHIVOS CON GETLINE FUNCIONA HORRIBLEMENTE, NO TENEMOS IDEA DE POR QUÉ
-vector<int> GestorCsv::leerProgramasCsv(string &ruta){
+vector<int> GestorCsv::leerProgramasCsv(const string &ruta)
+{
+
     vector<int> codigosSniesRetorno;
-    ifstream archivoProgramasCsv(ruta);
-    if (!(archivoProgramasCsv.is_open()))
+    ifstream archivo(ruta);
+    if (!archivo.is_open())
     {
         cout << "Archivo " << ruta << " no se pudo abrir correctamente" << endl;
     }
     else
     {
-        string linea;
-        string dato;
-        // Mantenimiento (Revisión): Se puede mejorar la lectura de archivos con getline y
-        // No debería saltarse la primera linea para así determinar qué está leyendo.
-        // Saltarse la primera linea
-        getline(archivoProgramasCsv, linea);
+        string linea,    dato;
+        getline(archivo, linea);
         // Leer los programas
-        while (getline(archivoProgramasCsv, linea))
+        while (getline(archivo, linea))
         {
             stringstream streamLinea(linea);
             getline(streamLinea, dato, ';');
-            // Manteniemiento: Se puede mejorar la forma de leer los datos de la línea y
-            // los nombres de los métodos y variables.
-            codigosSniesRetorno.push_back(stoi(dato));
+            try{
+                codigosSniesRetorno.push_back(stoi(dato));
+            }catch(const invalid_argument &e){
+                cout<<"Error: Valor invalido: "<<dato<<"en el archivo"<<endl;
+            }
         }
     }
-    archivoProgramasCsv.close();
+    archivo.close();
     return codigosSniesRetorno;
 }
 
 // Complejidad: Este metodo tiene una alta complejidad ciclomática y computacional, reducir en metodos más pequeños
 // Estructuras de control anidadas profundamente.
+
+//Función auxiliar para analizar una línea desde el archivo CSV
+vector<string> parseCvsLine(const string &line, char delimeter = ';'){
+    vector<string>tokens;
+    string token;
+    stringstream lineStream(line);
+    while(getline(lineStream, token, delimeter)){
+        tokens.push_back(token);
+    }
+
+    return tokens;
+}
+
+//  Función auxiliar para comprobar si un código de programa es de interés
+bool isProgramOfInterest(const string &code, const vector<int> &codigoSnies){
+    try{
+        int codeInt = stoi(code);
+        return find(codigoSnies.begin(), codigoSnies.end(), codeInt) != codigoSnies.end(); 
+    }
+    catch(const invalid_argument &e){
+        return false;
+    }
+}
+
+//función para leer la cabezera del archivo
+vector<string> readHeader(ifstream &file){
+    string hearderLine;
+    return parseCvsLine(hearderLine);
+}
+
+//Función auxiliar para procesar filas de programa y agregarlas a la matriz de resultados
+void processProgramRow(ifstream &file, vector<vector<string>> &resultMatrix, vector<string> &row){
+    resultMatrix.push_back(row);
+    for(int i=0; i<3; i++){
+        string line;
+        if(getline(file,line)){
+            row = parseCvsLine(line);
+            resultMatrix.push_back(row);
+        }
+    }
+}
+
+
+//Dgfhdgfgdfasdgdjgjfd keep working on it girl
 vector<vector<string>> GestorCsv::leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies)
 {
-    // Estructura: La estructura es confusa.
-    // Mantenimiento: Se pueden mejorar los nombres de las variables.
     vector<vector<string>> matrizResultado;
     string rutaCompleta = rutaBase + ano + ".csv";
     ifstream archivoPrimero(rutaCompleta);
@@ -119,22 +161,7 @@ vector<vector<string>> GestorCsv::leerArchivoPrimera(string &rutaBase, string &a
             // Si es de los programas que no me interesan, sigo a la siguiente fila, sin guardar la fila en la matriz de resultados
         }
     }
-
     archivoPrimero.close();
-
-    /*// Imprimir matriz resultado para verificaciones
-    for (int h = 0; h < matrizResultado.size(); h++)
-    {
-        for (int k = 0; k < matrizResultado[h].size(); k++)
-        {
-            cout << matrizResultado[h][k];
-            if (k != (matrizResultado[h].size() - 1))
-            {
-                cout << ";";
-            }
-        }
-        cout << endl;
-    }*/
     return matrizResultado;
 }
 
