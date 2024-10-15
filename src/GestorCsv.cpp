@@ -30,10 +30,52 @@ vector<int> GestorCsv::leerProgramasCsv(const string &ruta)
 
 // Complejidad: Este metodo tiene una alta complejidad ciclomática y computacional, reducir en metodos más pequeños
 // Estructuras de control anidadas profundamente.
+
+//Función auxiliar para analizar una línea desde el archivo CSV
+vector<string> parseCvsLine(const string &line, char delimeter = ';'){
+    vector<string>tokens;
+    string token;
+    stringstream lineStream(line);
+    while(getline(lineStream, token, delimeter)){
+        tokens.push_back(token);
+    }
+
+    return tokens;
+}
+
+//  Función auxiliar para comprobar si un código de programa es de interés
+bool isProgramOfInterest(const string &code, const vector<int> &codigoSnies){
+    try{
+        int codeInt = stoi(code);
+        return find(codigoSnies.begin(), codigoSnies.end(), codeInt) != codigoSnies.end(); 
+    }
+    catch(const invalid_argument &e){
+        return false;
+    }
+}
+
+//función para leer la cabezera del archivo
+vector<string> readHeader(ifstream &file){
+    string hearderLine;
+    return parseCvsLine(hearderLine);
+}
+
+//Función auxiliar para procesar filas de programa y agregarlas a la matriz de resultados
+void processProgramRow(ifstream &file, vector<vector<string>> &resultMatrix, vector<string> &row){
+    resultMatrix.push_back(row);
+    for(int i=0; i<3; i++){
+        string line;
+        if(getline(file,line)){
+            row = parseCvsLine(line);
+            resultMatrix.push_back(row);
+        }
+    }
+}
+
+
+//Dgfhdgfgdfasdgdjgjfd keep working on it girl
 vector<vector<string>> GestorCsv::leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies)
 {
-    // Estructura: La estructura es confusa.
-    // Mantenimiento: Se pueden mejorar los nombres de las variables.
     vector<vector<string>> matrizResultado;
     string rutaCompleta = rutaBase + ano + ".csv";
     ifstream archivoPrimero(rutaCompleta);
@@ -113,22 +155,7 @@ vector<vector<string>> GestorCsv::leerArchivoPrimera(string &rutaBase, string &a
             // Si es de los programas que no me interesan, sigo a la siguiente fila, sin guardar la fila en la matriz de resultados
         }
     }
-
     archivoPrimero.close();
-
-    /*// Imprimir matriz resultado para verificaciones
-    for (int h = 0; h < matrizResultado.size(); h++)
-    {
-        for (int k = 0; k < matrizResultado[h].size(); k++)
-        {
-            cout << matrizResultado[h][k];
-            if (k != (matrizResultado[h].size() - 1))
-            {
-                cout << ";";
-            }
-        }
-        cout << endl;
-    }*/
     return matrizResultado;
 }
 
