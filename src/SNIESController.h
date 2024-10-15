@@ -12,18 +12,26 @@ using std::map;
 using std::string;
 
 class SNIESController {
+    private:
+        map<long, ProgramaAcademico *> programasAcademicos;
 
-private:
-    map<long, ProgramaAcademico *> programasAcademicos;
-    GestorCsv gestorCsvObj;
-    Settings settings;
+        GestorCsv gestorCsvObj;
+        Settings settings;
 
-public:
-    SNIESController() = default;
-    ~SNIESController();
-    void procesarDatosCsv(string &, string &);
-    void calcularDatosExtra(bool);
-    void buscarProgramas(bool, string &, int);
+        string rutaProgramasCSV;
+        string rutaAdmitidos;
+        string rutaGraduados;
+        string rutaInscritos;
+        string rutaMatriculados;
+        string rutaMatriculadosPrimerSemestre;
+        string rutaOutput;
+
+    public:
+        SNIESController();
+        ~SNIESController();
+        void procesarDatosCsv(string &, string &);
+        void calcularDatosExtra(bool);
+        void buscarProgramas(bool, string &, int);
 };
 
 #endif
