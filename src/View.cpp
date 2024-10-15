@@ -149,7 +149,7 @@ bool View::isConvetibleToInt(const string &str)
 {
     try
     {
-        std::size_t pos;
+        std::size_t pos = 0;
         // Verificamos si se ha convertido toda la cadena
         return pos == str.length();
     }
