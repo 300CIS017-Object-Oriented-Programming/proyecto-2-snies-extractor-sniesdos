@@ -1,32 +1,30 @@
 #include "GestorCsv.h"
 // FIXME: LA LECTURA DE ARCHIVOS CON GETLINE FUNCIONA HORRIBLEMENTE, NO TENEMOS IDEA DE POR QUÉ
-vector<int> GestorCsv::leerProgramasCsv(string &ruta)
+vector<int> GestorCsv::leerProgramasCsv(const string &ruta)
 {
     vector<int> codigosSniesRetorno;
-    ifstream archivoProgramasCsv(ruta);
-    if (!(archivoProgramasCsv.is_open()))
+    ifstream archivo(ruta);
+    if (!archivo.is_open())
     {
         cout << "Archivo " << ruta << " no se pudo abrir correctamente" << endl;
     }
     else
     {
-        string linea;
-        string dato;
-        // Mantenimiento (Revisión): Se puede mejorar la lectura de archivos con getline y
-        // No debería saltarse la primera linea para así determinar qué está leyendo.
-        // Saltarse la primera linea
-        getline(archivoProgramasCsv, linea);
+        string linea,    dato;
+        getline(archivo, linea);
         // Leer los programas
-        while (getline(archivoProgramasCsv, linea))
+        while (getline(archivo, linea))
         {
             stringstream streamLinea(linea);
             getline(streamLinea, dato, ';');
-            // Manteniemiento: Se puede mejorar la forma de leer los datos de la línea y
-            // los nombres de los métodos y variables.
-            codigosSniesRetorno.push_back(stoi(dato));
+            try{
+                codigosSniesRetorno.push_back(stoi(dato));
+            }catch(const invalid_argument &e){
+                cout<<"Error: Valor invalido: "<<dato<<"en el archivo"<<endl;
+            }
         }
     }
-    archivoProgramasCsv.close();
+    archivo.close();
     return codigosSniesRetorno;
 }
 

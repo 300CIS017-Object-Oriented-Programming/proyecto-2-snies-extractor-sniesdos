@@ -16,7 +16,7 @@ using namespace std;
 class GestorCsv {
     public:
         GestorCsv() = default;
-        vector<int> leerProgramasCsv(string &ruta);
+        vector<int> leerProgramasCsv(const string &ruta);
         // Mantenimiento: Se puede mejorar la firma y nombre de los metodos para que sea más descriptiva
         vector<vector<string>> leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies);
         vector<vector<string>> leerArchivoSegunda(string &rutaBase, string &ano, vector<int> &codigosSnies);
