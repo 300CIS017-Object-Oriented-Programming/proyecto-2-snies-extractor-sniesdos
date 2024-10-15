@@ -4,21 +4,18 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <list>
 #include <fstream>
+#include <sstream>
+#include <list>
 #include "ProgramaAcademico.h"
+#include "Consolidado.h"
 
-using std::string;
-using std::vector;
-using std::map;
-using std::list;
-using std::ofstream;
-
+using namespace std;
 
 class GestorCsv {
     public:
         GestorCsv() = default;
-        std::vector<int> leerProgramasCsv(string &ruta);
+        vector<int> leerProgramasCsv(string &ruta);
         // Mantenimiento: Se puede mejorar la firma y nombre de los metodos para que sea más descriptiva
         vector<vector<string>> leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies);
         vector<vector<string>> leerArchivoSegunda(string &rutaBase, string &ano, vector<int> &codigosSnies);
