@@ -3,6 +3,9 @@
 //
 
 #include "GestorJson.h"
+#include <iostream>
+
+using namespace std;
 
 bool GestorCsv::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapadeProgramasAcademicos, vector<string> etiquetasColumnas)
 {
