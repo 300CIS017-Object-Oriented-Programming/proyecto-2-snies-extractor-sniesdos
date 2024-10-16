@@ -17,6 +17,9 @@ using std::vector;
 using std::map;
 using std::list;
 using std::ofstream;
+using std::ifstream;
+using std::stringstream;
+using std::invalid_argument;
 
 class GestorCsv {
 private:
