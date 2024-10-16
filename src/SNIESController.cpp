@@ -1,24 +1,17 @@
 #include "SNIESController.h"
 
-using namespace std;
-
-SNIESController::SNIESController(string &nuevaRutaProgramasCSV, string &nuevaRutaAdmitidos, string &nuevaRutaGraduados, string &nuevaRutaInscritos, string &nuevaRutaMatriculadosc, string &nuevaRutaMatriculadosPrimerSemestre, string &nuevaRutaOutput)
-{
-    // FIXME quitar los parámetros de las rutas de los parametros del constructor, usar el archivo de settings.h para poner las constantes
+SNIESController::SNIESController() {
     gestorCsvObj = GestorCsv();
-    rutaProgramasCSV = nuevaRutaProgramasCSV;
-    rutaAdmitidos = nuevaRutaAdmitidos;
-    rutaGraduados = nuevaRutaGraduados;
-    rutaInscritos = nuevaRutaInscritos;
-    rutaMatriculados = nuevaRutaMatriculadosc;
-    rutaMatriculadosPrimerSemestre = nuevaRutaMatriculadosPrimerSemestre;
-    rutaOutput = nuevaRutaOutput;
+    rutaProgramasCSV = Settings::PROGRAMAS_FILTRAR_FILE_PATH;
+    rutaAdmitidos = Settings::ADMITIDOS_FILE_PATH;
+    rutaGraduados = Settings::GRADUADOS_FILE_PATH;
+    rutaInscritos = Settings::INSCRITOS_FILE_PATH;
+    rutaMatriculados = Settings::MATRICULADOS_FILE_PATH;
+    rutaMatriculadosPrimerSemestre = Settings::MATRICULADOS_PRIMERSEMESTRE_FILE_PATH;
+    rutaOutput = Settings::OUT_PATH;
 }
-
-SNIESController::~SNIESController()
-{
-    for (auto &pair : programasAcademicos)
-    {
+SNIESController::~SNIESController() {
+    for (auto &pair : programasAcademicos) {
         ((pair).second)->~ProgramaAcademico();
         delete pair.second;
     }
