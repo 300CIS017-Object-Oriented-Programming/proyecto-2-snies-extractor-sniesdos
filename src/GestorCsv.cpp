@@ -3,33 +3,8 @@ GestorCsv::GestorCsv() {
     this->DELIMITADOR = Settings::DELIMITADOR;
 }
 // FIXME: LA LECTURA DE ARCHIVOS CON GETLINE FUNCIONA HORRIBLEMENTE, NO TENEMOS IDEA DE POR QUÉ
-vector<int> GestorCsv::leerProgramasCsv( string &ruta){
-    vector<int> codigosSniesRetorno;
-    ifstream archivo(ruta);
-    if (!archivo.is_open())
-    {
-        cout << "Archivo " << ruta << " no se pudo abrir correctamente" << endl;
-    }
-    else
-    {   
-        string linea, dato;
-        getline(archivo, linea);
-        // Leer los programas
-        while (getline(archivo, linea)){
-            stringstream streamLinea(linea);
-            try{
-                getline(streamLinea, dato, ';');
-                codigosSniesRetorno.push_back(stoi(dato));
-            }catch(const invalid_argument &e){
-                cout<<"Error: Valor invalido: "<<dato<<"en el archivo"<<endl;
-            }
-        }
-    }
-    archivo.close();
-    return codigosSniesRetorno;
-}
 
-vector<string> leerEncabezado(ifstream &archivo){
+vector<string> GestorCsv::leerEncabezado(ifstream &archivo){
     string fila, dato;
     vector<string>vecFila(39);
     getline(archivo,fila);
@@ -41,8 +16,8 @@ vector<string> leerEncabezado(ifstream &archivo){
     return vecFila;
 }
 
-vector<string>leerFila(ifstream &archivo, int limiteColumnas = LIMIT_COLUMNAS_FILA){
-    string fila, dato;
+vector<string> GestorCsv::leerFila(ifstream &archivo, int limiteColumnas = LIMIT_COLUMNAS_FILA){
+    string fila, dato; //fila con limites
     vector<string> vecfila(39);
     getline(archivo, fila);
     stringstream streamFila(fila);
@@ -53,7 +28,19 @@ vector<string>leerFila(ifstream &archivo, int limiteColumnas = LIMIT_COLUMNAS_FI
     return vecfila;
 }
 
-bool filaRelevante(const vector<string>&fila, vector<int>&codigoSnies){
+bool GestorCsv::abrirArchivo(string &ruta, ifstream &archivo){
+    bool ans;
+    archivo.open(ruta);
+    if(!archivo.is_open()){
+        cout<<"Error: No se pudo abrir el archivo"<<ruta<<endl;
+        ans = false;
+    }else{
+        ans= true;
+    }
+    return ans;
+}
+
+bool GestorCsv::filaRelevante(const vector<string>&fila, vector<int>&codigoSnies){
     if(fila[12] == "Sin programa especifico") return false;
     try{
         int codigo = stoi(fila[12]);
@@ -63,19 +50,39 @@ bool filaRelevante(const vector<string>&fila, vector<int>&codigoSnies){
     }
 }
 
-void leerFilasAdicionales(ifstream& archivo, vector<vector<string>>& matrizResult){
+void GestorCsv::leerFilasAdicionales(ifstream& archivo, vector<vector<string>>& matrizResult){
     for(int i = 0; i < 3; i++){
         matrizResult.push_back(leerFila(archivo));
     }
 }
 
+vector<int> GestorCsv::leerProgramasCsv( string &ruta){
+    vector<int> codigosSniesRetorno;
+    ifstream archivo(ruta);
+    if (!archivo.is_open()){
+        return codigosSniesRetorno;
+    }   
+    string linea, dato;
+    getline(archivo, linea);// salta los encabezados
+    while (getline(archivo, linea)){
+        stringstream streamLinea(linea);
+        try{
+            getline(streamLinea, dato, ';');
+            codigosSniesRetorno.push_back(stoi(dato));
+        }catch(const invalid_argument &e){
+            cout<<"Error: Valor invalido en el archivo: "<<dato<<endl;
+        }
+    }
+    archivo.close();
+    return codigosSniesRetorno;
+}
+
 //funcion inicial
 vector<vector<string>>GestorCsv::leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigoSnies){
     vector<vector<string>> matrizResultado;
-    string rutaCompleta= rutaBase + ano + ".csv";
-    ifstream archivo(rutaCompleta);
-    if(!archivo.is_open()){
-        cout<<"archivo"<<rutaCompleta<<"no se puedo abrir correctamente"<<endl;
+    string rutaCompleta = rutaBase + ano + ".csv";
+    ifstream archivo;
+    if(!abrirArchivo(rutaCompleta, archivo)){
         return matrizResultado;
     }
     matrizResultado.push_back(leerEncabezado(archivo));
