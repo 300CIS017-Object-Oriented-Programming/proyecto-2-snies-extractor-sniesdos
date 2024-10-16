@@ -21,10 +21,11 @@ using std::ifstream;
 using std::stringstream;
 using std::invalid_argument;
 
+const int LIMIT_COLUMNAS_FILA = 13;
+
 class GestorCsv {
 private:
     Settings settings;
-
     string DELIMITADOR;
 
 public:

@@ -3,9 +3,7 @@ GestorCsv::GestorCsv() {
     this->DELIMITADOR = Settings::DELIMITADOR;
 }
 // FIXME: LA LECTURA DE ARCHIVOS CON GETLINE FUNCIONA HORRIBLEMENTE, NO TENEMOS IDEA DE POR QUÉ
-vector<int> GestorCsv::leerProgramasCsv(const string &ruta)
-{
-
+vector<int> GestorCsv::leerProgramasCsv( string &ruta){
     vector<int> codigosSniesRetorno;
     ifstream archivo(ruta);
     if (!archivo.is_open())
@@ -17,11 +15,10 @@ vector<int> GestorCsv::leerProgramasCsv(const string &ruta)
         string linea, dato;
         getline(archivo, linea);
         // Leer los programas
-        while (getline(archivo, linea))
-        {
+        while (getline(archivo, linea)){
             stringstream streamLinea(linea);
-            getline(streamLinea, dato, ';');
             try{
+                getline(streamLinea, dato, ';');
                 codigosSniesRetorno.push_back(stoi(dato));
             }catch(const invalid_argument &e){
                 cout<<"Error: Valor invalido: "<<dato<<"en el archivo"<<endl;
@@ -44,7 +41,7 @@ vector<string> leerEncabezado(ifstream &archivo){
     return vecFila;
 }
 
-vector<string>leerFila(ifstream &archivo, int limiteColumnas = 13){
+vector<string>leerFila(ifstream &archivo, int limiteColumnas = LIMIT_COLUMNAS_FILA){
     string fila, dato;
     vector<string> vecfila(39);
     getline(archivo, fila);
@@ -56,10 +53,14 @@ vector<string>leerFila(ifstream &archivo, int limiteColumnas = 13){
     return vecfila;
 }
 
-bool filaRelevante(const vector<string>&fila, const vector<int>&codigoSnies){
+bool filaRelevante(const vector<string>&fila, vector<int>&codigoSnies){
     if(fila[12] == "Sin programa especifico") return false;
-    int codigo = stoi(fila[12]);
-    return find(codigoSnies.begin(),  codigoSnies.end(), codigo) != codigoSnies.end();
+    try{
+        int codigo = stoi(fila[12]);
+        return find(codigoSnies.begin(), codigoSnies.end(), codigo) != codigoSnies.end();;
+    }catch(const invalid_argument &e){
+        return false;
+    }
 }
 
 void leerFilasAdicionales(ifstream& archivo, vector<vector<string>>& matrizResult){
@@ -80,12 +81,12 @@ vector<vector<string>>GestorCsv::leerArchivoPrimera(string &rutaBase, string &an
     matrizResultado.push_back(leerEncabezado(archivo));
     while(!archivo.eof()){
         vector<string> fila = leerFila(archivo);
-        if(filaRelevante(fila, codigoSnies)){
+        if(!fila.empty() && filaRelevante(fila, codigoSnies)){
             matrizResultado.push_back(fila);
             leerFilasAdicionales(archivo, matrizResultado);
         }
     }
-    archivo.close();
+    archivo.close();    
     return matrizResultado;
 }
 
