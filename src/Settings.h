@@ -1,5 +1,5 @@
 /**
- * @file Settings.h
+* @file Settings.h
  * @brief Este archivo de encabezado define la clase Settings, que contiene variables de ruta de archivo constantes estáticas.
  *
  * La clase Settings se utiliza para almacenar rutas de archivos como constantes estáticas. Estas rutas están destinadas para su uso
@@ -22,22 +22,22 @@
 using std::string;
 
 class Settings {
-    public:
-        // En la clase Settings, las variables ADMITIDOS_FILE_PATH, MATRICULADOS_FILE_PATH y ETC se declaran como static const std::string. Esto significa que son constantes de tipo string que pertenecen a la clase en lugar de a instancias individuales de la clase.
-        static string BASE_PATH;
-        static string OUT_PATH;
-        static string LOGS_FILE_PATH;
-        static string PROGRAMAS_FILTRAR_FILE_PATH;
-        static string ADMITIDOS_FILE_PATH;
-        static string MATRICULADOS_FILE_PATH;
-        static string MATRICULADOS_PRIMERSEMESTRE_FILE_PATH
-        static string INSCRITOS_FILE_PATH;
-        static string GRADUADOS_FILE_PATH;
-        static string INFORME_FILE_PATH;
-        static string DELIMITADOR;
+public:
+    // En la clase Settings, las variables ADMITIDOS_FILE_PATH, MATRICULADOS_FILE_PATH y ETC se declaran como static const std::string. Esto significa que son constantes de tipo string que pertenecen a la clase en lugar de a instancias individuales de la clase.
+    static string BASE_PATH;
+    static string OUT_PATH;
+    static string LOGS_FILE_PATH;
+    static string PROGRAMAS_FILTRAR_FILE_PATH;
+    static string ADMITIDOS_FILE_PATH;
+    static string MATRICULADOS_FILE_PATH;
+    static string MATRICULADOS_PRIMERSEMESTRE_FILE_PATH;
+    static string INSCRITOS_FILE_PATH;
+    static string GRADUADOS_FILE_PATH;
+    static string INFORME_FILE_PATH;
+    static string DELIMITADOR;
 
-        void setBasePath(const string& newPath);
-        void setDelimitador(const string& newDelimitador);
+    static void setBasePath(const string& newPath);
+    static void setDelimitador(const string& newDelimitador);
 };
 
 #endif
