@@ -19,6 +19,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <vector> 
 #include <string>
 using namespace std;
 
@@ -35,6 +36,7 @@ public:
     static string BASE_PATH;
     static string DELIMITADOR;
     static string GRADUADOS_FILE_PATH;
+    static std::vector<std::string> camposImportantes;
 
     static void setRutaBase(const string &nuevaRutaBase);
     static void setAnioProgramas(string anioProgramas);

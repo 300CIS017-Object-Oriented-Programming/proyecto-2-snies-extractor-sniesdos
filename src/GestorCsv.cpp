@@ -1,10 +1,7 @@
 #include "GestorCsv.h"
-
-void GestorCsv::definirProgramas(){
-    std::unordered_map<std::string,std::string> programas;
+std::unordered_map<std::string,int> GestorCsv::extraerEncabezados(string const& ruta){
     std::unordered_map<std::string,int> encabezados;
-
-    std::ifstream archivoBase(Settings::PROGRAMAS_FILTRAR_FILE_PATH, std::ios::binary);
+    std::ifstream archivoBase(ruta, std::ios::binary);
 
     if (!(archivoBase.is_open()))
     {
@@ -21,6 +18,36 @@ void GestorCsv::definirProgramas(){
     while (getline(ss, encabezado, ';')) {
         encabezados[encabezado] = indice++;
     }
+    archivoBase.close();
+
+    return encabezados;
+}
+unordered_map<std::string,std::string> GestorCsv::extraerDatos(){
+    std::unordered_map<std::string,std::string> datos;
+    std::unordered_map<std::string,int> encabezados;
+    std::unordered_map<std::string,int> indices;
+
+    encabezados=extraerEncabezados(Settings::ADMITIDOS_FILE_PATH+"2022"+".csv");
+
+    for (const auto& encabezado : encabezados) {
+        auto it = find(Settings::camposImportantes.begin(), Settings::camposImportantes.end(), encabezado.first);
+        if (it == Settings::camposImportantes.end()) {
+            indices[encabezado.first] = encabezado.second;
+        }
+    }
+    
+    for (const auto& [clave, valor] : indices) {
+        std::cout << clave << ": " << valor << std::endl;
+    }
+
+    return datos;
+}
+unordered_map<std::string,std::string> GestorCsv::definirProgramas(){
+    std::unordered_map<std::string,std::string> programas;
+    std::unordered_map<std::string,int> encabezados;
+    string linea;
+    encabezados=extraerEncabezados(Settings::PROGRAMAS_FILTRAR_FILE_PATH);
+    std::ifstream archivoBase(Settings::PROGRAMAS_FILTRAR_FILE_PATH, std::ios::binary);
     
     int indicadorClave = encabezados["CÓDIGO SNIES DEL PROGRAMA"];
     int valorInteres = encabezados["PROGRAMA ACADÉMICO"];
@@ -41,7 +68,7 @@ void GestorCsv::definirProgramas(){
     } 
     archivoBase.close();
 
-    std::string rutaSalida =  Settings::BASE_PATH+"programas.csv";
+    std::string rutaSalida =  Settings::BASE_PATH+"programas2.csv";
     std::ofstream archivoSalida(rutaSalida, std::ios::binary); 
 
     if (!archivoSalida.is_open()) {
@@ -56,33 +83,34 @@ void GestorCsv::definirProgramas(){
     }
 
     archivoSalida.close();
-    std::cout << "Programas exportados correctamente a: " << rutaSalida << std::endl;
 
+    extraerDatos();
+
+    return programas;
 }
 
-// FIXME: LA LECTURA DE ARCHIVOS CON GETLINE FUNCIONA HORRIBLEMENTE, NO TENEMOS IDEA DE POR QUÉ
+
 vector<int> GestorCsv::leerProgramasCsv(string &ruta)
 {
     vector<int> codigosSniesRetorno;
     ifstream archivoProgramasCsv(ruta);
     if (!(archivoProgramasCsv.is_open()))
     {
-        cout << "Archivo " << ruta << " no se pudo abrir correctamente" << endl;
+        throw std::ios_base::failure("No se pudo abrir el archivo");
     }
-    else
+
+    string linea;
+    string dato;
+    // Saltarse la primera linea
+    getline(archivoProgramasCsv, linea);
+    // Leer los programas
+    while (getline(archivoProgramasCsv, linea))
     {
-        string linea;
-        string dato;
-        // Saltarse la primera linea
-        getline(archivoProgramasCsv, linea);
-        // Leer los programas
-        while (getline(archivoProgramasCsv, linea))
-        {
-            stringstream streamLinea(linea);
-            getline(streamLinea, dato, ';');
-            codigosSniesRetorno.push_back(stoi(dato));
-        }
+        stringstream streamLinea(linea);
+        getline(streamLinea, dato, ';');
+        codigosSniesRetorno.push_back(stoi(dato));
     }
+
     archivoProgramasCsv.close();
     // Recorre el vector e imprime cada elemento
     // for (size_t i = 0; i < codigosSniesRetorno.size(); ++i) {
@@ -190,7 +218,6 @@ vector<vector<string>> GestorCsv::leerArchivoPrimera(string &rutaBase, string &a
     }*/
     return matrizResultado;
 }
-
 vector<vector<string>> GestorCsv::leerArchivoSegunda(string &rutaBase, string &ano, vector<int> &codigosSnies)
 {
     vector<vector<string>> matrizResultado;

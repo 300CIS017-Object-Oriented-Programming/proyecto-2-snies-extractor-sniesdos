@@ -19,8 +19,9 @@ class GestorCsv
 {
 public:
     GestorCsv() = default;
-    void definirProgramas();
-    
+    unordered_map<std::string,std::string> definirProgramas();
+    std::unordered_map<std::string,int> extraerEncabezados(const string& ruta);
+    std::unordered_map<std::string,std::string> extraerDatos();
     vector<int> leerProgramasCsv(string &ruta);
     vector<vector<string>> leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies);
     vector<vector<string>> leerArchivoSegunda(string &rutaBase, string &ano, vector<int> &codigosSnies);
