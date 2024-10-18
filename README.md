@@ -50,6 +50,7 @@ Se implemento una nueva clase que permite exportar documentos de tipo .Txt.
    Se modificaron diferentes atributos y metodos de las clases Consolidado, ProgramaAcademico, GestorCSV y SNIESController con el objetivo de reducir la complejidad, aumentar la cohesión y disminuir la codependencia.
    ### 7) Creacion de clase GestorDatos :
    Se implemento una nueva clase quien es la clase padre de GestorCsv, GestorJson, GestorTXT.
+
 # Diagrama Mermaid
 
 *El vector de Consolidados tendrá siempre 8 posiciones [0-7] donde:*
