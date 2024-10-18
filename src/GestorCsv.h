@@ -9,7 +9,6 @@
 using std::string;
 using std::vector;
 using std::map;
-using namespace std;
 class GestorCsv {
 public:
     GestorCsv() = default;
