@@ -10,12 +10,10 @@
 
 using std::map;
 using std::string;
-using std::to_string;
 
 class SNIESController {
     private:
-        map<int, ProgramaAcademico *> programasAcademicos;
-        vector<string> etiquetasColumnas;
+        map<long, ProgramaAcademico *> programasAcademicos;
 
         GestorCsv gestorCsvObj;
         Settings settings;

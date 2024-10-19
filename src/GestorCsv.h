@@ -17,16 +17,25 @@ using std::vector;
 using std::map;
 using std::list;
 using std::ofstream;
+using std::ifstream;
+using std::stringstream;
+using std::invalid_argument;
+
+const int LIMIT_COLUMNAS_FILA = 13;
 
 class GestorCsv {
 private:
     Settings settings;
-
     string DELIMITADOR;
+    vector<string> leerEncabezado(ifstream &archivo);
+    vector<string> leerFila(ifstream &archivo, int limitecolumnas = LIMIT_COLUMNAS_FILA);
+    bool abrirArchivo(string &ruta, ifstream &archivo);
+    bool filaRelevante(const vector<string> &fila, vector<int> &codigoSnies);
+    void leerFilasAdicionales(ifstream &archivo, vector<vector<string>> &matrizResult);
 
 public:
     GestorCsv();
-    std::vector<int> leerProgramasCsv(string &ruta);
+    vector<int> leerProgramasCsv(string &ruta);
     // Mantenimiento: Se puede mejorar la firma y nombre de los metodos para que sea más descriptiva
     vector<vector<string>> leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies);
     vector<vector<string>> leerArchivoSegunda(string &rutaBase, string &ano, vector<int> &codigosSnies);

@@ -1,170 +1,103 @@
 #include "GestorCsv.h"
-
-
 GestorCsv::GestorCsv() {
     this->DELIMITADOR = Settings::DELIMITADOR;
 }
 // FIXME: LA LECTURA DE ARCHIVOS CON GETLINE FUNCIONA HORRIBLEMENTE, NO TENEMOS IDEA DE POR QUÉ
-vector<int> GestorCsv::leerProgramasCsv(const string &ruta)
-{
 
+vector<string> GestorCsv::leerEncabezado(ifstream &archivo){
+    string fila, dato;
+    vector<string>vecFila(39);
+    getline(archivo,fila);
+    stringstream streamFila(fila);
+    int columna = 0;
+    while(getline(streamFila, dato, ';') && columna < 39){
+        vecFila[columna++] = dato;
+    }
+    return vecFila;
+}
+
+vector<string> GestorCsv::leerFila(ifstream &archivo, int limiteColumnas){
+    string fila, dato; //fila con limites
+    vector<string> vecfila(39);
+    getline(archivo, fila);
+    stringstream streamFila(fila);
+    int columna = 0;
+    while(getline(streamFila, dato, ';') && columna < limiteColumnas){
+        vecfila[columna++] = dato;
+    }
+    return vecfila;
+}
+
+bool GestorCsv::abrirArchivo(string &ruta, ifstream &archivo){
+    bool ans;
+    archivo.open(ruta);
+    if(!archivo.is_open()){
+        cout<<"Error: No se pudo abrir el archivo"<<ruta<<endl;
+        ans = false;
+    }else{
+        ans= true;
+    }
+    return ans;
+}
+
+bool GestorCsv::filaRelevante(const vector<string>&fila, vector<int>&codigoSnies){
+    if(fila[12] == "Sin programa especifico") return false;
+    try{
+        int codigo = stoi(fila[12]);
+        return find(codigoSnies.begin(), codigoSnies.end(), codigo) != codigoSnies.end();;
+    }catch(const invalid_argument &e){
+        return false;
+    }
+}
+
+void GestorCsv::leerFilasAdicionales(ifstream& archivo, vector<vector<string>>& matrizResult){
+    for(int i = 0; i < 3; i++){
+        matrizResult.push_back(leerFila(archivo));
+    }
+}
+
+vector<int> GestorCsv::leerProgramasCsv( string &ruta){
     vector<int> codigosSniesRetorno;
     ifstream archivo(ruta);
-    if (!archivo.is_open())
-    {
-        cout << "Archivo " << ruta << " no se pudo abrir correctamente" << endl;
-    }
-    else
-    {
-        string linea,    dato;
-        getline(archivo, linea);
-        // Leer los programas
-        while (getline(archivo, linea))
-        {
-            stringstream streamLinea(linea);
+    if (!archivo.is_open()){
+        return codigosSniesRetorno;
+    }   
+    string linea, dato;
+    getline(archivo, linea);// salta los encabezados
+    while (getline(archivo, linea)){
+        stringstream streamLinea(linea);
+        try{
             getline(streamLinea, dato, ';');
-            try{
-                codigosSniesRetorno.push_back(stoi(dato));
-            }catch(const invalid_argument &e){
-                cout<<"Error: Valor invalido: "<<dato<<"en el archivo"<<endl;
-            }
+            codigosSniesRetorno.push_back(stoi(dato));
+        }catch(const invalid_argument &e){
+            cout<<"Error: Valor invalido en el archivo: "<<dato<<endl;
         }
     }
     archivo.close();
     return codigosSniesRetorno;
 }
 
-// Complejidad: Este metodo tiene una alta complejidad ciclomática y computacional, reducir en metodos más pequeños
-// Estructuras de control anidadas profundamente.
-
-//Función auxiliar para analizar una línea desde el archivo CSV
-vector<string> parseCvsLine(const string &line, char delimeter = ';'){
-    vector<string>tokens;
-    string token;
-    stringstream lineStream(line);
-    while(getline(lineStream, token, delimeter)){
-        tokens.push_back(token);
-    }
-
-    return tokens;
-}
-
-//  Función auxiliar para comprobar si un código de programa es de interés
-bool isProgramOfInterest(const string &code, const vector<int> &codigoSnies){
-    try{
-        int codeInt = stoi(code);
-        return find(codigoSnies.begin(), codigoSnies.end(), codeInt) != codigoSnies.end(); 
-    }
-    catch(const invalid_argument &e){
-        return false;
-    }
-}
-
-//función para leer la cabezera del archivo
-vector<string> readHeader(ifstream &file){
-    string hearderLine;
-    return parseCvsLine(hearderLine);
-}
-
-//Función auxiliar para procesar filas de programa y agregarlas a la matriz de resultados
-void processProgramRow(ifstream &file, vector<vector<string>> &resultMatrix, vector<string> &row){
-    resultMatrix.push_back(row);
-    for(int i=0; i<3; i++){
-        string line;
-        if(getline(file,line)){
-            row = parseCvsLine(line);
-            resultMatrix.push_back(row);
-        }
-    }
-}
-
-
-//Dgfhdgfgdfasdgdjgjfd keep working on it girl
-vector<vector<string>> GestorCsv::leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies)
-{
+//funcion inicial
+vector<vector<string>>GestorCsv::leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigoSnies){
     vector<vector<string>> matrizResultado;
     string rutaCompleta = rutaBase + ano + ".csv";
-    ifstream archivoPrimero(rutaCompleta);
-    if (!(archivoPrimero.is_open()))
-    {
-        cout << "Archivo " << rutaCompleta << " no se pudo abrir correctamente" << endl;
+    ifstream archivo;
+    if(!abrirArchivo(rutaCompleta, archivo)){
+        return matrizResultado;
     }
-    else
-    {
-        string fila;
-        string dato;
-        vector<string> vectorFila;
-        stringstream streamFila;
-        int columna;
-        vector<int>::iterator it;
-
-        // Primera iteracion del ciclo para guardar las etiquetas
-        getline(archivoPrimero, fila);
-        vectorFila = vector<string>(39);
-        streamFila = stringstream(fila);
-        columna = 0;
-        while ((getline(streamFila, dato, ';')))
-        {
-            vectorFila[columna] = dato;
-            columna++;
-        }
-        matrizResultado.push_back(vectorFila);
-
-        // Leer el resto del archivo
-        while (getline(archivoPrimero, fila))
-        {
-            streamFila = stringstream(fila);
-            columna = 0;
-            while ((getline(streamFila, dato, ';')) && (columna < 13))
-            {
-                vectorFila[columna] = dato;
-                columna++;
-            }
-
-            // Verificamos que la fila no sea una fila de error
-            if (vectorFila[12] != "Sin programa especifico")
-            {
-                it = find(codigosSnies.begin(), codigosSnies.end(), stoi(vectorFila[12]));
-            }
-            else
-            {
-                it = codigosSnies.end();
-            }
-
-            // Verificar si hace parte de los programas que me interesan
-            if (it != codigosSnies.end()) // Caso donde si estaba dentro de los programas que me interesan
-            {
-                // Termino de leer y guardar primera fila
-                vectorFila[columna] = dato; // Guardamos el dato que habiamos geteado justo antes de hacer la verificacion
-                columna++;
-                while ((getline(streamFila, dato, ';')))
-                {
-                    vectorFila[columna] = dato;
-                    columna++;
-                }
-                matrizResultado.push_back(vectorFila);
-
-                // Leo y guardo filas restantes
-                for (int j = 0; j < 3; j++)
-                {
-                    getline(archivoPrimero, fila);
-                    streamFila = stringstream(fila);
-                    columna = 0;
-                    while ((getline(streamFila, dato, ';')))
-                    {
-                        vectorFila[columna] = dato;
-                        columna++;
-                    }
-                    matrizResultado.push_back(vectorFila);
-                }
-            }
-            // Si es de los programas que no me interesan, sigo a la siguiente fila, sin guardar la fila en la matriz de resultados
+    matrizResultado.push_back(leerEncabezado(archivo));
+    while(!archivo.eof()){
+        vector<string> fila = leerFila(archivo);
+        if(!fila.empty() && filaRelevante(fila, codigoSnies)){
+            matrizResultado.push_back(fila);
+            leerFilasAdicionales(archivo, matrizResultado);
         }
     }
-    archivoPrimero.close();
+    archivo.close();    
     return matrizResultado;
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 // Complejidad: Este metodo tiene una alta complejidad ciclomática y computacional, reducir en metodos más pequeños
 // Parece hacer lo mismo que el metodo leerArchivoPrimera
 vector<vector<string>> GestorCsv::leerArchivoSegunda(string &rutaBase, string &ano, vector<int> &codigosSnies)
