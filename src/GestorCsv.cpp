@@ -16,7 +16,7 @@ vector<string> GestorCsv::leerEncabezado(ifstream &archivo){
     return vecFila;
 }
 
-vector<string> GestorCsv::leerFila(ifstream &archivo, int limiteColumnas = LIMIT_COLUMNAS_FILA){
+vector<string> GestorCsv::leerFila(ifstream &archivo, int limiteColumnas){
     string fila, dato; //fila con limites
     vector<string> vecfila(39);
     getline(archivo, fila);
