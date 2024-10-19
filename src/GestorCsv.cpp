@@ -16,7 +16,7 @@ vector<string> GestorCsv::leerEncabezado(ifstream &archivo){
     return vecFila;
 }
 
-vector<string> GestorCsv::leerFila(ifstream &archivo, int limiteColumnas = LIMIT_COLUMNAS_FILA){
+vector<string> GestorCsv::leerFila(ifstream &archivo, int limiteColumnas){
     string fila, dato; //fila con limites
     vector<string> vecfila(39);
     getline(archivo, fila);
@@ -97,118 +97,7 @@ vector<vector<string>>GestorCsv::leerArchivoPrimera(string &rutaBase, string &an
     return matrizResultado;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-// Complejidad: Este metodo tiene una alta complejidad ciclomática y computacional, reducir en metodos más pequeños
-// Parece hacer lo mismo que el metodo leerArchivoPrimera
-vector<vector<string>> GestorCsv::leerArchivoSegunda(string &rutaBase, string &ano, vector<int> &codigosSnies)
-{
-    vector<vector<string>> matrizResultado;
-    string rutaCompleta = rutaBase + ano + ".csv";
-    ifstream archivoSegundo(rutaCompleta);
-    if (!(archivoSegundo.is_open()))
-    {
-        cout << "Archivo " << rutaCompleta << " no se pudo abrir correctamente" << endl;
-    }
-    else
-    {
-        string fila;
-        string dato;
-        vector<string> vectorFila(6);
-        stringstream streamFila;
-        int columnaArchivo;
-        int columnaVector;
-        vector<int>::iterator it;
-
-        // Nos saltamos las etiquetas para no interferir en el bucle
-        getline(archivoSegundo, fila);
-
-        // Leemos las filas
-        while (getline(archivoSegundo, fila))
-        {
-            streamFila = stringstream(fila);
-            columnaArchivo = 0;
-            columnaVector = 0;
-            while ((getline(streamFila, dato, ';')) && (columnaArchivo < 13))
-            {
-                if (columnaArchivo == 12)
-                {
-                    vectorFila[columnaVector] = dato;
-                    columnaVector++;
-                }
-                columnaArchivo++;
-            }
-
-            // Verificamos que la fila no sea una fila de error
-            if (vectorFila[0] != "Sin programa especifico")
-            {
-                it = find(codigosSnies.begin(), codigosSnies.end(), stoi(vectorFila[0]));
-            }
-            else
-            {
-                it = codigosSnies.end();
-            }
-
-            // Verificar si hace parte de los programas que me interesan
-            if (it != codigosSnies.end()) // Caso cuando SI es parte de los que me interesan
-            {
-                // Termino de leer y guardar primera fila
-                columnaArchivo++; // Esto se debe a la iteracion en que hacemos getline sin subirle a la columaArchivo porque nos salimos del bucle
-                while (getline(streamFila, dato, ';'))
-                {
-                    if (columnaArchivo >= 34)
-                    {
-                        vectorFila[columnaVector] = dato;
-                        columnaVector++;
-                    }
-                    columnaArchivo++;
-                }
-                matrizResultado.push_back(vectorFila);
-
-                // Leer las otras 3 filas
-                for (int i = 0; i < 3; i++)
-                {
-                    getline(archivoSegundo, fila);
-                    streamFila = stringstream(fila);
-                    columnaArchivo = 0;
-                    columnaVector = 0;
-                    while (getline(streamFila, dato, ';'))
-                    {
-                        if ((columnaArchivo >= 34) || (columnaArchivo == 12))
-                        {
-                            vectorFila[columnaVector] = dato;
-                            columnaVector++;
-                        }
-                        columnaArchivo++;
-                    }
-                    matrizResultado.push_back(vectorFila);
-                }
-            }
-            // Cuando no me interesa no hago nada
-        }
-    }
-
-    /*
-    Ejemplo de matrizResultado: (No tendría las etiquetas incluidas)
-    CodigoSnies;IdSexo;SexoString;Ano;Semestre;Admitidos
-    1; 1; Masculino; 2022; 1, 56
-    */
-    archivoSegundo.close();
-
-    /*// Imprimir matriz resultado para verificaciones
-    for (int h = 0; h < matrizResultado.size(); h++)
-    {
-        for (int k = 0; k < matrizResultado[h].size(); k++)
-        {
-            cout << matrizResultado[h][k];
-            if (k != (matrizResultado[h].size() - 1))
-            {
-                cout << ";";
-            }
-        }
-        cout << endl;
-    }*/
-    return matrizResultado;
-}
+//borré el leerArchivoSegunda (Isabella Erazo)
 
 vector<vector<string>> GestorCsv::leerArchivo(string &rutaBase, string &ano, vector<int> &codigosSnies, int colmunaCodigoSnies)
 {
