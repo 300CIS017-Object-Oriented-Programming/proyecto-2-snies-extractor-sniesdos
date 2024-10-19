@@ -1,16 +1,16 @@
 #include "Settings.h"
 
-static string BASE_PATH = "C:/SNIES_EXTRACTOR/inputs/";
-static string OUT_PATH = "C:/SNIES_EXTRACTOR/outputs/";
-static string LOGS_FILE_PATH = "C:/SNIES_EXTRACTOR/logs/log.txt";
-static string PROGRAMAS_FILTRAR_FILE_PATH = BASE_PATH + "programas.csv";
-static string ADMITIDOS_FILE_PATH = BASE_PATH + "admitidos";
-static string MATRICULADOS_FILE_PATH = BASE_PATH + "matriculados";
-static string MATRICULADOS_PRIMERSEMESTRE_FILE_PATH = BASE_PATH + "matriculadosPrimerSemestre";
-static string INSCRITOS_FILE_PATH = BASE_PATH + "inscritos";
-static string GRADUADOS_FILE_PATH = BASE_PATH + "graduados";
-static string INFORME_FILE_PATH = BASE_PATH + "informe.txt";
-static string DELIMITADOR = ";";
+string Settings::BASE_PATH = "C:/SNIES_EXTRACTOR/inputs/";
+string Settings::OUT_PATH = "C:/SNIES_EXTRACTOR/outputs/";
+string Settings::LOGS_FILE_PATH = "C:/SNIES_EXTRACTOR/logs/log.txt";
+string Settings::PROGRAMAS_FILTRAR_FILE_PATH = BASE_PATH + "programas.csv";
+string Settings::ADMITIDOS_FILE_PATH = BASE_PATH + "admitidos";
+string Settings::MATRICULADOS_FILE_PATH = BASE_PATH + "matriculados";
+string Settings::MATRICULADOS_PRIMERSEMESTRE_FILE_PATH = BASE_PATH + "matriculadosPrimerSemestre";
+string Settings::INSCRITOS_FILE_PATH = BASE_PATH + "inscritos";
+string Settings::GRADUADOS_FILE_PATH = BASE_PATH + "graduados";
+string Settings::INFORME_FILE_PATH = BASE_PATH + "informe.txt";
+string Settings::DELIMITADOR = ";";
 
 // Implementación de los métodos setters
 void Settings::setBasePath(const string& newPath) {
