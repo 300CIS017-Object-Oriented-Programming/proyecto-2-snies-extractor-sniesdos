@@ -1,99 +1,58 @@
 #include "Consolidado.h"
-#include <string_view>
+#include <stdexcept>
 
+// Constructor por defecto
 Consolidado::Consolidado() = default;
 
-Consolidado::Consolidado(int idSexo, std::string_view sexo, int ano, int semestre, const DatosEstudiantes &datos)
-    : idSexo(idSexo), sexo(sexo), ano(ano), semestre(semestre),
+// Constructor con parámetros
+Consolidado::Consolidado(int idSexo, const std::string& sexo, int anio, int semestre, const DatosEstudiantes &datos)
+    : idSexo(idSexo), sexo(sexo), anio(anio), semestre(semestre),
       inscritos(datos.inscritos), admitidos(datos.admitidos),
-      matriculados(datos.primeraMatricula), matriculadosPrimerSemestre(datos.totalMatriculados), graduados(datos.graduados) {}
-
-int Consolidado::getIdSexo() const
+      matriculadosPrimerSemestre(datos.primeraMatricula), matriculados(datos.totalMatriculados), graduados(datos.graduados)
 {
-    return idSexo;
+    if (!esAnioValido(anio)) {
+        throw std::invalid_argument("El año ingresado no es válido.");
+    }
+    if (!esValorPositivo(inscritos) || !esValorPositivo(admitidos) ||
+        !esValorPositivo(matriculados) || !esValorPositivo(matriculadosPrimerSemestre) || !esValorPositivo(graduados)) {
+        throw std::invalid_argument("Los valores numéricos deben ser positivos.");
+        }
 }
 
-void Consolidado::setIdSexo(int nuevoIdSexo)
-{
-    this->idSexo = nuevoIdSexo;
+// Getters
+int Consolidado::getIdSexo() const noexcept { return idSexo; }
+std::string Consolidado::getSexo() const noexcept { return sexo; }
+int Consolidado::getAnio() const noexcept { return anio; }
+int Consolidado::getSemestre() const noexcept { return semestre; }
+int Consolidado::getInscritos() const noexcept { return inscritos; }
+int Consolidado::getAdmitidos() const noexcept { return admitidos; }
+int Consolidado::getMatriculados() const noexcept { return matriculados; }
+int Consolidado::getMatriculadosPrimerSemestre() const noexcept { return matriculadosPrimerSemestre; }
+int Consolidado::getGraduados() const noexcept { return graduados; }
+
+// Setters
+void Consolidado::setIdSexo(int nuevoIdSexo) { idSexo = nuevoIdSexo; }
+void Consolidado::setSexo(std::string_view nuevoSexo) {
+    sexo = nuevoSexo;
+}
+void Consolidado::setAnio(int nuevoAnio) {
+    if (!esAnioValido(nuevoAnio)) {
+        throw std::invalid_argument("El año ingresado no es válido.");
+    }
+    anio = nuevoAnio;
+}
+void Consolidado::setSemestre(int nuevoSemestre) { semestre = nuevoSemestre; }
+void Consolidado::setInscritos(int nuevosInscritos) { inscritos = nuevosInscritos; }
+void Consolidado::setAdmitidos(int nuevosAdmitidos) { admitidos = nuevosAdmitidos; }
+void Consolidado::setMatriculados(int nuevosMatriculados) { matriculados = nuevosMatriculados; }
+void Consolidado::setMatriculadosPrimerSemestre(int nuevosMatriculadosPrimerSemestre) { matriculadosPrimerSemestre = nuevosMatriculadosPrimerSemestre; }
+void Consolidado::setGraduados(int nuevosGraduados) { graduados = nuevosGraduados; }
+
+// Validaciones
+bool Consolidado::esAnioValido(int anioIngresado) const noexcept {
+    return anioIngresado >= 1900 && anioIngresado <= 2100;
 }
 
-std::string Consolidado::getSexo() const
-{
-    return std::string(sexo);
-}
-
-void Consolidado::setSexo(std::string_view nuevoSexo)
-{
-    this->sexo = nuevoSexo;
-}
-
-int Consolidado::getAno() const
-{
-    return ano;
-}
-
-void Consolidado::setAno(int nuevoAno)
-{
-    this->ano = nuevoAno;
-}
-
-int Consolidado::getSemestre() const
-{
-    return semestre;
-}
-
-void Consolidado::setSemestre(int nuevoSemestre)
-{
-    this->semestre = nuevoSemestre;
-}
-
-int Consolidado::getInscritos() const
-{
-    return inscritos;
-}
-
-void Consolidado::setInscritos(int nuevosInscritos)
-{
-    this->inscritos = nuevosInscritos;
-}
-
-int Consolidado::getAdmitidos() const
-{
-    return admitidos;
-}
-
-void Consolidado::setAdmitidos(int nuevosAdmitidos)
-{
-    this->admitidos = nuevosAdmitidos;
-}
-
-int Consolidado::getMatriculados() const
-{
-    return matriculados;
-}
-
-void Consolidado::setMatriculados(int nuevosMatriculados)
-{
-    this->matriculados = nuevosMatriculados;
-}
-
-int Consolidado::getMatriculadosPrimerSemestre() const
-{
-    return matriculadosPrimerSemestre;
-}
-
-void Consolidado::setMatriculadosPrimerSemestre(int nuevosMatriculadosPrimerSemestre)
-{
-    this->matriculadosPrimerSemestre = nuevosMatriculadosPrimerSemestre;
-}
-
-int Consolidado::getGraduados() const
-{
-    return graduados;
-}
-
-void Consolidado::setGraduados(int nuevosGraduados)
-{
-    this->graduados = nuevosGraduados;
+bool Consolidado::esValorPositivo(int valor) const noexcept {
+    return valor >= 0;
 }

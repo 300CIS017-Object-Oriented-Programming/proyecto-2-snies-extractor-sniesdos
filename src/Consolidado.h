@@ -19,45 +19,47 @@ class Consolidado
 private:
     int idSexo;
     std::string sexo;
-    int ano;
+    int anio;
     int semestre;
     int inscritos;
     int admitidos;
-    int matriculados;
     int matriculadosPrimerSemestre;
+    int matriculados;
     int graduados;
 
 public:
+    // Constructores
     Consolidado();
+    Consolidado(int idSexo, const std::string& sexo, int anio, int semestre, const DatosEstudiantes &datos);
 
-    Consolidado(int idSexo, std::string_view sexo, int ano, int semestre, const DatosEstudiantes &datos);
+    // Getters
+    int getIdSexo() const noexcept;
+    std::string getSexo() const noexcept;
+    int getAnio() const noexcept;
+    int getSemestre() const noexcept;
+    int getInscritos() const noexcept;
+    int getAdmitidos() const noexcept;
+    int getMatriculados() const noexcept;
+    int getMatriculadosPrimerSemestre() const noexcept;
+    int getGraduados() const noexcept;
 
-    int getIdSexo() const;
+    // Setters
     void setIdSexo(int idSexo);
-
-    std::string getSexo() const;
-    void setSexo(std::string_view sexo);
-
-    int getAno() const;
-    void setAno(int ano);
-
-    int getSemestre() const;
+    void setSexo(std::string_view nuevoSexo);
+    void setAnio(int anio);
     void setSemestre(int semestre);
-
-    int getInscritos() const;
     void setInscritos(int inscritos);
-
-    int getAdmitidos() const;
     void setAdmitidos(int admitidos);
-
-    int getMatriculados() const;
     void setMatriculados(int matriculados);
-
-    int getMatriculadosPrimerSemestre() const;
     void setMatriculadosPrimerSemestre(int matriculadosPrimerSemestre);
-
-    int getGraduados() const;
     void setGraduados(int graduados);
+
+    // Destructor
+    ~Consolidado() = default;
+
+    // Validación de datos
+    bool esAnioValido(int anioIngresado) const noexcept;
+    bool esValorPositivo(int valor) const noexcept;
 };
 
 #endif // CONSOLIDADO_H
