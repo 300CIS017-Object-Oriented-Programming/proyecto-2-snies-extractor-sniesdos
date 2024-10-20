@@ -1,22 +1,23 @@
-//
-// Created by User on 14/10/2024.
-//
+// Created by Nicolas on 14/10/2024.
 
 #ifndef GESTORTXT_H
 #define GESTORTXT_H
 
-#include "GestorDatos.h"
+#include "GestorBase.h"
+#include "ProgramaAcademico.h"
+#include <string>
+#include <vector>
+#include <map>
+#include <list>
 
-using std::string;
-using std::map;
-using std::vector;
+using namespace std;
 
-class GestorTxt : public GestorDatos {
+class GestorTxt : public GestorBase
+{
 public:
-
-    void exportarDatos(const string& filePath, const vector<map<string, string>>& datos) override;
+    bool crearArchivo(string&, map<int, ProgramaAcademico*>&, vector<string>) override;
+    bool crearArchivoBuscados(string&, list<ProgramaAcademico*>&, vector<string>) override;
+    bool crearArchivoExtra(string&, vector<vector<string>>) override;
 };
-
-
 
 #endif //GESTORTXT_H

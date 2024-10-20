@@ -1,23 +1,27 @@
 //
-// Created by User on 13/10/2024.
+// Created by Nicolas on 14/10/2024.
 //
-#ifndef GESTOR_JSON_H
-#define GESTOR_JSON_H
 
-#include "GestorDatos.h"
+#ifndef GESTORJSON_H
+#define GESTORJSON_H
 
+#include "GestorBase.h"
+#include "ProgramaAcademico.h"
+#include "../include/single_include/nlohmann/json.hpp"
 #include <string>
 #include <vector>
 #include <map>
+#include <list>
 
-using std::string;
-using std::map;
-using std::vector;
+using namespace std;
+using json = nlohmann::json;
 
-
-class GestorJson : public GestorDatos {
+class GestorJson : public GestorBase
+{
 public:
-    void exportarDatos(const std::string& filePath, const std::vector<std::map<std::string, std::string>>& datos) override;
+    bool crearArchivo(string&, map<int, ProgramaAcademico*>&, vector<string>) override;
+    bool crearArchivoBuscados(string&, list<ProgramaAcademico*>&, vector<string>) override;
+    bool crearArchivoExtra(string&, vector<vector<string>>) override;
 };
 
-#endif // GESTOR_JSON_H
+#endif //GESTORJSON_H

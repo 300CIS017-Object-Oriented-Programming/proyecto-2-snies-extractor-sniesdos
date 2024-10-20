@@ -11,11 +11,19 @@ using std::map;
 using std::string;
 #include "Settings.h"
 
-class SNIESController {
-
+class SNIESController
+{
 private:
-    map<long, ProgramaAcademico *> programasAcademicos;
-    GestorCsv gestorCsvObj;
+    map<int, ProgramaAcademico *> programasAcademicos;
+    GestorCsv *gestorCsvObj = new GestorCsv();
+    vector<string> etiquetasColumnas;
+    string rutaProgramasCSV;
+    string rutaAdmitidos;
+    string rutaGraduados;
+    string rutaInscritos;
+    string rutaMatriculados;
+    string rutaMatriculadosPrimerSemestre;
+    string rutaOutput;
 public:
     SNIESController() = default;
     ~SNIESController();
