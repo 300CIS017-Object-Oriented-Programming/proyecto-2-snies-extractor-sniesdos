@@ -610,8 +610,6 @@ map<string, int> GestorCsv::conseguirPosicionesColumnas(string &rutaArchivo) {
     */
 
     return mapaConPosiciones;
-
-
 }
 
 int GestorCsv::conseguirCantColumnas(map<string, int> mapa) {
@@ -633,4 +631,29 @@ string GestorCsv::quitarEspacioYAgregarMayus(string cadena) {
     std::replace(cadena.begin(), cadena.end(), ' ', '_');
 
     return cadena;
+}
+
+string GestorCsv::convertirStringFormaEstandar(string &stringIn) {
+    static const unordered_map<char, char> tildesMap = {
+        {'á', 'a'}, {'Á', 'a'},
+        {'é', 'e'}, {'É', 'e'},
+        {'í', 'i'}, {'Í', 'i'},
+        {'ó', 'o'}, {'Ó', 'o'},
+        {'ú', 'u'}, {'Ú', 'u'}
+    };
+
+    string ans;
+    for (int i = 0; i < stringIn.length(); ++i) {
+        char letra = tolower(stringIn[i]);  // Se convierte a minúscula
+
+        if (tildesMap.count(letra)) {
+            letra = tildesMap.at(letra);  // Se reemplaza la vocal con tilde
+        }
+
+        if (letra != ' ' && letra != '-') {
+            ans += letra;
+        }
+    }
+
+    return ans;
 }

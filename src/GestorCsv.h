@@ -1,3 +1,4 @@
+// After
 #ifndef GESTOR_CSV_H
 #define GESTOR_CSV_H
 
@@ -5,19 +6,22 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <fstream>
-// Mantenimiento: Se incluyen librerías que no se utilizan
-#include <sstream>
 #include <list>
-#include <algorithm>
+#include <fstream>
+#include <unordered_map>
+#include <cctype>
 #include "ProgramaAcademico.h"
-#include "Consolidado.h"
 
-// Recomendación Linter: Se debe evitar el uso de using namespace en archivos de cabecera
-using namespace std;
+using std::string;
+using std::vector;
+using std::map;
+using std::list;
+using std::unordered_map;
 
 class GestorCsv : public GestorBase
 {
+private:
+    string convertirStringFormaEstandar(string &stringIn);
 public:
     GestorCsv() = default;
     vector<int> leerProgramasCsv(string &ruta);

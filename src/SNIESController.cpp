@@ -27,6 +27,7 @@ SNIESController::~SNIESController()
     }
 }
 
+// Mantenimiento: Esta función tiene una complejidad altísima, se puede mejorar y reducir.
 void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
 {
     GestorCsv *gestorCsv = new GestorCsv();
@@ -276,6 +277,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
     // cout << archivoCreado << endl;
 }
 
+// Mantenimiento: El nombre de esta función es confuso.
 void SNIESController::buscarProgramas(bool flag, string &palabraClave, int idComparacion)
 {
     GestorCsv *gestorCsv = new GestorCsv();
@@ -311,6 +313,7 @@ void SNIESController::buscarProgramas(bool flag, string &palabraClave, int idCom
     }
 }
 
+// Mantenimiento y Estructura: Esta función tiene una complejidad altísima, se puede mejorar y reducir.
 void SNIESController::calcularDatosExtra(bool flag)
 {
     GestorCsv *gestorCsv = new GestorCsv();

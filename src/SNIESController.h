@@ -1,16 +1,15 @@
 #ifndef SNIES_CONTROLLER_H
 #define SNIES_CONTROLLER_H
-#include <iostream>
+
 #include <vector>
 #include <map>
 #include <string>
-#include <algorithm>
-#include <list>
 #include "ProgramaAcademico.h"
-#include "Consolidado.h"
 #include "GestorCsv.h"
 
-using namespace std;
+using std::map;
+using std::string;
+#include "Settings.h"
 
 class SNIESController
 {
@@ -25,12 +24,11 @@ private:
     string rutaMatriculados;
     string rutaMatriculadosPrimerSemestre;
     string rutaOutput;
-
 public:
     SNIESController() = default;
-    SNIESController(string &, string &, string &, string &, string &, string &, string &);
     ~SNIESController();
     void procesarDatosCsv(string &, string &);
+    // Mantenimiento: Este método tiene un nombre confuso.
     void calcularDatosExtra(bool);
     void buscarProgramas(bool, string &, int);
 };
