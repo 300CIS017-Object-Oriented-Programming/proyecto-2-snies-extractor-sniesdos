@@ -1,3 +1,7 @@
+//
+// Created by Nicolas on 14/10/2024.
+//
+
 #include "GestorTxt.h"
 #include "GestorCsv.h"
 #include <iostream>
@@ -175,5 +179,4 @@ bool GestorTxt::crearArchivoExtra(string &ruta, vector<vector<string>> datosAImp
     }
     archivoExtra.close();
     return estadoCreacion;
-
 }
