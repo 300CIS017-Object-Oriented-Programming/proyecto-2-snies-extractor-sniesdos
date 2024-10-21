@@ -419,7 +419,7 @@ bool GestorCsv::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapade
                 Consolidado *consolidadoActual = (it->second)->getConsolidado(i);
                 archivoResultados << consolidadoActual->getIdSexo() << ";";
                 archivoResultados << consolidadoActual->getSexo() << ";";
-                archivoResultados << consolidadoActual->getAno() << ";";
+                archivoResultados << consolidadoActual->getAnio() << ";";
                 archivoResultados << consolidadoActual->getSemestre() << ";";
                 archivoResultados << consolidadoActual->getAdmitidos() << ";";
                 archivoResultados << consolidadoActual->getGraduados() << ";";
@@ -504,7 +504,7 @@ bool GestorCsv::crearArchivoBuscados(string &ruta, list<ProgramaAcademico *> &pr
                 Consolidado *consolidadoActual = (*it)->getConsolidado(i);
                 archivoBuscados << consolidadoActual->getIdSexo() << ";";
                 archivoBuscados << consolidadoActual->getSexo() << ";";
-                archivoBuscados << consolidadoActual->getAno() << ";";
+                archivoBuscados << consolidadoActual->getAnio() << ";";
                 archivoBuscados << consolidadoActual->getSemestre() << ";";
                 archivoBuscados << consolidadoActual->getAdmitidos() << ";";
                 archivoBuscados << consolidadoActual->getGraduados() << ";";
