@@ -1,3 +1,4 @@
+
 #include "Settings.h"
 // Declaración:
 // Inicialización: La inicialización de estas variables se realiza fuera de la clase. 
@@ -18,16 +19,19 @@ std::vector<std::string> Settings::camposImportantes = {"CÓDIGO DE LA INSTITUCI
 
 void Settings::setRutaBase(const string& nuevaRutaBase){
     BASE_PATH = nuevaRutaBase;
+
     ADMITIDOS_FILE_PATH = BASE_PATH + "admitidos";
     MATRICULADOS_FILE_PATH = BASE_PATH + "matriculados";
     INSCRITOS_FILE_PATH = BASE_PATH + "inscritos";
     GRADUADOS_FILE_PATH = BASE_PATH + "graduados";
 }
+
 void Settings::setAnioProgramas(string anioProgramas){
     PROGRAMAS_FILTRAR_FILE_PATH = BASE_PATH + "admitidos"+anioProgramas+".csv";
 }
 void Settings::setDelimitador(const char& delimitador){
     DELIMITADOR = delimitador;
 }
+
 
 

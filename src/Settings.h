@@ -16,6 +16,7 @@
  *
  */
 
+
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
@@ -41,5 +42,6 @@ public:
     static void setRutaBase(const string &nuevaRutaBase);
     static void setAnioProgramas(string anioProgramas);
     static void setDelimitador(const char &delimitador);
+
 };
 #endif // SETTINGS_H
