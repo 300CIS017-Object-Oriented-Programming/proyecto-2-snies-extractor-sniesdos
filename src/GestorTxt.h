@@ -1,9 +1,22 @@
 #ifndef GESTORTXT_H
 #define GESTORTXT_H
 
-// Function declarations for gestortxt
-void readTextFile(const char *filename);
-void writeTextFile(const char *filename, const char *content);
-void appendTextFile(const char *filename, const char *content);
+#include "GestorBase.h"
+#include "ProgramaAcademico.h"
+#include <string>
+#include <vector>
+#include <map>
+#include <list>
 
-#endif // GESTORTXT_H
+using namespace std;
+
+class GestorTxt : public GestorBase
+{
+public:
+    bool crearArchivo(string&, map<int, ProgramaAcademico*>&, vector<string>) override;
+    bool crearArchivoBuscados(string&, list<ProgramaAcademico*>&, vector<string>) override;
+    bool crearArchivoExtra(string&, vector<vector<string>>) override;
+};
+
+#endif //GESTORTXT_H
+
