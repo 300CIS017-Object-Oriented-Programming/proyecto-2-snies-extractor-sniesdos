@@ -75,8 +75,6 @@ unordered_map<std::string, std::string> GestorCsv::definirProgramas()
 
     archivoSalida.close();
 
-    extraerDatos();
-
     return programas;
 }
 
@@ -121,11 +119,6 @@ std::unordered_map<std::string,int> GestorCsv::extraerIndices(){
             indices[encabezado.first] = encabezado.second;
         }
     }
-    
-    cout<<"Si"<<endl;
-    for (const auto& [clave, valor] : indices) {
-        std::cout << clave << ": " << valor << std::endl;
-    }
     return indices;
 }
 
@@ -139,8 +132,8 @@ std::vector<std::vector<std::string>> GestorCsv::extraerDatos(){
         throw std::ios_base::failure("No se pudo abrir el archivo");
     }
 
-    // // Leer y descartar la primera línea (encabezado)
-    // std::getline(archivo, linea);
+    //Leer y descartar la primera línea (encabezado)
+    std::getline(archivo, linea);
 
     while (std::getline(archivo, linea)) {
         std::vector<std::string> fila;          
@@ -184,14 +177,6 @@ void GestorCsv::eliminarIndices(std::unordered_map<std::string, int>& indices, s
         }
         
         fila = fila_filtrada;
-    }
-    cout<<"NOnes"<<endl;
-    int limite = std::min(5, static_cast<int>(datos.size()));  // Determinar cuántos valores imprimir
-    for (int i = 0; i < limite; ++i) {
-        for (const auto& valor : datos[i]) {
-            std::cout << valor << " ";  // Imprime los valores de una fila separados por espacio
-        }
-        std::cout << std::endl;         // Nueva línea al final de cada fila
     }
 }
 
