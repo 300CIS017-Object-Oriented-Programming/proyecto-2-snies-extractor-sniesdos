@@ -7,10 +7,14 @@
 #include <vector>
 #include <map>
 #include <list>
-#include <fstream>
 #include <unordered_map>
-#include <cctype>
+#include <algorithm>
 #include "ProgramaAcademico.h"
+#include "Consolidado.h"
+#include "Settings.h"
+#include <fstream>
+#include <cctype>
+
 
 using std::string;
 using std::vector;
@@ -24,6 +28,11 @@ private:
     string convertirStringFormaEstandar(string &stringIn);
 public:
     GestorCsv() = default;
+    unordered_map<std::string,std::string> definirProgramas();
+    std::unordered_map<std::string,int> extraerEncabezados(const string& ruta);
+    std::vector<std::vector<std::string>> extraerDatos();
+    std::unordered_map<std::string,int> extraerIndices();
+    void eliminarIndices(std::unordered_map<std::string, int>& indices, std::vector<std::vector<std::string>>& datos);
     vector<int> leerProgramasCsv(string &ruta);
     // Mantenimiento: Se puede mejorar la firma y nombre de los metodos para que sea más descriptiva
     vector<vector<string>> leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies);

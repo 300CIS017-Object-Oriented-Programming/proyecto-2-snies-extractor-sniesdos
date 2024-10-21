@@ -1,24 +1,27 @@
 #ifndef VIEW_H
 #define VIEW_H
-
 #include "SNIESController.h"
+#include "Settings.h"
+#include <cctype>
 
-// Recomendación Linter: Dejar de usar using namespace std y usar std::.
 using namespace std;
 
-class View {
+class View
+{
 private:
     SNIESController controlador;
-    bool isConvetibleToInt(const string &);
+    Settings ajustes;
+    bool esEntero(const std::string& str);
+    bool eleccionUsuario();
+public:
+    View();
+    ~View();
     bool mostrarPantallaBienvenido();
     void mostrarDatosExtra();
     void buscarPorPalabraClaveYFormacion();
     void salir();
-public:
-    View();
-    ~View();
-    // Estructura: El View debería tener solo una función pública.
-    void mostrarMenu();
+    bool isConvetibleToInt(const string &);
+    void parametrizacion();
 };
 
 #endif

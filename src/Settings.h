@@ -20,23 +20,28 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <vector> 
 #include <string>
 using namespace std;
 
 class Settings
 {
 public:
-    // En la clase Settings, las variables ADMITIDOS_FILE_PATH, MATRICULADOS_FILE_PATH y ETC se declaran como static const std::string. Esto significa que son constantes de tipo string que pertenecen a la clase en lugar de a instancias individuales de la clase.
-    static  string ADMITIDOS_FILE_PATH;
-    static  string MATRICULADOS_FILE_PATH;
-    static  string INSCRITOS_FILE_PATH;
-    static  string PROGRAMAS_FILTRAR_FILE_PATH;
-    static  string BASE_PATH;
-    static  string DELIMITADOR;
-    static  string GRADUADOS_FILE_PATH;
-
-    static void setBasePath(const std::string& newPath);
-    static void setDelimitador(const std::string& newDelimitador);
+    // En la clase Settings, las variables ADMITIDOS_FILE_PATH, MATRICULADOS_FILE_PATH y ETC se declaran como static const std::string.
+    // Esto significa que son constantes de tipo string que pertenecen a la clase en lugar de a instancias individuales de la clase.
     // FIXME completar para el resto de constantes
+    static string ADMITIDOS_FILE_PATH;
+    static string MATRICULADOS_FILE_PATH;
+    static string INSCRITOS_FILE_PATH;
+    static string PROGRAMAS_FILTRAR_FILE_PATH;
+    static string BASE_PATH;
+    static string DELIMITADOR;
+    static string GRADUADOS_FILE_PATH;
+    static std::vector<std::string> camposImportantes;
+
+    static void setRutaBase(const string &nuevaRutaBase);
+    static void setAnioProgramas(string anioProgramas);
+    static void setDelimitador(const char &delimitador);
+
 };
 #endif // SETTINGS_H

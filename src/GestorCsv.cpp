@@ -1,37 +1,197 @@
 #include "GestorCsv.h"
-// FIXME: LA LECTURA DE ARCHIVOS CON GETLINE FUNCIONA HORRIBLEMENTE, NO TENEMOS IDEA DE POR QUÉ
+std::unordered_map<std::string, int> GestorCsv::extraerEncabezados(string const &ruta)
+{
+    std::unordered_map<std::string, int> encabezados;
+    std::ifstream archivoBase(ruta, std::ios::binary);
+
+    if (!(archivoBase.is_open()))
+    {
+        throw std::ios_base::failure("No se pudo abrir el archivo");
+    }
+
+    string linea;
+    int indice = 0;
+
+    getline(archivoBase, linea);
+    std::stringstream ss(linea);
+    std::string encabezado;
+
+    while (getline(ss, encabezado, ';'))
+    {
+        encabezados[encabezado] = indice++;
+    }
+    archivoBase.close();
+
+    return encabezados;
+}
+
+unordered_map<std::string, std::string> GestorCsv::definirProgramas()
+{
+    std::unordered_map<std::string, std::string> programas;
+    std::unordered_map<std::string, int> encabezados;
+    string linea;
+    encabezados = extraerEncabezados(Settings::PROGRAMAS_FILTRAR_FILE_PATH);
+    std::ifstream archivoBase(Settings::PROGRAMAS_FILTRAR_FILE_PATH, std::ios::binary);
+    if (!archivoBase.is_open())
+    {
+        throw std::ios_base::failure("No se pudo abrir el archivo");
+    }
+
+    int indicadorClave = encabezados["CÓDIGO SNIES DEL PROGRAMA"];
+    int valorInteres = encabezados["PROGRAMA ACADÉMICO"];
+    linea = "";
+
+    while (getline(archivoBase, linea))
+    {
+        std::stringstream ss(linea);
+        std::string item;
+        std::vector<std::string> elementos;
+
+        while (getline(ss, item, ';'))
+        {
+            elementos.push_back(item);
+        }
+
+        std::string clave = elementos[indicadorClave];
+        programas[clave] = elementos[valorInteres];
+    }
+    archivoBase.close();
+
+    std::string rutaSalida = Settings::BASE_PATH + "programas2.csv";
+    std::ofstream archivoSalida(rutaSalida, std::ios::binary);
+
+    if (!archivoSalida.is_open())
+    {
+        throw std::ios_base::failure("No se pudo abrir el archivo de salida");
+    }
+    // Utiliza UTF-8 BOM para permitir caracteres especiales
+    archivoSalida << "\xEF\xBB\xBF";
+    archivoSalida << "CÓDIGO SNIES DEL PROGRAMA; PROGRAMA ACADÉMICO" << std::endl;
+
+    for (const auto &par : programas)
+    {
+        archivoSalida << par.first << ";" << par.second << std::endl;
+    }
+
+    archivoSalida.close();
+
+    return programas;
+}
+
 vector<int> GestorCsv::leerProgramasCsv(string &ruta)
 {
     vector<int> codigosSniesRetorno;
     ifstream archivoProgramasCsv(ruta);
     if (!(archivoProgramasCsv.is_open()))
     {
-        cout << "Archivo " << ruta << " no se pudo abrir correctamente" << endl;
+        throw std::ios_base::failure("No se pudo abrir el archivo");
     }
-    else
+
+    string linea;
+    string dato;
+    // Saltarse la primera linea
+    getline(archivoProgramasCsv, linea);
+    // Leer los programas
+    while (getline(archivoProgramasCsv, linea))
     {
-        string linea;
-        string dato;
-        // Mantenimiento (Revisión): Se puede mejorar la lectura de archivos con getline y
-        // No debería saltarse la primera linea para así determinar qué está leyendo.
-        // Saltarse la primera linea
-        getline(archivoProgramasCsv, linea);
-        // Leer los programas
-        while (getline(archivoProgramasCsv, linea))
-        {
-            stringstream streamLinea(linea);
-            getline(streamLinea, dato, ';');
-            // Manteniemiento: Se puede mejorar la forma de leer los datos de la línea y
-            // los nombres de los métodos y variables.
-            codigosSniesRetorno.push_back(stoi(dato));
-        }
+        stringstream streamLinea(linea);
+        getline(streamLinea, dato, ';');
+        codigosSniesRetorno.push_back(stoi(dato));
     }
+
     archivoProgramasCsv.close();
+    // Recorre el vector e imprime cada elemento
+    // for (size_t i = 0; i < codigosSniesRetorno.size(); ++i) {
+    //     std::cout << "Elemento " << i << ": " << codigosSniesRetorno[i] << std::endl;
+    // }
     return codigosSniesRetorno;
 }
 
-// Complejidad: Este metodo tiene una alta complejidad ciclomática y computacional, reducir en metodos más pequeños
-// Estructuras de control anidadas profundamente.
+    archivoProgramasCsv.close();
+    // Recorre el vector e imprime cada elemento
+    // for (size_t i = 0; i < codigosSniesRetorno.size(); ++i) {
+    //     std::cout << "Elemento " << i << ": " << codigosSniesRetorno[i] << std::endl;
+    // }
+    return codigosSniesRetorno;
+}
+
+
+std::unordered_map<std::string,int> GestorCsv::extraerIndices(){
+    std::unordered_map<std::string, int> indices;
+    std::unordered_map<std::string, int> encabezados;
+
+    encabezados=extraerEncabezados(Settings::ADMITIDOS_FILE_PATH+"2022"+".csv");
+    
+    for (const auto& encabezado : encabezados) {
+        auto it = find(Settings::camposImportantes.begin(), Settings::camposImportantes.end(), encabezado.first);
+        if (it == Settings::camposImportantes.end()) {
+            indices[encabezado.first] = encabezado.second;
+        }
+    }
+    return indices;
+}
+
+std::vector<std::vector<std::string>> GestorCsv::extraerDatos(){
+    std::vector<std::vector<std::string>> datos;  
+    std::ifstream archivo(Settings::ADMITIDOS_FILE_PATH+"2022"+".csv");         
+    std::string linea;
+
+    if (!archivo.is_open())
+    {
+        throw std::ios_base::failure("No se pudo abrir el archivo");
+    }
+
+    //Leer y descartar la primera línea (encabezado)
+    std::getline(archivo, linea);
+
+    while (std::getline(archivo, linea)) {
+        std::vector<std::string> fila;          
+        std::stringstream sstream(linea);      
+        std::string valor;
+
+        
+        while (std::getline(sstream, valor, ';')) {
+            fila.push_back(valor);              
+        }
+
+        datos.push_back(fila);                  
+    }
+
+    archivo.close();    
+    std::unordered_map<std::string, int> indices = extraerIndices();
+    
+    eliminarIndices(indices,datos);
+    return datos;
+}
+void GestorCsv::eliminarIndices(std::unordered_map<std::string, int>& indices, std::vector<std::vector<std::string>>& datos) {
+    
+    for (auto& fila : datos) {
+        
+        std::vector<std::string> fila_filtrada;
+        
+        
+        for (size_t i = 0; i < fila.size(); ++i) {
+            
+            bool eliminar = false;
+            for (const auto& par : indices) {
+                if (i == par.second) {
+                    eliminar = true;
+                    break;
+                }
+            }
+            
+            if (!eliminar) {
+                fila_filtrada.push_back(fila[i]);
+            }
+        }
+        
+        fila = fila_filtrada;
+    }
+}
+
+
+
+
 vector<vector<string>> GestorCsv::leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies)
 {
     // Estructura: La estructura es confusa.
@@ -144,8 +304,6 @@ vector<vector<string>> GestorCsv::leerArchivoPrimera(string &rutaBase, string &a
     return matrizResultado;
 }
 
-// Complejidad: Este metodo tiene una alta complejidad ciclomática y computacional, reducir en metodos más pequeños
-// Parece hacer lo mismo que el metodo leerArchivoPrimera
 vector<vector<string>> GestorCsv::leerArchivoSegunda(string &rutaBase, string &ano, vector<int> &codigosSnies)
 {
     vector<vector<string>> matrizResultado;
