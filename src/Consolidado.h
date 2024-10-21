@@ -2,62 +2,64 @@
 #define CONSOLIDADO_H
 
 #include <string>
-#include <vector>
-#include <iostream>
+#include <string_view>
 
-
-using std::cin;
-using std::cout;
-using std::endl;
-using std::string;
-using std::vector;
-
+// Estructura para agrupar los datos de los estudiantes
+struct DatosEstudiantes
+{
+    int inscritos;
+    int admitidos;
+    int primeraMatricula;
+    int totalMatriculados;
+    int graduados;
+};
 
 class Consolidado
 {
 private:
     int idSexo;
-    string sexo;
-    int ano;
+    std::string sexo;
+    int anio;
     int semestre;
     int inscritos;
     int admitidos;
-    int matriculados;
     int matriculadosPrimerSemestre;
+    int matriculados;
     int graduados;
 
 public:
+    // Constructores
     Consolidado();
-    // Mantenimiento: Gran cantidad de atributos en la firma del constructor
-    Consolidado(int, string, int, int, int, int, int, int, int);
+    Consolidado(int idSexo, const std::string& sexo, int anio, int semestre, const DatosEstudiantes &datos);
 
-    // Mantenimiento: Gran cantidad de métodos get y set que tal vez no son estrictamente necesarios
-    int getIdSexo();
-    void setIdSexo(int);
+    // Getters
+    int getIdSexo() const noexcept;
+    std::string getSexo() const noexcept;
+    int getAnio() const noexcept;
+    int getSemestre() const noexcept;
+    int getInscritos() const noexcept;
+    int getAdmitidos() const noexcept;
+    int getMatriculados() const noexcept;
+    int getMatriculadosPrimerSemestre() const noexcept;
+    int getGraduados() const noexcept;
 
-    string getSexo();
-    void setSexo(string &);
+    // Setters
+    void setIdSexo(int idSexo);
+    void setSexo(std::string_view nuevoSexo);
+    void setAnio(int anio);
+    void setSemestre(int semestre);
+    void setInscritos(int inscritos);
+    void setAdmitidos(int admitidos);
+    void setMatriculados(int matriculados);
+    void setMatriculadosPrimerSemestre(int matriculadosPrimerSemestre);
+    void setGraduados(int graduados);
 
-    int getAno();
-    void setAno(int);
+    // Destructor
+    ~Consolidado() = default;
 
-    int getSemestre();
-    void setSemestre(int);
-
-    int getInscritos();
-    void setInscritos(int);
-
-    int getAdmitidos();
-    void setAdmitidos(int);
-
-    int getMatriculados();
-    void setMatriculados(int);
-
-    int getMatriculadosPrimerSemestre();
-    void setMatriculadosPrimerSemestre(int);
-
-    int getGraduados();
-    void setGraduados(int);
+    // Validación de datos
+    bool esAnioValido(int anioIngresado) const noexcept;
+    bool esValorPositivo(int valor) const noexcept;
 };
 
 #endif // CONSOLIDADO_H
