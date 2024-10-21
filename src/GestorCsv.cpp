@@ -1,6 +1,7 @@
 #include "GestorCsv.h"
-std::unordered_map<std::string,int> GestorCsv::extraerEncabezados(string const& ruta){
-    std::unordered_map<std::string,int> encabezados;
+std::unordered_map<std::string, int> GestorCsv::extraerEncabezados(string const &ruta)
+{
+    std::unordered_map<std::string, int> encabezados;
     std::ifstream archivoBase(ruta, std::ios::binary);
 
     if (!(archivoBase.is_open()))
@@ -9,76 +10,66 @@ std::unordered_map<std::string,int> GestorCsv::extraerEncabezados(string const& 
     }
 
     string linea;
-    int indice=0;
+    int indice = 0;
 
     getline(archivoBase, linea);
     std::stringstream ss(linea);
     std::string encabezado;
 
-    while (getline(ss, encabezado, ';')) {
+    while (getline(ss, encabezado, ';'))
+    {
         encabezados[encabezado] = indice++;
     }
     archivoBase.close();
 
     return encabezados;
 }
-unordered_map<std::string,std::string> GestorCsv::extraerDatos(){
-    std::unordered_map<std::string,std::string> datos;
-    std::unordered_map<std::string,int> encabezados;
-    std::unordered_map<std::string,int> indices;
 
-    encabezados=extraerEncabezados(Settings::ADMITIDOS_FILE_PATH+"2022"+".csv");
-
-    for (const auto& encabezado : encabezados) {
-        auto it = find(Settings::camposImportantes.begin(), Settings::camposImportantes.end(), encabezado.first);
-        if (it == Settings::camposImportantes.end()) {
-            indices[encabezado.first] = encabezado.second;
-        }
-    }
-    
-    for (const auto& [clave, valor] : indices) {
-        std::cout << clave << ": " << valor << std::endl;
-    }
-
-    return datos;
-}
-unordered_map<std::string,std::string> GestorCsv::definirProgramas(){
-    std::unordered_map<std::string,std::string> programas;
-    std::unordered_map<std::string,int> encabezados;
+unordered_map<std::string, std::string> GestorCsv::definirProgramas()
+{
+    std::unordered_map<std::string, std::string> programas;
+    std::unordered_map<std::string, int> encabezados;
     string linea;
-    encabezados=extraerEncabezados(Settings::PROGRAMAS_FILTRAR_FILE_PATH);
+    encabezados = extraerEncabezados(Settings::PROGRAMAS_FILTRAR_FILE_PATH);
     std::ifstream archivoBase(Settings::PROGRAMAS_FILTRAR_FILE_PATH, std::ios::binary);
-    
+    if (!archivoBase.is_open())
+    {
+        throw std::ios_base::failure("No se pudo abrir el archivo");
+    }
+
     int indicadorClave = encabezados["CÓDIGO SNIES DEL PROGRAMA"];
     int valorInteres = encabezados["PROGRAMA ACADÉMICO"];
     linea = "";
 
-    while(getline(archivoBase, linea)){
+    while (getline(archivoBase, linea))
+    {
         std::stringstream ss(linea);
         std::string item;
         std::vector<std::string> elementos;
-        
-       
-        while (getline(ss, item, ';')) {
+
+        while (getline(ss, item, ';'))
+        {
             elementos.push_back(item);
         }
-        
-        std::string clave = elementos[indicadorClave];  
-        programas[clave] = elementos[valorInteres];  
-    } 
+
+        std::string clave = elementos[indicadorClave];
+        programas[clave] = elementos[valorInteres];
+    }
     archivoBase.close();
 
-    std::string rutaSalida =  Settings::BASE_PATH+"programas2.csv";
-    std::ofstream archivoSalida(rutaSalida, std::ios::binary); 
+    std::string rutaSalida = Settings::BASE_PATH + "programas2.csv";
+    std::ofstream archivoSalida(rutaSalida, std::ios::binary);
 
-    if (!archivoSalida.is_open()) {
+    if (!archivoSalida.is_open())
+    {
         throw std::ios_base::failure("No se pudo abrir el archivo de salida");
     }
-    //Utiliza UTF-8 BOM para permitir caracteres especiales
+    // Utiliza UTF-8 BOM para permitir caracteres especiales
     archivoSalida << "\xEF\xBB\xBF";
     archivoSalida << "CÓDIGO SNIES DEL PROGRAMA; PROGRAMA ACADÉMICO" << std::endl;
 
-    for (const auto& par : programas) {
+    for (const auto &par : programas)
+    {
         archivoSalida << par.first << ";" << par.second << std::endl;
     }
 
@@ -88,7 +79,6 @@ unordered_map<std::string,std::string> GestorCsv::definirProgramas(){
 
     return programas;
 }
-
 
 vector<int> GestorCsv::leerProgramasCsv(string &ruta)
 {
@@ -118,6 +108,94 @@ vector<int> GestorCsv::leerProgramasCsv(string &ruta)
     // }
     return codigosSniesRetorno;
 }
+
+std::unordered_map<std::string,int> GestorCsv::extraerIndices(){
+    std::unordered_map<std::string, int> indices;
+    std::unordered_map<std::string, int> encabezados;
+
+    encabezados=extraerEncabezados(Settings::ADMITIDOS_FILE_PATH+"2022"+".csv");
+    
+    for (const auto& encabezado : encabezados) {
+        auto it = find(Settings::camposImportantes.begin(), Settings::camposImportantes.end(), encabezado.first);
+        if (it == Settings::camposImportantes.end()) {
+            indices[encabezado.first] = encabezado.second;
+        }
+    }
+    
+    cout<<"Si"<<endl;
+    for (const auto& [clave, valor] : indices) {
+        std::cout << clave << ": " << valor << std::endl;
+    }
+    return indices;
+}
+
+std::vector<std::vector<std::string>> GestorCsv::extraerDatos(){
+    std::vector<std::vector<std::string>> datos;  
+    std::ifstream archivo(Settings::ADMITIDOS_FILE_PATH+"2022"+".csv");         
+    std::string linea;
+
+    if (!archivo.is_open())
+    {
+        throw std::ios_base::failure("No se pudo abrir el archivo");
+    }
+
+    // // Leer y descartar la primera línea (encabezado)
+    // std::getline(archivo, linea);
+
+    while (std::getline(archivo, linea)) {
+        std::vector<std::string> fila;          
+        std::stringstream sstream(linea);      
+        std::string valor;
+
+        
+        while (std::getline(sstream, valor, ';')) {
+            fila.push_back(valor);              
+        }
+
+        datos.push_back(fila);                  
+    }
+
+    archivo.close();    
+    std::unordered_map<std::string, int> indices = extraerIndices();
+    
+    eliminarIndices(indices,datos);
+    return datos;
+}
+void GestorCsv::eliminarIndices(std::unordered_map<std::string, int>& indices, std::vector<std::vector<std::string>>& datos) {
+    
+    for (auto& fila : datos) {
+        
+        std::vector<std::string> fila_filtrada;
+        
+        
+        for (size_t i = 0; i < fila.size(); ++i) {
+            
+            bool eliminar = false;
+            for (const auto& par : indices) {
+                if (i == par.second) {
+                    eliminar = true;
+                    break;
+                }
+            }
+            
+            if (!eliminar) {
+                fila_filtrada.push_back(fila[i]);
+            }
+        }
+        
+        fila = fila_filtrada;
+    }
+    cout<<"NOnes"<<endl;
+    int limite = std::min(5, static_cast<int>(datos.size()));  // Determinar cuántos valores imprimir
+    for (int i = 0; i < limite; ++i) {
+        for (const auto& valor : datos[i]) {
+            std::cout << valor << " ";  // Imprime los valores de una fila separados por espacio
+        }
+        std::cout << std::endl;         // Nueva línea al final de cada fila
+    }
+}
+
+
 
 vector<vector<string>> GestorCsv::leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies)
 {
