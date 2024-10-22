@@ -30,3 +30,4 @@ void Settings::setBasePath(const string& newPath) {
 void Settings::setDelimitador(const string& newDelimitador) {
     DELIMITADOR = newDelimitador; // Modificar el delimitador
 }
+
