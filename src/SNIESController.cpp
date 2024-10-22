@@ -1,22 +1,17 @@
 #include "SNIESController.h"
 
-using namespace std;
-
 SNIESController::SNIESController() {
     gestorCsvObj = GestorCsv();
-    rutaProgramasCSV = settings.PROGRAMAS_FILTRAR_FILE_PATH;
-    rutaAdmitidos = settings.ADMITIDOS_FILE_PATH;
-    rutaGraduados = settings.GRADUADOS_FILE_PATH;
-    rutaInscritos = settings.INSCRITOS_FILE_PATH;
-    rutaMatriculados = settings.MATRICULADOS_FILE_PATH;
-    rutaMatriculadosPrimerSemestre = settings.MATRICULADOS_PRIMERSEMESTRE_FILE_PATH;
-    rutaOutput = settings.OUT_PATH;
+    rutaProgramasCSV = Settings::PROGRAMAS_FILTRAR_FILE_PATH;
+    rutaAdmitidos = Settings::ADMITIDOS_FILE_PATH;
+    rutaGraduados = Settings::GRADUADOS_FILE_PATH;
+    rutaInscritos = Settings::INSCRITOS_FILE_PATH;
+    rutaMatriculados = Settings::MATRICULADOS_FILE_PATH;
+    rutaMatriculadosPrimerSemestre = Settings::MATRICULADOS_PRIMERSEMESTRE_FILE_PATH;
+    rutaOutput = Settings::OUT_PATH;
 }
-
-SNIESController::~SNIESController()
-{
-    for (auto &pair : programasAcademicos)
-    {
+SNIESController::~SNIESController() {
+    for (auto &pair : programasAcademicos) {
         ((pair).second)->~ProgramaAcademico();
         delete pair.second;
     }
@@ -86,7 +81,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
         programasAcademicos.emplace(programaAcademico->getCodigoSniesDelPrograma(), programaAcademico);
     }
     // cout << "despues crear programas academicos" << endl;
-    programasAcademicosVector = gestorCsvObj.leerArchivoSegunda(rutaAdmitidos, ano2, codigosSnies);
+    /*programasAcademicosVector = gestorCsvObj.leerArchivoSegunda(rutaAdmitidos, ano2, codigosSnies);
     // cout << "despues leer archivos segunda" << endl;
     for (int j = 0; j < programasAcademicosVector.size(); j += 4)
     {
@@ -108,6 +103,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
             }
         }
     }
+    */
     // cout << "despues crear todos los consolidados" << endl;
     programasAcademicosVector = gestorCsvObj.leerArchivo(rutaGraduados, ano1, codigosSnies, 13);
 
