@@ -77,6 +77,8 @@ vector<int> GestorCsv::leerProgramasCsv( string &ruta){
     return codigosSniesRetorno;
 }
 
+
+
 //funcion inicial
 vector<vector<string>>GestorCsv::leerArchivo(string &rutaBase, string &ano, vector<int> &codigosSnies, int colmunaCodigoSnies){
     vector<vector<string>> matrizResultado;
