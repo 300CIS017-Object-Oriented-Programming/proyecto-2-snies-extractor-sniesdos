@@ -3,7 +3,7 @@
 #include <string>
 
 SNIESController::SNIESController() {
-    gestorCsvObj = GestorCsv();
+    gestorArchivos = GestorArchivo();
     rutaProgramasCSV = Settings::PROGRAMAS_FILTRAR_FILE_PATH;
     rutaAdmitidos = Settings::ADMITIDOS_FILE_PATH;
     rutaGraduados = Settings::GRADUADOS_FILE_PATH;
@@ -198,13 +198,13 @@ void SNIESController::buscarProgramas(bool flag, string &palabraClave, int idCom
         try {
             if (op == 1) {
                 GestorCsv *gestorObjAux = new GestorCsv();
-                gestorObjAux->crearArchivoBuscados(rutaOutput, matrizFinal);
+                gestorObjAux->crearArchivoBuscados(rutaOutput, listaProgramas, etiquetasColumnas);
             } else if (op == 2) {
                 GestorTxt *gestorObjAux = new GestorTxt();
-                gestorObjAux->crearArchivoBuscados(rutaOutput, matrizFinal);
+                gestorObjAux->crearArchivoBuscados(rutaOutput, listaProgramas, etiquetasColumnas);
             } else {
                 GestorJson *gestorObjAux = new GestorJson();
-                gestorObjAux->crearArchivoBuscados(rutaOutput, matrizFinal);
+                gestorObjAux->crearArchivoBuscados(rutaOutput,listaProgramas, etiquetasColumnas);
             }
         } catch (std::out_of_range &e) {
             std::cerr << "Error al crear el archivo: " << e.what() << std::endl;
