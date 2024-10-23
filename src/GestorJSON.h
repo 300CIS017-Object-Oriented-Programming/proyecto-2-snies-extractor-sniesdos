@@ -1,7 +1,7 @@
 #ifndef GESTOR_JSON_H
 #define GESTOR_JSON_H
 
-#include "json.hpp"
+
 #include "Settings.h"
 #include "GestorCsv.h"
 #include "Consolidado.h"

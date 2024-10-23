@@ -1,7 +1,6 @@
 #ifndef GESTOR_TXT_H
 #define GESTOR_TXT_H
 
-#include "json.hpp"
 #include "Settings.h"
 #include "GestorCsv.h"
 #include "GestorJSON.h"
