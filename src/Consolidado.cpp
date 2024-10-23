@@ -25,24 +25,6 @@ void Consolidado::setSexo(string &sexo)
     this->sexo = sexo;
 }
 
-int Consolidado::getAno()
-{
-    return ano;
-}
-
-void Consolidado::setAno(int ano)
-{
-    this->ano = ano;
-}
-
-int Consolidado::getSemestre()
-{
-    return semestre;
-}
-void Consolidado::setSemestre(int semestre)
-{
-    this->semestre = semestre;
-}
 
 int Consolidado::getInscritos()
 {
@@ -59,10 +41,6 @@ int Consolidado::getAdmitidos()
     return admitidos;
 }
 
-void Consolidado::setAdmitidos(int admitidos)
-{
-    this->admitidos = admitidos;
-}
 
 int Consolidado::getMatriculados()
 {
