@@ -1,5 +1,7 @@
 #include "SNIESController.h"
 
+#include <string>
+
 SNIESController::SNIESController() {
     gestorCsvObj = GestorCsv();
     rutaProgramasCSV = Settings::PROGRAMAS_FILTRAR_FILE_PATH;
@@ -11,6 +13,7 @@ SNIESController::SNIESController() {
     rutaOutput = Settings::OUT_PATH;
 }
 
+
 SNIESController::~SNIESController()
 {
     for (auto &pair : programasAcademicos)
@@ -20,11 +23,12 @@ SNIESController::~SNIESController()
     }
 }
 
+
 void SNIESController::setProgramasAcademicos(vector<vector<string>> &programasAcademicosVector, string &ruta, string &ano, vector<int> &codigosSnies, int columna, int offset) {
     programasAcademicosVector = gestorCsvObj.leerArchivo(ruta, ano, codigosSnies, columna);
 	for (int k = 0; k < programasAcademicosVector.size(); k += Settings::DATOS_ACADEMICOS)
 	{
-		map<int, ProgramaAcademico *>::iterator it = programasAcademicos.find(stoi(programasAcademicosVector[k][0]));
+		map<long, ProgramaAcademico *>::iterator it = programasAcademicos.find(stoi(programasAcademicosVector[k][0]));
         	if (it != programasAcademicos.end())
 		{
 			ProgramaAcademico *programa = it->second;
@@ -51,30 +55,7 @@ void SNIESController::setProgramasAcademicos(vector<vector<string>> &programasAc
 	}
 }
 
-void SNIESController::crearArchivo(map<int, ProgramaAcademico *> &programasAcademicos, vector<string> &etiquetasColumnas)
-{
-    int op;
-    GestorCsv *aux = nullptr;
-    cout << "Selecciona el metodo de creacion de archivos:" << endl;
-    cout << " 1. CSV" << endl;
-    cout << " 2. TXT" << endl;
-    cout << " 3. JSON" << endl;
-    cout << "Seleccione la opcion que desea:";
-    cin >> op;
-    cout << endl;
-    if (op == 1) {
-        aux = new GestorCsv();
-    }
-    /*
-    else if (op == 2) {
-        aux = new GestorTxt();
-    }
-    else {
-        aux = new GestorJson();
-    }
-    */
-    aux->crearArchivo(rutaOutput, programasAcademicos, etiquetasColumnas);
-}
+
 
 void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
 {
@@ -88,6 +69,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
     programasAcademicosVector = gestorCsvObj.leerArchivoPrimera(rutaAdmitidos, ano1, codigosSnies);
     // cout << "despues leer archivos Primera" << endl;
     etiquetasColumnas = programasAcademicosVector[0];
+
 
     for (int i = 1; i < programasAcademicosVector.size(); i += Settings::DATOS_ACADEMICOS)
     {
@@ -127,8 +109,10 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
         programaAcademico->setCodigoDelMunicipioPrograma(stoi(programasAcademicosVector[i][32]));    // CÓDIGO DEL MUNICIPIO (PROGRAMA)
         programaAcademico->setMunicipioDeOfertaDelPrograma(programasAcademicosVector[i][33]);        // MUNICIPIO DE OFERTA DEL PROGRAMA
         Consolidado *consolidado[4];
+
         for (int m = 0; m < Settings::DATOS_ACADEMICOS; ++m)
         {
+
             consolidado[m] = new Consolidado();
             consolidado[m]->setIdSexo(stoi(programasAcademicosVector[i + m][34]));
             consolidado[m]->setSexo(programasAcademicosVector[i + m][35]);
@@ -142,6 +126,7 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
     // cout << "despues crear programas academicos" << endl;
     /*programasAcademicosVector = gestorCsvObj.leerArchivoSegunda(rutaAdmitidos, ano2, codigosSnies);
     // cout << "despues leer archivos segunda" << endl;
+
     for (int j = 0; j < programasAcademicosVector.size(); j += Settings::DATOS_ACADEMICOS)
     {
         map<int, ProgramaAcademico *>::iterator it = programasAcademicos.find(stoi(programasAcademicosVector[j][0]));
@@ -177,14 +162,14 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
 
     setProgramasAcademicos(programasAcademicosVector, rutaMatriculadosPrimerSemestre, ano1, codigosSnies, 13, 0);
     setProgramasAcademicos(programasAcademicosVector, rutaMatriculadosPrimerSemestre, ano2, codigosSnies, 13, 4);
-
-    crearArchivo(programasAcademicos, etiquetasColumnas);
+    
+  
 }
 
 void SNIESController::buscarProgramas(bool flag, string &palabraClave, int idComparacion)
 {
     list<ProgramaAcademico *> listaProgramas;
-    for (map<int, ProgramaAcademico *>::iterator it = programasAcademicos.begin(); it != programasAcademicos.end(); ++it)
+    for (map<long, ProgramaAcademico *>::iterator it = programasAcademicos.begin(); it != programasAcademicos.end(); ++it)
     {
         ProgramaAcademico *programa = it->second;
         string nombre = programa->getProgramaAcademico();
@@ -199,9 +184,33 @@ void SNIESController::buscarProgramas(bool flag, string &palabraClave, int idCom
 
     if (flag)
     {
-        bool creado;
-        creado = gestorCsvObj.crearArchivoBuscados(rutaOutput, listaProgramas, etiquetasColumnas);
+        int op;
+        cout<< "-----------------------------------"<<endl;
+        cout << "Que tipo de archivo desea generar" << endl;
+        cout << "1. CSV" << endl;
+        cout << "2. TXT" << endl;
+        cout << "3. JSON" << endl;
+        cout<< "-----------------------------------"<<endl;
+        cout << "Seleccione la opcion que desea:";
+        cin >> op;
+        cout<< "-----------------------------------"<<endl;
+
+        try {
+            if (op == 1) {
+                GestorCsv *gestorObjAux = new GestorCsv();
+                gestorObjAux->crearArchivoBuscados(rutaOutput, matrizFinal);
+            } else if (op == 2) {
+                GestorTxt *gestorObjAux = new GestorTxt();
+                gestorObjAux->crearArchivoBuscados(rutaOutput, matrizFinal);
+            } else {
+                GestorJson *gestorObjAux = new GestorJson();
+                gestorObjAux->crearArchivoBuscados(rutaOutput, matrizFinal);
+            }
+        } catch (std::out_of_range &e) {
+            std::cerr << "Error al crear el archivo: " << e.what() << std::endl;
+        }
     }
+}
 }
 
 void SNIESController::calcularDatosExtra(bool flag)
@@ -221,7 +230,7 @@ void SNIESController::calcularDatosExtra(bool flag)
     int sumaPrimerAno = 0;
     int sumaSegundoAno = 0;
 
-    for (map<int, ProgramaAcademico *>::iterator it = programasAcademicos.begin(); it != programasAcademicos.end(); ++it)
+    for (map<long, ProgramaAcademico *>::iterator it = programasAcademicos.begin(); it != programasAcademicos.end(); ++it)
     {
         int neosPrimerAno = 0;
         int neosSegundoAno = 0;
@@ -336,7 +345,30 @@ void SNIESController::calcularDatosExtra(bool flag)
 
     if (flag)
     {
-        bool creado;
-        creado = gestorCsvObj.crearArchivoExtra(rutaOutput, matrizFinal);
+        int op;
+        cout<< "-----------------------------------"<<endl;
+        cout << "Que tipo de archivo desea generar" << endl;
+        cout << "1. CSV" << endl;
+        cout << "2. TXT" << endl;
+        cout << "3. JSON" << endl;
+        cout<< "-----------------------------------"<<endl;
+        cout << "Seleccione la opcion que desea:";
+        cin >> op;
+        cout<< "-----------------------------------"<<endl;
+
+        try {
+            if (op == 1) {
+                GestorCsv *gestorObjAux = new GestorCsv();
+                gestorObjAux->crearArchivoExtra(rutaOutput, matrizFinal);
+            } else if (op == 2) {
+                GestorTxt *gestorObjAux = new GestorTxt();
+                gestorObjAux->crearArchivoExtra(rutaOutput, matrizFinal);
+            } else {
+                GestorJson *gestorObjAux = new GestorJson();
+                gestorObjAux->crearArchivoExtra(rutaOutput, matrizFinal);
+            }
+        } catch (std::out_of_range &e) {
+            std::cerr << "Error al crear el archivo: " << e.what() << std::endl;
+        }
     }
 }
