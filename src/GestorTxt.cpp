@@ -1,29 +1,32 @@
 #include "GestorTxt.h"
 
-void GestorTxt::escribirEtiquetas(string &codigoSNIES, string &nombrePrograma, string &fila, string &delimitador, vector<vector<string>> &matrizEtiquetas, int minPosEtiquetas, int maxPosEtiquetas){
+GestorTxt::GestorTxt() = default;  // Explicitly default constructor
 
-}
+bool GestorTxt::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico, vector<string> etiquetasColumnas) {
+    bool estadoCreacion = false;
+    string rutaCompleta = ruta +  "resultados.txt";
+    ofstream archivoTxt(rutaCompleta);
 
-void GestorTxt::escribirPrograma(string &codigoSNIES, string &nombrePrograma, string &fila, string &delimitador, vector<vector<string>> &matrizEtiquetas, ProgramaAcademico* programaActual){
+    if (archivoTxt.is_open()) {
+        // Print header
+        for (size_t i = 0; i < etiquetasColumnas.size(); i++) {
+            archivoTxt << etiquetasColumnas[i] << "\t";
+        }
+        archivoTxt << "\n";
 
-}
-
-void GestorTxt::imprimirConsolidados(string &fila, ofstream &archivoResultados, string &delimitador,  vector<vector<string>> &matrizEtiqueta, ProgramaAcademico* porgramaActual){
-
-}
-
-void GestorTxt::escribirConsolidado(string &fila, string &delimitador, Consolidado* consolidadoActual, vector<vector<string>> &matrizEtiquetas){
-
-}
-
-GestorTxt::GestorTxt(){
-
-}
-
-bool GestorTxt::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapadeProgramasAcademicos, vector<string> etiquetasColumnas){
-
-}
-
-bool GestorTxt::crearArchivoBuscados(string &ruta, list<ProgramaAcademico *> &programasBuscados, vector<string> etiquetasColumnas){
-    
+        // Print data
+        for (auto it = mapaProgramaAcademico.begin(); it != mapaProgramaAcademico.end(); ++it) {
+            ProgramaAcademico* programa = it->second;
+            archivoTxt << programa->getCodigoDeLaInstitucion() << "\t"
+                       << programa->getInstitucionDeEducacionSuperiorIes() << "\t"
+                       << programa->getNivelAcademico() << "\t"
+                       << programa->getProgramaAcademico() << "\n";
+        }
+        archivoTxt.close();
+        estadoCreacion = true;
+        cout << "Archivo TXT creado exitosamente en: " << rutaCompleta << endl;
+    } else {
+        cout << "Error: no se pudo crear el archivo TXT en: " << rutaCompleta << endl;
+    }
+    return estadoCreacion;
 }

@@ -6,16 +6,6 @@
 #include "Consolidado.h"
 #include "Settings.h"
 
-
-using std::string;
-using std::vector;
-using std::map;
-using std::list;
-using std::ofstream;
-using std::ifstream;
-using std::stringstream;
-using std::invalid_argument;
-
 const int LIMIT_COLUMNAS_FILA = 13;
 
 class GestorCsv: public GestorArchivo {

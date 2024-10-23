@@ -71,3 +71,11 @@ void Consolidado::setGraduados(int graduados)
 {
     this->graduados = graduados;
 }
+
+int Consolidado::getAno(){
+    return ano;
+}
+
+int Consolidado::getSemestre(){
+    return semestre;
+}

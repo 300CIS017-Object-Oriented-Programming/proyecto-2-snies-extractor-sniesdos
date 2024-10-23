@@ -50,6 +50,10 @@ public:
 
     int getGraduados();
     void setGraduados(int);
+
+    int getAno();
+
+    int getSemestre();
 };
 
 #endif // CONSOLIDADO_H
