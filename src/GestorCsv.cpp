@@ -2,7 +2,6 @@
 GestorCsv::GestorCsv() {
     this->DELIMITADOR = Settings::DELIMITADOR;
 }
-// FIXME: LA LECTURA DE ARCHIVOS CON GETLINE FUNCIONA HORRIBLEMENTE, NO TENEMOS IDEA DE POR QUÉ
 
 vector<string> GestorCsv::leerEncabezado(ifstream &archivo){
     string fila, dato;
@@ -80,7 +79,7 @@ vector<int> GestorCsv::leerProgramasCsv( string &ruta){
 
 
 //funcion inicial
-vector<vector<string>>GestorCsv::leerArchivo(string &rutaBase, string &ano, vector<int> &codigosSnies, int colmunaCodigoSnies){
+vector<vector<string>>GestorCsv::leerArchivo(string &rutaBase, string &ano, vector<int> &codigosSnies){
     vector<vector<string>> matrizResultado;
     string rutaCompleta = rutaBase + ano + ".csv";
     ifstream archivo;
@@ -99,7 +98,6 @@ vector<vector<string>>GestorCsv::leerArchivo(string &rutaBase, string &ano, vect
     return matrizResultado;
 }
 
-//borré el leerArchivoPrimera y leerArchivoSegunda (Isabella Erazo)
 
 bool GestorCsv::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapadeProgramasAcademicos, vector<string> etiquetasColumnas)
 {
@@ -185,7 +183,7 @@ bool GestorCsv::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapade
     return estadoCreacion;
 }
 
-bool GestorCsv::crearArchivoBuscados(string &ruta, list<ProgramaAcademico *> &programasBuscados, vector<string> etiquetasColumnas)
+bool GestorCsv::crearArchivoBuscado(string &ruta, list<ProgramaAcademico *> &programasBuscados, vector<string> etiquetasColumnas)
 {
     // Este bool nos ayudará a saber si se creo exitosamente el archivo
     bool estadoCreacion = false;
@@ -270,7 +268,7 @@ bool GestorCsv::crearArchivoBuscados(string &ruta, list<ProgramaAcademico *> &pr
     return estadoCreacion;
 }
 
-/*bool GestorCsv::crearArchivoExtra(string &ruta, vector<vector<string>> datosAImprimir)
+bool GestorCsv::crearArchivoExtra(string &ruta, vector<vector<string>> datosAImprimir)
 {
     // Este bool nos ayudará a saber si se creo el archivo exitosamente
     bool estadoCreacion = false;
@@ -303,4 +301,4 @@ bool GestorCsv::crearArchivoBuscados(string &ruta, list<ProgramaAcademico *> &pr
 
     archivoExtra.close();
     return estadoCreacion;
-}*/
+}

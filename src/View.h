@@ -14,9 +14,12 @@ private:
     void filtrarPorPalabrasClaveYFormacion();
     static void salirDePrograma();
     string obtenerAnoValido(const string&);
-    //void ordenarAnios(string&, string&);
+    void ordenarAnios(string& anio1, string& anio2);
 
-    //void seleccionarOpcionExportar(int);
+    bool preguntarSiConvertirCSV();
+    string obtenerPalabraClave();
+    int obtenerIdFormacionAcademica();
+
 public:
     View();
     ~View() = default;

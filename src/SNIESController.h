@@ -22,7 +22,9 @@ class SNIESController {
         map<long, ProgramaAcademico *> programasAcademicos;
         vector<string> etiquetasColumnas;
 
-        GestorArchivo gestorArchivos;
+        GestorCsv *gestorCsvObj;
+        GestorJson *gestorJsonObj;
+        GestorTxt *gestorTxtObj;
 
         Settings settings;
 
@@ -37,9 +39,9 @@ class SNIESController {
     public:
         SNIESController();
         ~SNIESController();
-        void setProgramasAcademicos(vector<vector<string>> &, string &, string &, vector<int> &, int, int);
+        void setProgramasAcademicos(vector<vector<string>> &, string &, string &, vector<int> &, int);
         void crearArchivo(map<int, ProgramaAcademico *> &, vector<string> &);
-        void procesarDatosCsv(string &, string &);
+        void procesarDatos(string &, string &);
         void calcularDatosExtra(bool);
         void buscarProgramas(bool, string &, int);
 };

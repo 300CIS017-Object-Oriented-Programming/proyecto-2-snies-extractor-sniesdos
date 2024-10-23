@@ -53,7 +53,7 @@ bool View::mostrarPantallaBienvenido() {
         ordenarAnios(anio1, anio2);
 
         cout << "Procesando datos ..." << endl;
-        controlador.procesarDatosCsv(anio1, anio2);
+        controlador.procesarDatos(anio1, anio2);
         cout << "Datos procesados con exito!" << endl;
     }
 
@@ -63,7 +63,7 @@ bool View::mostrarPantallaBienvenido() {
 
 void View::salirDePrograma(){
     cout << "Cerrando programa..." << endl;
-    cout << "Recuerde revisar la carpeta de outputs para los archivos .csv exportados" << endl;
+    cout << "Recuerde revisar la carpeta de outputs para los archivos exportados" << endl;
     cout << "Programa Cerrado con exito!" << endl;
 }
 
@@ -79,7 +79,7 @@ void View::mostrarDatosProgramaAcademico() {
     cout << endl;
 
     try {
-        if (userAnswer == 'y') {
+        if (userAnswer == 'y'){
             controlador.calcularDatosExtra(true);
         } else if (userAnswer == 'n') {
             controlador.calcularDatosExtra(false);
@@ -87,63 +87,68 @@ void View::mostrarDatosProgramaAcademico() {
             throw invalid_argument("Entrada no válida");
         }
     } catch (const invalid_argument &e) {
-        cout << "|ERROR| Entrada no válida, por favor ingrese 'Y' o 'N'." << endl;
+        cout << "|ERROR| Entrada no válida"<< e.what() << endl;
         // No hace nada si la entrada no es válida
     }
 }
 
-void View::filtrarPorPalabrasClaveYFormacion()
-{
+void View::filtrarPorPalabrasClaveYFormacion() {
+    char userAnswer = 'y';
 
-    char userAnswer = 'y', opcionCSV;
-    string palabraClave;
-    bool convertirCSV;
-    int idFormacionAcademica;
-
-    while (userAnswer == 'y')
-    {
-        cout << "Desea hacer una busqueda por palabra clave del nombre del programa(Y/N): " << endl;
+    while (userAnswer == 'y') {
+        // Pedimos al usuario si desea realizar una búsqueda por palabra clave
+        cout << "¿Desea hacer una búsqueda por palabra clave del nombre del programa (Y/N)?: " << endl;
         cin >> userAnswer;
-        cout << endl;
-        userAnswer = tolower(userAnswer);
+        userAnswer = static_cast<char>(tolower(userAnswer));
 
-        // Alta complejidad ciclomática, refactorizar
-        if (userAnswer == 'y')
-        {
-            cout << "Deseas convertir convertir los datos del programa academico a un CSV?(Y/N): " << endl;
-            cin >> opcionCSV;
-            cout << endl;
-            opcionCSV = tolower(opcionCSV);
-
-            if (opcionCSV == 'y')
-            {
-                convertirCSV = true;
-            }
-
-            else
-            {
-                convertirCSV = false;
-            }
-            // Coesión y Organización: Baja coesión, este metodo hace cosas que no debería,
-            // separar en métodos más pequeños
-            cout << "Escriba la palabra clave para buscar los programas por nombre:" << endl;
-            cin >> palabraClave;
-            cout << endl;
-
-            cout << "Seleccione un nivel de formacion para filtrar: \n 1->Especializacion Universitaria\n 2->Maestria\n 3->Doctorado\n 4->Formacion Tecnica Profesional \n 5->Tecnologico\n 6->Universitario\n 7->Especializacion Tecnico Profesional\n 8->Especializacion Tecnologica\n 10->Especializacion Medico Quirurgica\n " << endl;
-            cin >> idFormacionAcademica;
-            cout << "\n";
-            while ((idFormacionAcademica > 10) || (idFormacionAcademica == 9) || (idFormacionAcademica < 1))
-            {
-                cout << "Seleccione una opcion entre 1-10 excluyendo el 9\n"
-                     << endl;
-                cin >> idFormacionAcademica;
-            }
+        if (userAnswer == 'y') {
+            bool convertirCSV = preguntarSiConvertirCSV();
+            string palabraClave = obtenerPalabraClave();
+            int idFormacionAcademica = obtenerIdFormacionAcademica();
 
             controlador.buscarProgramas(convertirCSV, palabraClave, idFormacionAcademica);
         }
     }
 }
+
+bool View::preguntarSiConvertirCSV() {
+    char opcionCSV;
+    cout << "¿Deseas convertir los datos del programa académico a un CSV (Y/N)?: " << endl;
+    cin >> opcionCSV;
+    opcionCSV = static_cast<char>(tolower(opcionCSV));
+
+    return opcionCSV == 'y';
+}
+
+string View::obtenerPalabraClave() {
+    string palabraClave;
+    cout << "Escriba la palabra clave para buscar los programas por nombre:" << endl;
+    cin >> palabraClave;
+    return palabraClave;
+}
+
+int View::obtenerIdFormacionAcademica() {
+    int idFormacionAcademica;
+    cout << "Seleccione un nivel de formación para filtrar: \n"
+         << "1->Especialización Universitaria\n"
+         << "2->Maestría\n"
+         << "3->Doctorado\n"
+         << "4->Formación Técnica Profesional\n"
+         << "5->Tecnológico\n"
+         << "6->Universitario\n"
+         << "7->Especialización Técnica Profesional\n"
+         << "8->Especialización Tecnológica\n"
+         << "10->Especialización Médico Quirúrgica\n";
+    cin >> idFormacionAcademica;
+
+    while ((idFormacionAcademica > 10) || (idFormacionAcademica == 9) || (idFormacionAcademica < 1)) {
+        cout << "Seleccione una opción entre 1-10 excluyendo el 9: " << endl;
+        cin >> idFormacionAcademica;
+    }
+
+    return idFormacionAcademica;
+}
+
 
 bool View::isConvetibleToInt(const string &str)
 {
@@ -153,12 +158,12 @@ bool View::isConvetibleToInt(const string &str)
         // Verificamos si se ha convertido toda la cadena
         return pos == str.length();
     }
-    catch (const std::invalid_argument &)
+    catch (invalid_argument &)
     {
         // No se pudo convertir: la cadena no es un número válido
         return false;
     }
-    catch (const std::out_of_range &)
+    catch (out_of_range &)
     {
         // No se pudo convertir: el número está fuera del rango de int
         return false;
