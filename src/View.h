@@ -14,7 +14,9 @@ private:
     void filtrarPorPalabrasClaveYFormacion();
     static void salirDePrograma();
     string obtenerAnoValido(const string&);
-    void ordenarAnios(string&, string&);
+    //void ordenarAnios(string&, string&);
+
+    //void seleccionarOpcionExportar(int);
 public:
     View();
     ~View() = default;

@@ -14,7 +14,7 @@ using std::string;
 class SNIESController {
     private:
         map<long, ProgramaAcademico *> programasAcademicos;
-
+        vector<string> etiquetasColumnas;
         GestorCsv gestorCsvObj;
         Settings settings;
 

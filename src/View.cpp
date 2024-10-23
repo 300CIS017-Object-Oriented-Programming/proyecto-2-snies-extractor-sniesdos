@@ -72,7 +72,7 @@ void View::mostrarDatosProgramaAcademico() {
     char userAnswer;
     cout << "A continuacion vamos a mostrar datos relevantes de los programas academicos seleccionados" << "\n"
          << endl;
-    cout << "Desea Convertir los datos a un archivo CSV?(Y/N): " << endl;
+    cout << "Desea Convertir los datos a un archivo CSV, JSON o TXT?(Y/N): " << endl;
     cin >> userAnswer;
 
     userAnswer = static_cast<char>(tolower(static_cast<unsigned char>(userAnswer)));
