@@ -7,6 +7,11 @@
 #include "ProgramaAcademico.h"
 #include "GestorCsv.h"
 #include "Settings.h"
+#include "Consolidado.h"
+#include "GestorArchivo.h"
+#include "GestorTxt.h"
+#include "GestorJSON.h"
+
 
 using std::map;
 using std::string;
@@ -15,12 +20,10 @@ using std::to_string;
 class SNIESController {
     private:
         map<long, ProgramaAcademico *> programasAcademicos;
-        map<int, ProgramaAcademico *> programasAcademicos;
-
-
+        GestorTxt gestorTxtObj;
         GestorCsv gestorCsvObj;
+        GestorJson gestorJsonObj;
         Settings settings;
-
         string rutaProgramasCSV;
         string rutaAdmitidos;
         string rutaGraduados;

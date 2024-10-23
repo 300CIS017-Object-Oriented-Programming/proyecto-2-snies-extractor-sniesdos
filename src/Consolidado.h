@@ -34,6 +34,12 @@ public:
     int getIdSexo();
     void setIdSexo(int);
 
+    int getAno();
+    void setAno(int);
+
+    int getSemestre();
+    void setSemestre(int);
+
     string getSexo();
     void setSexo(string &);
 
@@ -41,6 +47,7 @@ public:
     void setInscritos(int);
 
     int getAdmitidos();
+    void setAdmitidos(int);
 
     int getMatriculados();
     void setMatriculados(int);
