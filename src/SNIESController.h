@@ -31,10 +31,7 @@ class SNIESController {
     public:
         SNIESController();
         ~SNIESController();
-        void setGraduados(vector<vector<string>> &, string &, vector<int> &, int);
-        void setInscritos(vector<vector<string>> &, string &, vector<int> &, int, int);
-        void setMatriculados(vector<vector<string>> &, string &, vector<int> &, int);
-        void setMatriculadosPrimerSemestre(vector<vector<string>> &, string &, vector<int> &, int);
+        void setProgramasAcademicos(vector<vector<string>> &, string &, string &, vector<int> &, int, int);
         void crearArchivo(map<int, ProgramaAcademico *> &, vector<string> &);
         void procesarDatosCsv(string &, string &);
         void calcularDatosExtra(bool);

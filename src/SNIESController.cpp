@@ -20,9 +20,8 @@ SNIESController::~SNIESController()
     }
 }
 
-void SNIESController::setGraduados(vector<vector<string>> &programasAcademicosVector, string &ano, vector<int> &codigosSnies, int offset)
-{
-    programasAcademicosVector = gestorCsvObj.leerArchivo(rutaGraduados, ano, codigosSnies, 13);
+void SNIESController::setProgramasAcademicos(vector<vector<string>> &programasAcademicosVector, string &ruta, string &ano, vector<int> &codigosSnies, int columna, int offset) {
+    programasAcademicosVector = gestorCsvObj.leerArchivo(ruta, ano, codigosSnies, columna);
 	for (int k = 0; k < programasAcademicosVector.size(); k += Settings::DATOS_ACADEMICOS)
 	{
 		map<int, ProgramaAcademico *>::iterator it = programasAcademicos.find(stoi(programasAcademicosVector[k][0]));
@@ -31,66 +30,25 @@ void SNIESController::setGraduados(vector<vector<string>> &programasAcademicosVe
 			ProgramaAcademico *programa = it->second;
 			for (int m = 0; m < Settings::DATOS_ACADEMICOS; ++m)
 			{
-				Consolidado *consolidado = programa->getConsolidado(m + offset);
-                consolidado->setGraduados(stoi(programasAcademicosVector[k + m][1]));
+                Consolidado *consolidado = programa->getConsolidado(m + offset);
+                if(ruta == rutaGraduados)
+                {
+                    consolidado->setGraduados(stoi(programasAcademicosVector[k + m][1]));
+                }
+                else if(ruta == rutaInscritos)
+                {
+                    consolidado->setInscritos(stoi(programasAcademicosVector[k + m][1]));
+                }
+                else if(ruta == rutaMatriculados)
+                {
+                    consolidado->setMatriculados(stoi(programasAcademicosVector[k + m][1]));
+                }
+                else if(ruta == rutaMatriculadosPrimerSemestre) {
+                    consolidado->setMatriculadosPrimerSemestre(stoi(programasAcademicosVector[k + m][1]));
+                }
 			}
 		}
 	}
-}
-
-void SNIESController::setInscritos(vector<vector<string>> &programasAcademicosVector, string &ano, vector<int> &codigosSnies, int columna, int offset)
-{
-    programasAcademicosVector = gestorCsvObj.leerArchivo(rutaInscritos, ano, codigosSnies, columna);
-    for (int k = 0; k < programasAcademicosVector.size(); k += Settings::DATOS_ACADEMICOS)
-    {
-        map<int, ProgramaAcademico *>::iterator it = programasAcademicos.find(stoi(programasAcademicosVector[k][0]));
-        if (it != programasAcademicos.end())
-        {
-            ProgramaAcademico *programa = it->second;
-            for (int m = 0; m < Settings::DATOS_ACADEMICOS; ++m)
-            {
-                Consolidado *consolidado = programa->getConsolidado(m + offset);
-                consolidado->setInscritos(stoi(programasAcademicosVector[k + m][1]));
-            }
-        }
-    }
-}
-
-void SNIESController::setMatriculados(vector<vector<string>> &programasAcademicosVector, string &ano, vector<int> &codigosSnies, int offset)
-{
-    programasAcademicosVector = gestorCsvObj.leerArchivo(rutaMatriculados, ano, codigosSnies, 13);
-    for (int k = 0; k < programasAcademicosVector.size(); k += Settings::DATOS_ACADEMICOS)
-    {
-        map<int, ProgramaAcademico *>::iterator it = programasAcademicos.find(stoi(programasAcademicosVector[k][0]));
-        if (it != programasAcademicos.end())
-        {
-            ProgramaAcademico *programa = it->second;
-            for (int m = 0; m < Settings::DATOS_ACADEMICOS; ++m)
-            {
-                Consolidado *consolidado = programa->getConsolidado(m + offset);
-                consolidado->setMatriculados(stoi(programasAcademicosVector[k + m][1]));
-            }
-        }
-    }
-}
-
-void SNIESController::setMatriculadosPrimerSemestre(vector<vector<string>> &programasAcademicosVector, string &ano, vector<int> &codigosSnies, int offset)
-{
-    programasAcademicosVector = gestorCsvObj.leerArchivo(rutaMatriculadosPrimerSemestre, ano, codigosSnies, 13);
-    for (int k = 0; k < programasAcademicosVector.size(); k += Settings::DATOS_ACADEMICOS)
-    {
-        map<int, ProgramaAcademico *>::iterator it = programasAcademicos.find(stoi(programasAcademicosVector[k][0]));
-        if (it != programasAcademicos.end())
-        {
-            ProgramaAcademico *programa = it->second;
-
-            for (int m = 0; m < Settings::DATOS_ACADEMICOS; ++m)
-            {
-                Consolidado *consolidado = programa->getConsolidado(m + offset);
-                consolidado->setMatriculadosPrimerSemestre(stoi(programasAcademicosVector[k + m][1]));
-            }
-        }
-    }
 }
 
 void SNIESController::crearArchivo(map<int, ProgramaAcademico *> &programasAcademicos, vector<string> &etiquetasColumnas)
@@ -205,18 +163,19 @@ void SNIESController::procesarDatosCsv(string &ano1, string &ano2)
         }
     }
     // cout << "despues crear todos los consolidados" << endl;
-    setGraduados(programasAcademicosVector, ano1, codigosSnies, 0);
-    setGraduados(programasAcademicosVector, ano2, codigosSnies, 4);
+    
+    setProgramasAcademicos(programasAcademicosVector, rutaGraduados, ano1, codigosSnies, 13, 0);
+    setProgramasAcademicos(programasAcademicosVector, rutaGraduados, ano2, codigosSnies, 13, 4);
     
     columna = (ano2 == "2022") ? 12 : 13;
-    setInscritos(programasAcademicosVector, ano1, codigosSnies, 12, 0);
-    setInscritos(programasAcademicosVector, ano1, codigosSnies, columna, 0);
+    setProgramasAcademicos(programasAcademicosVector, rutaInscritos, ano1, codigosSnies, 12, 0);
+    setProgramasAcademicos(programasAcademicosVector, rutaInscritos, ano2, codigosSnies, columna, 4);
 
-    setMatriculados(programasAcademicosVector, ano1, codigosSnies, 0);
-    setMatriculados(programasAcademicosVector, ano2, codigosSnies, 4);
+    setProgramasAcademicos(programasAcademicosVector, rutaMatriculados, ano1, codigosSnies, 13, 0);
+    setProgramasAcademicos(programasAcademicosVector, rutaMatriculados, ano2, codigosSnies, 13, 4);
 
-    setMatriculados(programasAcademicosVector, ano1, codigosSnies, 0);
-    setMatriculados(programasAcademicosVector, ano2, codigosSnies, 4);
+    setProgramasAcademicos(programasAcademicosVector, rutaMatriculadosPrimerSemestre, ano1, codigosSnies, 13, 0);
+    setProgramasAcademicos(programasAcademicosVector, rutaMatriculadosPrimerSemestre, ano2, codigosSnies, 13, 4);
 
     crearArchivo(programasAcademicos, etiquetasColumnas);
 }
