@@ -15,6 +15,32 @@ void Consolidado::setIdSexo(int idSexo)
     this->idSexo = idSexo;
 }
 
+void Consolidado::setAdmitidos(int admitidos)
+{
+    this->admitidos = admitidos;
+}
+
+int Consolidado::getAno()
+{
+    return ano;
+}
+
+void Consolidado::setAno(int ano)
+{
+    this->ano = ano;
+}
+
+int Consolidado::getSemestre()
+{
+    return semestre;
+}
+
+void Consolidado::setSemestre(int semestre)
+{
+    this->semestre = semestre;
+}
+
+
 string Consolidado::getSexo()
 {
     return sexo;
