@@ -12,7 +12,6 @@ using std::endl;
 using std::string;
 using std::vector;
 
-
 class Consolidado{
     private:
         int idSexo;
@@ -37,11 +36,11 @@ class Consolidado{
         string getSexo();
         void setSexo(string &);
 
-        //int getAno();
-        //void setAno(int);
+        int getAno();
+        void setAno(int);
 
-        //int getSemestre();
-        //void setSemestre(int);
+        int getSemestre();
+        void setSemestre(int);
 
         int getInscritos();
         void setInscritos(int);
@@ -57,6 +56,7 @@ class Consolidado{
 
         int getGraduados();
         void setGraduados(int);
+
 };
 
 #endif // CONSOLIDADO_H
