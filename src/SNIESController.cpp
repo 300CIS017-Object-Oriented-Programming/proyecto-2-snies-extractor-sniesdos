@@ -67,7 +67,7 @@ void SNIESController::procesarDatos(string &ano1, string &ano2)
     vector<vector<string>> programasAcademicosVector;
     int columna;
     codigosSnies = gestorCsvObj->leerProgramasCsv(rutaProgramasCSV);
-    programasAcademicosVector = gestorCsvObj->leerArchivo(rutaAdmitidos, ano1, codigosSnies);
+    programasAcademicosVector = gestorCsvObj->leerArchivo(rutaAdmitidos, ano1, codigosSnies, columna);
     etiquetasColumnas = programasAcademicosVector[0];
 
 
@@ -204,7 +204,7 @@ void SNIESController::buscarProgramas(bool flag, string &palabraClave, int idCom
                 gestorObjAux->crearArchivoBuscados(rutaOutput, listaProgramas, etiquetasColumnas);
             } else {
                 GestorJson *gestorObjAux = new GestorJson();
-                gestorObjAux->crearArchivoBuscados(rutaOutput,listaProgramas, etiquetasColumnas);
+                gestorObjAux->crearArchivoBuscados(rutaOutput,listaProgramas);
             }
         } catch (std::out_of_range &e) {
             std::cerr << "Error al crear el archivo: " << e.what() << std::endl;
@@ -359,13 +359,13 @@ void SNIESController::calcularDatosExtra(bool flag)
         try {
             if (op == 1) {
                 GestorCsv *gestorObjAux = new GestorCsv();
-                gestorObjAux->crearArchivoExtra(rutaOutput, matrizFinal);
+                gestorObjAux->crearArchivoExtra(rutaOutput);
             } else if (op == 2) {
                 GestorTxt *gestorObjAux = new GestorTxt();
-                gestorObjAux->crearArchivoExtra(rutaOutput, matrizFinal);
+                gestorObjAux->crearArchivoExtra(rutaOutput);
             } else {
                 GestorJson *gestorObjAux = new GestorJson();
-                gestorObjAux->crearArchivoExtra(rutaOutput, matrizFinal);
+                gestorObjAux->crearArchivoExtra(rutaOutput);
             }
         } catch (std::out_of_range &e) {
             std::cerr << "Error al crear el archivo: " << e.what() << std::endl;
