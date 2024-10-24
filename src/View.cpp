@@ -10,7 +10,7 @@ string View::obtenerAnoValido(const string& mensaje) {
     string ano;
     int intento = 0;
 
-    while (!(isConvetibleToInt(ano))) {
+    do {
         if (intento > 0) {
             cout << "El valor ingresado fue invalido!" << endl;
             cout << "Por favor ingrese un valor valido." << endl;
@@ -18,7 +18,7 @@ string View::obtenerAnoValido(const string& mensaje) {
         cout << mensaje << endl;
         cin >> ano;
         intento++;
-    }
+    } while (!(isConvetibleToInt(ano)));
     return ano;
 }
 
@@ -154,16 +154,16 @@ bool View::isConvetibleToInt(const string &str)
 {
     try
     {
-        std::size_t pos = 0;
+        size_t pos = 0;
         // Verificamos si se ha convertido toda la cadena
         return pos == str.length();
     }
-    catch (invalid_argument &)
+    catch (const invalid_argument &)
     {
         // No se pudo convertir: la cadena no es un número válido
         return false;
     }
-    catch (out_of_range &)
+    catch (const out_of_range &)
     {
         // No se pudo convertir: el número está fuera del rango de int
         return false;
