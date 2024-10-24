@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 
-GestorJson::GestorJson() {}
 
 bool GestorJson::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico, vector<string> etiquetasColumnas) {
     bool estadoCreacion = false;

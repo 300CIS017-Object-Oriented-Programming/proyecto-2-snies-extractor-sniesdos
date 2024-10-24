@@ -5,7 +5,7 @@
 
 class GestorTxt : public GestorArchivo {
 public:
-    GestorTxt();
+    GestorTxt() = default;
 
     bool crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico, vector<string> etiquetasColumnas) override;
     bool crearArchivoBuscado(string &ruta, list<ProgramaAcademico *> &programasBuscados, vector<string> etiquetasColumnas) override;

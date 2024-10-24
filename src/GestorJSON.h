@@ -8,7 +8,7 @@ using json = nlohmann::json;
 using namespace std;
 class GestorJson : public GestorArchivo {
 public:
-    GestorJson();
+    GestorJson() = default;
 
     bool crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico, vector<string> etiquetasColumnas) override;
     bool crearArchivoBuscado(string &ruta, list<ProgramaAcademico *> &programasBuscados, vector<string> etiquetasColumnas) override;

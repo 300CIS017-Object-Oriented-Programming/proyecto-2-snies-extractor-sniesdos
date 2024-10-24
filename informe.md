@@ -69,17 +69,20 @@ En esta clase los centro de mejora fueron la mantenibilidad, reducir la duplicac
 - Delimitador y Parámetros de Consolidados: El delimitador [ ; ] ahora se gestiona directamente en la clase Settings, permitiendo que se cambie en un solo lugar si fuera necesario. Además, se añadieron constantes como COLUMNAS_CONSOLIDADOS y DATOS_ACADEMICOS, centralizando parámetros clave que son usados en varios puntos del sistema.
 
 
+### 4. Clase GestorArchivos:
+Originalmente la clase "GestorCSV" fue diseñada para leer y escribir archivos CSV relacionados con los datos de programas académicos. Esto no es muy flexible pues estaba limitado a la manipulación de archivos CSV. 
 
+Se hizo la refactorización, añadiendo polimorfismo para permitir la lectura y escritura en otros formatos de archivo (JSON y TXT), mejorando la escalabilidad y la flexibilidad del programa.
 
+#### Mejoras:
+- Duplicación de código: Entre los métodos `leerArchivoPrimera()`,  `leerArchivoSegunda()` y  `leerArchivo()`, los tres métodos seguían una estructura similar pero con ligeras diferencias en el manejo de los archivos. Por lo tanto lo resumimos a una sola función `leerArchivo()`.
 
+## Conclusión
 
-
-### 4. Organización y eficiencia
 - **Refactorización de bucles**: Se optimizaron varios bucles que iteraban innecesariamente sobre los datos, logrando una mejora del 20% en el rendimiento al procesar grandes volúmenes de información.
 - **Reorganización de clases**: Las clases se reorganizaron en carpetas según sus responsabilidades, mejorando la estructura general del proyecto.
 
 #### Impacto:
 La reorganización del código facilitó su navegación y comprensión, lo que reduce el tiempo necesario para hacer modificaciones o añadir nuevas funcionalidades.
 
-## Conclusión
 Las mejoras realizadas no solo optimizaron el rendimiento del sistema, sino que también contribuyeron a un código más limpio, mantenible y escalable. Estas prácticas beneficiarán al proyecto en futuras expansiones y facilitarán su colaboración con otros desarrolladores.

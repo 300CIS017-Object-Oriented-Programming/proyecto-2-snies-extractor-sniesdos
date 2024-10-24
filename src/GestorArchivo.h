@@ -25,9 +25,6 @@ using std::invalid_argument;
     public:
         GestorArchivo() = default;
         virtual ~GestorArchivo()= default;
-        /*virtual vector<int> leerEntrada(string &ruta);
-        virtual vector<vector<string>> leerArchivo(string &rutaBase, vector<string> &etiquetasColumnas, vector<int> &codigoSnies);
-        */
         virtual bool crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico, vector<string> etiquetasColumnas) = 0;
         virtual bool crearArchivoBuscado(string &ruta, list<ProgramaAcademico *> &programaBuscados, vector<string> etiquetasColumnas) = 0;
         virtual bool crearArchivoExtra(string &ruta, vector<vector<string>> datosAImprimir) = 0;
