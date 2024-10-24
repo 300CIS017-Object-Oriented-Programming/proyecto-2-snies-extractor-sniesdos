@@ -60,7 +60,7 @@ vector<int> GestorCsv::leerProgramasCsv( string &ruta){
     ifstream archivo(ruta);
     if (!archivo.is_open()){
         return codigosSniesRetorno;
-    }   
+    }
     string linea, dato;
     getline(archivo, linea);// salta los encabezados
     while (getline(archivo, linea)){

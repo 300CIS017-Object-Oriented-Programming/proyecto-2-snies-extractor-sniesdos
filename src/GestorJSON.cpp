@@ -1,155 +1,96 @@
-#include "GestorJSON.h"
-bool GestorJson::crearArchivo(){
-    string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico,
-    vector<vector<string>> &matrizEtiquetas) {
-    string rutaCompleta = ruta + "resultados.csv";
-    ofstream archivoResultados(rutaCompleta);
+#include "GestorJson.h"
+#include <fstream>
+#include <iostream>
+#include <string>
 
-    if (!archivoResultados.is_open()) return false;
+GestorJson::GestorJson() {}
 
-    archivoResultados << "{\n";
-    archivoResultados << "\"resultados\": [\n";
+bool GestorJson::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico, vector<string> etiquetasColumnas) {
+    bool estadoCreacion = false;
+    string rutaCompleta = ruta + "resultados.json";
+    json archivoJson;
 
-    map<int, ProgramaAcademico *>::iterator it;
-    Consolidado *consolidadoActual;
-
-    for (it = mapaProgramaAcademico.begin(); it != mapaProgramaAcademico.end();
-         it++) {
+    for (auto &programa : mapaProgramaAcademico) {
+        json consolidadoJson;
         for (int i = 0; i < 8; i++) {
-            archivoResultados << "{\n";
-            archivoResultados << "\"codigoDeLaInstitucion\": "
-                              << (it->second)->getCodigoDeLaInstitucion()
-                              << ",\n";
-            archivoResultados << "\"iesPadre\": \""
-                              << (it->second)->getIesPadre() << "\",\n";
-            archivoResultados
-                << "\"institucionDeEducacionSuperiorIes\": \""
-                << (it->second)->getInstitucionDeEducacionSuperiorIes()
-                << "\",\n";
-            archivoResultados << "\"principalOSeccional\": \""
-                              << (it->second)->getPrincipalOSeccional()
-                              << "\",\n";
-            archivoResultados
-                << "\"idSectorIes\": " << (it->second)->getIdSectorIes()
-                << ",\n";
-            archivoResultados << "\"sectorIes\": \""
-                              << (it->second)->getSectorIes() << "\",\n";
-            archivoResultados
-                << "\"idCaracter\": " << (it->second)->getIdCaracter() << ",\n";
-            archivoResultados << "\"caracterIes\": \""
-                              << (it->second)->getCaracterIes() << "\",\n";
-            archivoResultados << "\"codigoDelDepartamentoIes\": "
-                              << (it->second)->getCodigoDelDepartamentoIes()
-                              << ",\n";
-            archivoResultados
-                << "\"departamentoDeDomicilioDeLaIes\": \""
-                << (it->second)->getDepartamentoDeDomicilioDeLaIes() << "\",\n";
-            archivoResultados << "\"codigoDelMunicipioIes\": "
-                              << (it->second)->getCodigoDelMunicipioIes()
-                              << ",\n";
-            archivoResultados << "\"municipioDeDomicilioDeLaIes\": \""
-                              << (it->second)->getMunicipioDeDomicilioDeLaIes()
-                              << "\",\n";
-            archivoResultados << "\"codigoSniesDelPrograma\": "
-                              << (it->second)->getCodigoSniesDelPrograma()
-                              << ",\n";
-            archivoResultados << "\"programaAcademico\": \""
-                              << (it->second)->getProgramaAcademico()
-                              << "\",\n";
-            archivoResultados << "\"idNivelAcademico\": "
-                              << (it->second)->getIdNivelAcademico() << ",\n";
-            archivoResultados << "\"nivelAcademico\": \""
-                              << (it->second)->getNivelAcademico() << "\",\n";
-            archivoResultados << "\"idNivelDeFormacion\": "
-                              << (it->second)->getIdNivelDeFormacion() << ",\n";
-            archivoResultados << "\"nivelDeFormacion\": \""
-                              << (it->second)->getNivelDeFormacion() << "\",\n";
-            archivoResultados
-                << "\"idMetodologia\": " << (it->second)->getIdMetodologia()
-                << ",\n";
-            archivoResultados << "\"metodologia\": \""
-                              << (it->second)->getMetodologia() << "\",\n";
-            archivoResultados << "\"idArea\": " << (it->second)->getIdArea()
-                              << ",\n";
-            archivoResultados << "\"areaDeConocimiento\": \""
-                              << (it->second)->getAreaDeConocimiento()
-                              << "\",\n";
-            archivoResultados << "\"idNucleo\": " << (it->second)->getIdNucleo()
-                              << ",\n";
-            archivoResultados
-                << "\"nucleoBasicoDelConocimientoNbc\": \""
-                << (it->second)->getNucleoBasicoDelConocimientoNbc() << "\",\n";
-            archivoResultados << "\"idCineCampoAmplio\": "
-                              << (it->second)->getIdCineCampoAmplio() << ",\n";
-            archivoResultados << "\"descCineCampoAmplio\": \""
-                              << (it->second)->getDescCineCampoAmplio()
-                              << "\",\n";
-            archivoResultados << "\"idCineCampoEspecifico\": "
-                              << (it->second)->getIdCineCampoEspecifico()
-                              << ",\n";
-            archivoResultados << "\"descCineCampoEspecifico\": \""
-                              << (it->second)->getDescCineCampoEspecifico()
-                              << "\",\n";
-            archivoResultados << "\"idCineCodigoDetallado\": "
-                              << (it->second)->getIdCineCodigoDetallado()
-                              << ",\n";
-            archivoResultados << "\"descCineCodigoDetallado\": \""
-                              << (it->second)->getDescCineCodigoDetallado()
-                              << "\",\n";
-            archivoResultados
-                << "\"codigoDelDepartamentoPrograma\": "
-                << (it->second)->getCodigoDelDepartamentoPrograma() << ",\n";
-            archivoResultados
-                << "\"departamentoDeOfertaDelPrograma\": \""
-                << (it->second)->getDepartamentoDeOfertaDelPrograma()
-                << "\",\n";
-            archivoResultados << "\"codigoDelMunicipioPrograma\": "
-                              << (it->second)->getCodigoDelMunicipioPrograma()
-                              << ",\n";
-            archivoResultados << "\"municipioDeOfertaDelPrograma\": \""
-                              << (it->second)->getMunicipioDeOfertaDelPrograma()
-                              << "\"\n";
-
-            consolidadoActual = (it->second)->getConsolidado(i);
-
-            archivoResultados
-                << "\"idSexo\": " << consolidadoActual->getIdSexo() << ",\n";
-            archivoResultados << "\"sexo\": \"" << consolidadoActual->getSexo()
-                              << "\",\n";
-            archivoResultados << "\"ano\": " << consolidadoActual->getAno()
-                              << ",\n";
-            archivoResultados
-                << "\"semestre\": " << consolidadoActual->getSemestre()
-                << ",\n";
-            archivoResultados
-                << "\"admitidos\": " << consolidadoActual->getAdmitidos()
-                << ",\n";
-            archivoResultados
-                << "\"graduados\": " << consolidadoActual->getGraduados()
-                << ",\n";
-            archivoResultados
-                << "\"inscritos\": " << consolidadoActual->getInscritos()
-                << ",\n";
-            archivoResultados
-                << "\"matriculados\": " << consolidadoActual->getMatriculados()
-                << ",\n";
-            archivoResultados
-                << "\"neos\": "
-                << consolidadoActual->getMatriculadosPrimerSemestre() << "\n";
-
-            archivoResultados << "},\n";
+            Consolidado *consolidado = programa.second->getConsolidado(i);
+            consolidadoJson.push_back({
+                {"IdSexo", consolidado->getIdSexo()},
+                {"Sexo", consolidado->getSexo()},
+                {"Ano", consolidado->getAno()},
+                {"Semestre", consolidado->getSemestre()},
+                {"Admitidos", consolidado->getAdmitidos()},
+                {"Graduados", consolidado->getGraduados()},
+                {"Inscritos", consolidado->getInscritos()},
+                {"Matriculados", consolidado->getMatriculados()},
+                {"Neos", consolidado->getMatriculadosPrimerSemestre()}
+            });
         }
+        archivoJson[to_string(programa.first)] = consolidadoJson;
     }
 
-    archivoResultados << "]\n";
-    archivoResultados << "}\n";
+    std::ofstream archivoResultados(rutaCompleta);
+    if (archivoResultados.is_open()) {
+        archivoResultados << archivoJson.dump(4);  // Pretty print with 4 spaces
+        estadoCreacion = true;
+        std::cout << "Archivo JSON creado en: " << rutaCompleta << std::endl;
+    }
 
-    return true;
+    archivoResultados.close();
+    return estadoCreacion;
 }
 
-bool GestorJson::crearArchivoBuscados(){
-    string &ruta, list<ProgramaAcademico *> &programaBuscados,
-    vector<vector<string>> &matrizEtiquetas)
+bool GestorJson::crearArchivoBuscado(string &ruta, list<ProgramaAcademico *> &programasBuscados, vector<string> etiquetasColumnas) {
+    bool estadoCreacion = false;
+    string rutaCompleta = ruta + "buscados.json";
+    json archivoJson;
 
+    for (auto &programa : programasBuscados) {
+        json consolidadoJson;
+        for (int i = 0; i < 8; i++) {
+            Consolidado *consolidado = programa->getConsolidado(i);
+            consolidadoJson.push_back({
+                {"IdSexo", consolidado->getIdSexo()},
+                {"Sexo", consolidado->getSexo()},
+                {"Ano", consolidado->getAno()},
+                {"Semestre", consolidado->getSemestre()},
+                {"Admitidos", consolidado->getAdmitidos()},
+                {"Graduados", consolidado->getGraduados()},
+                {"Inscritos", consolidado->getInscritos()},
+                {"Matriculados", consolidado->getMatriculados()},
+                {"Neos", consolidado->getMatriculadosPrimerSemestre()}
+            });
+        }
+        archivoJson[to_string(programa->getCodigoSniesDelPrograma())] = consolidadoJson;
+    }
 
+    std::ofstream archivoBuscados(rutaCompleta);
+    if (archivoBuscados.is_open()) {
+        archivoBuscados << archivoJson.dump(4);
+        estadoCreacion = true;
+        std::cout << "Archivo JSON de programas buscados creado en: " << rutaCompleta << std::endl;
+    }
+
+    archivoBuscados.close();
+    return estadoCreacion;
+}
+
+bool GestorJson::crearArchivoExtra(string &ruta, vector<vector<string>> datosAImprimir) {
+    bool estadoCreacion = false;
+    string rutaCompleta = ruta + "extras.json";
+    json archivoJson;
+
+    for (const auto &fila : datosAImprimir) {
+        archivoJson.push_back(fila);
+    }
+
+    std::ofstream archivoExtra(rutaCompleta);
+    if (archivoExtra.is_open()) {
+        archivoExtra << archivoJson.dump(4);
+        estadoCreacion = true;
+        std::cout << "Archivo JSON de extras creado en: " << rutaCompleta << std::endl;
+    }
+
+    archivoExtra.close();
+    return estadoCreacion;
 }

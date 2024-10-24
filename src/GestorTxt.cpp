@@ -1,31 +1,83 @@
 #include "GestorTxt.h"
+#include <fstream>
+#include <iostream>
 
+GestorTxt::GestorTxt() {}
 
 bool GestorTxt::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico, vector<string> etiquetasColumnas) {
     bool estadoCreacion = false;
-    string rutaCompleta = ruta +  "resultados.txt";
-    ofstream archivoTxt(rutaCompleta);
+    string rutaCompleta = ruta + "resultados.txt";
+    ofstream archivoResultados(rutaCompleta);
 
-    if (archivoTxt.is_open()) {
-        // Print header
-        for (size_t i = 0; i < etiquetasColumnas.size(); i++) {
-            archivoTxt << etiquetasColumnas[i] << "\t";
+    if (archivoResultados.is_open()) {
+        for (const auto &etiqueta : etiquetasColumnas) {
+            archivoResultados << etiqueta << "\t";
         }
-        archivoTxt << "\n";
+        archivoResultados << "GRADUADOS\tINSCRITOS\tMATRICULADOS\tNEOS\n";
 
-        // Print data
-        for (auto it = mapaProgramaAcademico.begin(); it != mapaProgramaAcademico.end(); ++it) {
-            ProgramaAcademico* programa = it->second;
-            archivoTxt << programa->getCodigoDeLaInstitucion() << "\t"
-                       << programa->getInstitucionDeEducacionSuperiorIes() << "\t"
-                       << programa->getNivelAcademico() << "\t"
-                       << programa->getProgramaAcademico() << "\n";
+        for (const auto &programa : mapaProgramaAcademico) {
+            for (int i = 0; i < 8; i++) {
+                Consolidado *consolidado = programa.second->getConsolidado(i);
+                archivoResultados << programa.second->getCodigoDeLaInstitucion() << "\t"
+                                  << consolidado->getAdmitidos() << "\t"
+                                  << consolidado->getGraduados() << "\t"
+                                  << consolidado->getInscritos() << "\t"
+                                  << consolidado->getMatriculados() << "\n";
+            }
         }
-        archivoTxt.close();
         estadoCreacion = true;
-        cout << "Archivo TXT creado exitosamente en: " << rutaCompleta << endl;
-    } else {
-        cout << "Error: no se pudo crear el archivo TXT en: " << rutaCompleta << endl;
+        std::cout << "Archivo TXT creado en: " << rutaCompleta << std::endl;
     }
+
+    archivoResultados.close();
+    return estadoCreacion;
+}
+
+bool GestorTxt::crearArchivoBuscado(string &ruta, list<ProgramaAcademico *> &programasBuscados, vector<string> etiquetasColumnas) {
+    bool estadoCreacion = false;
+    string rutaCompleta = ruta + "buscados.txt";
+    ofstream archivoBuscados(rutaCompleta);
+
+    if (archivoBuscados.is_open()) {
+        for (const auto &etiqueta : etiquetasColumnas) {
+            archivoBuscados << etiqueta << "\t";
+        }
+        archivoBuscados << "GRADUADOS\tINSCRITOS\tMATRICULADOS\tNEOS\n";
+
+        for (auto &programa : programasBuscados) {
+            for (int i = 0; i < 8; i++) {
+                Consolidado *consolidado = programa->getConsolidado(i);
+                archivoBuscados << programa->getCodigoDeLaInstitucion() << "\t"
+                                << consolidado->getAdmitidos() << "\t"
+                                << consolidado->getGraduados() << "\t"
+                                << consolidado->getInscritos() << "\t"
+                                << consolidado->getMatriculados() << "\n";
+            }
+        }
+        estadoCreacion = true;
+        std::cout << "Archivo TXT de programas buscados creado en: " << rutaCompleta << std::endl;
+    }
+
+    archivoBuscados.close();
+    return estadoCreacion;
+}
+
+bool GestorTxt::crearArchivoExtra(string &ruta, vector<vector<string>> datosAImprimir) {
+    bool estadoCreacion = false;
+    string rutaCompleta = ruta + "extras.txt";
+    ofstream archivoExtra(rutaCompleta);
+
+    if (archivoExtra.is_open()) {
+        for (const auto &fila : datosAImprimir) {
+            for (const auto &dato : fila) {
+                archivoExtra << dato << "\t";
+            }
+            archivoExtra << "\n";
+        }
+        estadoCreacion = true;
+        std::cout << "Archivo TXT de extras creado en: " << rutaCompleta << std::endl;
+    }
+
+    archivoExtra.close();
     return estadoCreacion;
 }
