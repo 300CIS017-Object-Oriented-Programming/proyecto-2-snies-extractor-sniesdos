@@ -3,11 +3,11 @@
 #include <string>
 
 SNIESController::SNIESController() {
-    /*
+    
     gestorCsvObj = new GestorCsv();
     gestorJsonObj = new GestorJson();
     gestorTxtObj = new GestorTxt();
-    */
+
     rutaProgramasCSV = Settings::PROGRAMAS_FILTRAR_FILE_PATH;
     rutaAdmitidos = Settings::ADMITIDOS_FILE_PATH;
     rutaGraduados = Settings::GRADUADOS_FILE_PATH;
@@ -108,7 +108,7 @@ void SNIESController::procesarDatos(string &ano1, string &ano2)
         programaAcademico->setDepartamentoDeOfertaDelPrograma(programasAcademicosVector[i][31]);     // DEPARTAMENTO DE OFERTA DEL PROGRAMA
         programaAcademico->setCodigoDelMunicipioPrograma(stoi(programasAcademicosVector[i][32]));    // CÓDIGO DEL MUNICIPIO (PROGRAMA)
         programaAcademico->setMunicipioDeOfertaDelPrograma(programasAcademicosVector[i][33]);        // MUNICIPIO DE OFERTA DEL PROGRAMA
-        Consolidado *consolidado[4];
+        Consolidado *consolidado[Settings::DATOS_ACADEMICOS];
 
         for (int m = 0; m < Settings::DATOS_ACADEMICOS; ++m)
         {

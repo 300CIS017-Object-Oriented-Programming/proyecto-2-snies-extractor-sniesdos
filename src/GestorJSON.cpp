@@ -31,7 +31,7 @@ bool GestorJson::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaP
 
     std::ofstream archivoResultados(rutaCompleta);
     if (archivoResultados.is_open()) {
-        archivoResultados << archivoJson.dump(4);  // Pretty print with 4 spaces
+        archivoResultados << archivoJson.dump(4);
         estadoCreacion = true;
         std::cout << "Archivo JSON creado en: " << rutaCompleta << std::endl;
     }
