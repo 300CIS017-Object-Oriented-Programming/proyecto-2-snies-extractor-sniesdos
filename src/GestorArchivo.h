@@ -1,42 +1,43 @@
+// Gestor archivo
 #ifndef GESTOR_ARCHIVO_H
 #define GESTOR_ARCHIVO_H
 
-#include "ProgramaAcademico.h"
 #include <algorithm>
-#include <iostream>
-#include <sstream>
 #include <fstream>
-#include <string>
-#include <vector>
 #include <list>
 #include <map>
+#include <sstream>
+#include <string>
+#include <vector>
 
-using std::string;
-using std::vector;
-using std::map;
-using std::list;
-using std::ofstream;
+#include "Consolidado.h"
+#include "ProgramaAcademico.h"
+#include "Settings.h"
+
 using std::ifstream;
-using std::stringstream;
 using std::invalid_argument;
+using std::list;
+using std::map;
+using std::ofstream;
+using std::string;
+using std::stringstream;
+using std::vector;
 
+class GestorArchivo {
+   protected:
+    Settings settings;
+    vector<string> leerEncabezado(ifstream &archivo);
+    vector<string> leerFila(ifstream &archivo, int limiteColumnas = 13);
+    bool abrirArchivo(string &ruta, ifstream &archivo);
+    bool filaRelevante(const vector<string> &fila, vector<int> &codigoSnies);
+    void leerFilasAdicionales(ifstream &archivo,vector<vector<string>> &matrizResult);
 
-class GestorArchivo{
-    public:
-    GestorArchivo() = default;
-    virtual ~GestorArchivo()= default;
-    virtual vector<int> leerEntrada(string &ruta);
-    virtual vector<vector<string>> leerArchivo(string &rutaBase, vector<string> &etiquetasColumnas, vector<int> &codigoSnies);
-
-    virtual bool crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramasAcademicos, vector<vector<string>> &matrizEtiquetas) = 0;
-    virtual bool crearArchivoBuscado(string &ruta, list<ProgramaAcademico *> &programaBuscados, vector<vector<string>> &matrizEtiquetas) = 0;
-
-protected:
-    // Common functionality for derived classes
-    bool abrirArchivoLectura(const std::string &ruta, std::ifstream &archivo);
-    bool abrirArchivoEscritura(const std::string &ruta, std::ofstream &archivo);
-    bool archivoVacio(std::ifstream &archivo);
-    
+   public:
+    GestorArchivo();
+    vector<int> leerProgramasCsv(string &ruta);
+    vector<vector<string>> leerArchivo(string &rutaBase, string &ano,vector<int> &codigosSnies,int colmunaCodigoSnies);
+    bool crearArchivo(string &ruta,map<int, ProgramaAcademico *> &mapadeProgramasAcademicos,vector<string> etiquetasColumnas);
+    bool crearArchivoBuscados(string &ruta,list<ProgramaAcademico *> &programasBuscados,vector<string> etiquetasColumnas);
 };
 
 #endif

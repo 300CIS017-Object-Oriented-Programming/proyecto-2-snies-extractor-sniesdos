@@ -12,11 +12,13 @@ void ProgramaAcademico::setCodigoDeLaInstitucion(int nuevoCodigoDeLaInstitucion)
     codigoDeLaInstitucion = nuevoCodigoDeLaInstitucion;
 }
 
-int ProgramaAcademico::getCodigoDeLaInstitucion(){
+int ProgramaAcademico::getCodigoDeLaInstitucion()
+{
     return codigoDeLaInstitucion;
 }
 
-void ProgramaAcademico::setIesPadre(int nuevoIesPadre){
+void ProgramaAcademico::setIesPadre(int nuevoIesPadre)
+{
     iesPadre = nuevoIesPadre;
 }
 
@@ -330,4 +332,22 @@ void ProgramaAcademico::setMunicipioDeOfertaDelPrograma(string &nuevoMunicipioDe
 string ProgramaAcademico::getMunicipioDeOfertaDelPrograma()
 {
     return municipioDeOfertaDelPrograma;
+}
+
+void ProgramaAcademico::setConsolidado(Consolidado *nuevoConsolidado, int pos)
+{
+    consolidados[pos] = nuevoConsolidado;
+}
+
+Consolidado *ProgramaAcademico::getConsolidado(int posicionConsolidado)
+{
+    return consolidados[posicionConsolidado];
+}
+
+ProgramaAcademico::~ProgramaAcademico()
+{
+    for (Consolidado *consolidado : consolidados)
+    {
+        delete consolidado;
+    }
 }

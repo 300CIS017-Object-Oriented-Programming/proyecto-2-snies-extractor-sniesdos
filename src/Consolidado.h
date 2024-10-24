@@ -12,55 +12,49 @@ using std::endl;
 using std::string;
 using std::vector;
 
+class Consolidado{
+    private:
+        int idSexo;
+        string sexo;
+        int ano;
+        int semestre;
+        int inscritos;
+        int admitidos;
+        int matriculados;
+        int matriculadosPrimerSemestre;
+        int graduados;
 
-class Consolidado
-{
-private:
-    int idSexo;
-    string sexo;
-    int ano;
-    int semestre;
-    int inscritos;
-    int admitidos;
-    int matriculados;
-    int matriculadosPrimerSemestre;
-    int graduados;
+    public:
+        Consolidado();
+        Consolidado(int, string, int, int, int, int, int, int, int);
+        
+        int getIdSexo();
+        void setIdSexo(int);
 
-public:
-    Consolidado();
-    // Mantenimiento: Gran cantidad de atributos en la firma del constructor
-    Consolidado(int, string, int, int, int, int, int, int, int);
+        string getSexo();
+        void setSexo(string &);
 
-    int getIdSexo();
-    void setIdSexo(int);
+        int getAno();
+        void setAno(int);
 
-    int getAno();
-    void setAno(int);
+        int getSemestre();
+        void setSemestre(int);
 
-    int getSemestre();
-    void setSemestre(int);
+        int getInscritos();
+        void setInscritos(int);
 
-    string getSexo();
-    void setSexo(string &);
+        int getAdmitidos();
+        void setAdmitidos(int);
 
-    int getInscritos();
-    void setInscritos(int);
+        int getMatriculados();
+        void setMatriculados(int);
 
-    int getAdmitidos();
-    void setAdmitidos(int);
+        int getMatriculadosPrimerSemestre();
+        void setMatriculadosPrimerSemestre(int);
 
-    int getMatriculados();
-    void setMatriculados(int);
+        int getGraduados();
+        void setGraduados(int);
 
-    int getMatriculadosPrimerSemestre();
-    void setMatriculadosPrimerSemestre(int);
-
-    int getGraduados();
-    void setGraduados(int);
-
-    int getAno();
-
-    int getSemestre();
 };
 
 #endif // CONSOLIDADO_H

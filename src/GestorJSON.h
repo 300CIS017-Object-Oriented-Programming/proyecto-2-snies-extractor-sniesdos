@@ -10,8 +10,9 @@
 class GestorJson : public GestorArchivo {
    public:
     GestorJson() = default;
-    bool crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico, vector<vector<string>> &matrizEtiquetas);
-    bool crearArchivoBuscados(string &ruta, list<ProgramaAcademico *> &programaBuscados, vector<vector<string>> &matrizEtiquetas);
+    bool crearArchivo(string &ruta,map<int, ProgramaAcademico *> &mapaProgramaAcademico);
+    bool crearArchivoBuscados(string &ruta, list<ProgramaAcademico *> &programaBuscados);
+    bool crearArchivoExtra(string &ruta);
 };
 
 #endif

@@ -12,7 +12,9 @@ class GestorTxt : public GestorArchivo {
 public:
     // Default constructor
     GestorTxt() = default;
-    bool crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico, vector<string> etiquetasColumnas) override;
+    bool crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico, vector<string> etiquetasColumnas);
+    bool crearArchivoExtra(string &ruta, vector<string> etiquetasColumnas);
+
 };
 
 #endif

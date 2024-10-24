@@ -50,6 +50,7 @@ class ProgramaAcademico {
     string departamentoDeOfertaDelPrograma;
     int codigoDelMunicipioPrograma;
     string municipioDeOfertaDelPrograma;
+    std::vector<Consolidado *> consolidados;
 
 public:
     ProgramaAcademico();

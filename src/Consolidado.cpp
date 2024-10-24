@@ -5,19 +5,21 @@ Consolidado::Consolidado() = default;
 Consolidado::Consolidado(int idSexo, string sexo, int ano, int semestre, int inscritos, int admitidos, int primeraMatricula, int totalMatriculados, int graduados)
     : idSexo(idSexo), sexo(sexo), ano(ano), semestre(semestre), inscritos(inscritos), admitidos(admitidos), matriculados(primeraMatricula), matriculadosPrimerSemestre(totalMatriculados), graduados(graduados) {}
 
-int Consolidado::getIdSexo()
-{
+int Consolidado::getIdSexo(){
     return idSexo;
 }
 
-void Consolidado::setIdSexo(int idSexo)
-{
+void Consolidado::setIdSexo(int idSexo){
     this->idSexo = idSexo;
 }
 
-void Consolidado::setAdmitidos(int admitidos)
+string Consolidado::getSexo(){
+    return sexo;
+}
+
+void Consolidado::setSexo(string &sexo)
 {
-    this->admitidos = admitidos;
+    this->sexo = sexo;
 }
 
 int Consolidado::getAno()
@@ -34,23 +36,10 @@ int Consolidado::getSemestre()
 {
     return semestre;
 }
-
 void Consolidado::setSemestre(int semestre)
 {
     this->semestre = semestre;
 }
-
-
-string Consolidado::getSexo()
-{
-    return sexo;
-}
-
-void Consolidado::setSexo(string &sexo)
-{
-    this->sexo = sexo;
-}
-
 
 int Consolidado::getInscritos()
 {
@@ -67,6 +56,10 @@ int Consolidado::getAdmitidos()
     return admitidos;
 }
 
+void Consolidado::setAdmitidos(int admitidos)
+{
+    this->admitidos = admitidos;
+}
 
 int Consolidado::getMatriculados()
 {
@@ -96,12 +89,4 @@ int Consolidado::getGraduados()
 void Consolidado::setGraduados(int graduados)
 {
     this->graduados = graduados;
-}
-
-int Consolidado::getAno(){
-    return ano;
-}
-
-int Consolidado::getSemestre(){
-    return semestre;
 }
