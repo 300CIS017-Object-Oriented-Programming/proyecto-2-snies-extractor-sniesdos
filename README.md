@@ -209,7 +209,6 @@ SNIESController --> GestorCsv: tiene un
 SNIESController --> GestorJson: tiene un
 SNIESController --> GestorTxt: tiene un
 SNIESController o-- Consolidado
-Consolidado <.. GestorCsv: usa
 GestorArchivo<|--GestorCsv: Hereda
 GestorCsv --> Settings : tiene un
 GestorArchivo<|--GestorJson: Hereda
