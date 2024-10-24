@@ -49,6 +49,8 @@ Más abajo podrán encontrar el diagrama UML de las clases.
 classDiagram
 direction BT
     class ProgramaAcademico {
+        -map~string, string~ datos
+        -map~int, Consolidado*~ consolidado
         -int codigoDeLaInstitucion
         -int iesPadre
         -string institucionDeEducacionSuperiorIes
@@ -83,154 +85,219 @@ direction BT
         -string departamentoDeOfertaDelPrograma
         -int codigoDelMunicipioPrograma
         -string municipioDeOfertaDelPrograma
-        -Vector<Consolidado*> consolidados
+        -vector~Consolidado*~ consolidados
         +ProgramaAcademico()
         +~ProgramaAcademico()
+        +setDato(string, string)
+        +getDato(string)
         +setCodigoDeLaInstitucion(int)
-        +setIesPadre(int)
-        +setInstitucionDeEducacionSuperiorIes(string)
-        +setPrincipalOSeccional(string)
-        +setIdSectorIes(int)
-        +setSectorIes(string)
-        +setIdCaracter(int)
-        +setCaracterIes(string)
-        +setCodigoDelDepartamentoIes(int)
-        +setDepartamentoDeDomicilioDeLaIes(string)
-        +setCodigoDelMunicipioIes(int)
-        +setMunicipioDeDomicilioDeLaIes(string)
-        +setCodigoSniesDelPrograma(int)
-        +setProgramaAcademico(string)
-        +setIdNivelAcademico(int)
-        +setNivelAcademico(string)
-        +setIdNivelDeFormacion(int)
-        +setNivelDeFormacion(string)
-        +setIdMetodologia(int)
-        +setMetodologia(string)
-        +setIdArea(int)
-        +setAreaDeConocimiento(string)
-        +setIdNucleo(int)
-        +setNucleoBasicoDelConocimientoNbc(string)
-        +setIdCineCampoAmplio(int)
-        +setDescCineCampoAmplio(string)
-        +setIdCineCampoEspecifico(int)
-        +setDescCineCampoEspecifico(string)
-        +setIdCineCodigoDetallado(int)
-        +setDescCineCodigoDetallado(string)
-        +setCodigoDelDepartamentoPrograma(int)
-        +setDepartamentoDeOfertaDelPrograma(string)
-        +setCodigoDelMunicipioPrograma(int)
-        +setMunicipioDeOfertaDelPrograma(string)
         +getCodigoDeLaInstitucion()
+        +setIesPadre(int)
         +getIesPadre()
+        +setInstitucionDeEducacionSuperiorIes(string &)
         +getInstitucionDeEducacionSuperiorIes()
+        +setPrincipalOSeccional(string &)
         +getPrincipalOSeccional()
+        +setIdSectorIes(int)
         +getIdSectorIes()
+        +setSectorIes(string &)
         +getSectorIes()
+        +setIdCaracter(int)
         +getIdCaracter()
+        +setCaracterIes(string &)
         +getCaracterIes()
+        +setCodigoDelDepartamentoIes(int)
         +getCodigoDelDepartamentoIes()
+        +setDepartamentoDeDomicilioDeLaIes(string &)
         +getDepartamentoDeDomicilioDeLaIes()
+        +setCodigoDelMunicipioIes(int)
         +getCodigoDelMunicipioIes()
+        +setMunicipioDeDomicilioDeLaIes(string &)
         +getMunicipioDeDomicilioDeLaIes()
+        +setCodigoSniesDelPrograma(int)
         +getCodigoSniesDelPrograma()
+        +setProgramaAcademico(string &)
         +getProgramaAcademico()
+        +setIdNivelAcademico(int)
         +getIdNivelAcademico()
+        +setNivelAcademico(string &)
         +getNivelAcademico()
+        +setIdNivelDeFormacion(int)
         +getIdNivelDeFormacion()
+        +setNivelDeFormacion(string &)
         +getNivelDeFormacion()
+        +setIdMetodologia(int)
         +getIdMetodologia()
+        +setMetodologia(string &)
         +getMetodologia()
+        +setIdArea(int)
         +getIdArea()
+        +setAreaDeConocimiento(string &)
         +getAreaDeConocimiento()
+        +setIdNucleo(int)
         +getIdNucleo()
+        +setNucleoBasicoDelConocimientoNbc(string &)
         +getNucleoBasicoDelConocimientoNbc()
+        +setIdCineCampoAmplio(int)
         +getIdCineCampoAmplio()
+        +setDescCineCampoAmplio(string &)
         +getDescCineCampoAmplio()
+        +setIdCineCampoEspecifico(int)
         +getIdCineCampoEspecifico()
+        +setDescCineCampoEspecifico(string &)
         +getDescCineCampoEspecifico()
+        +setIdCineCodigoDetallado(int)
         +getIdCineCodigoDetallado()
+        +setDescCineCodigoDetallado(string &)
         +getDescCineCodigoDetallado()
+        +setCodigoDelDepartamentoPrograma(int)
         +getCodigoDelDepartamentoPrograma()
+        +setDepartamentoDeOfertaDelPrograma(string &)
         +getDepartamentoDeOfertaDelPrograma()
+        +setCodigoDelMunicipioPrograma(int)
         +getCodigoDelMunicipioPrograma()
+        +setMunicipioDeOfertaDelPrograma(string &)
         +getMunicipioDeOfertaDelPrograma()
-        +pushConsolidado(Consolidado*)
-        +getConsolidado()
+        +setConsolidado(Consolidado*, int)
+        +getConsolidado(int)
     }
     class Consolidado {
-        -int inscritos
-        -int admitidos
-        -int matriculadosPrimerSemestre
-        -int matriculados
-        -int graduados
         -int idSexo
         -string sexo
         -int ano
         -int semestre
-        +setIdSexo(int)
-        +setSexo(string)
-        +setAno(int)
-        +setSemestre(int)
+        -int inscritos
+        -int admitidos
+        -int matriculados
+        -int matriculadosPrimerSemestre
+        -int graduados
+        +Consolidado()
+        +Consolidado(int, string, int, int, int, int, int, int, int)
         +getIdSexo()
+        +setIdSexo(int)
         +getSexo()
+        +setSexo(string &)
         +getAno()
+        +setAno(int)
         +getSemestre()
-        +setInscritos(int)
-        +setAdmitidos(int)
-        +setMatriculadosPrimerSemestre(int)
-        +setMatriculados(int)
-        +setGraduados(int)
+        +setSemestre(int)
         +getInscritos()
+        +setInscritos(int)
         +getAdmitidos()
-        +getMatriculadosPrimerSemestre()
+        +setAdmitidos(int)
         +getMatriculados()
+        +setMatriculados(int)
+        +getMatriculadosPrimerSemestre()
+        +setMatriculadosPrimerSemestre(int)
         +getGraduados()
+        +setGraduados(int)
+    }
+    class GestorArchivo {
+        #bool abrirArchivoLectura(const string &, ifstream &)
+        #bool abrirArchivoEscritura(const string &, ofstream &)
+        #bool archivoVacio(ifstream &)
+        +GestorArchivo() = default
+        +virtual ~GestorArchivo() = default
+        +virtual bool crearArchivo(string &, map~int, ProgramaAcademico*~ &, vector~string~)
+        +virtual bool crearArchivoBuscado(string &, list~ProgramaAcademico*~ &, vector~string~)
+        +virtual bool crearArchivoExtra(string &, vector~vector~string~~)
     }
     class GestorCsv {
-        +GestorCsv() = default
-        +vector<int> leerProgramasCsv(string &ruta)
-        +vector<vector<string>> leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies)
-        +vector<vector<string>> leerArchivoSegunda(string &rutaBase, string &ano, vector<int> &codigosSnies)
-        +vector<vector<string>> leerArchivo(string &rutaBase, string &ano, vector<int> &codigosSnies, int colmunaCodigoSnies)
-        +bool crearArchivo(string &ruta, map <int, ProgramaAcademico*> &mapadeProgramasAcademicos, vector<string> etiquetasColumnas)
-        +bool crearArchivoBuscados(string &ruta, list<ProgramaAcademico*> &programasBuscados, vector<string> etiquetasColumnas)
-        +bool crearArchivoExtra(string &ruta,vector<vector<string>> datosAImprimir)
+        <<Abstract>>
+        -Settings settings
+        -string DELIMITADOR
+        -leerEncabezado(ifstream &)
+        -leerFila(ifstream &, int)
+        -abrirArchivo(string &, ifstream &)
+        -filaRelevante(const vector~string~ &, vector~int~ &)
+        -leerFilasAdicionales(ifstream &, vector~vector~string~~ &)
+        +GestorCsv()
+        +vector~int~ leerProgramasCsv(string &ruta)
+        +vector~vector~string~~ leerArchivo(string &, string &, vector~int~ &)
+        +bool crearArchivo(string &, map~int, ProgramaAcademico*~ &, vector~string~)
+        +bool crearArchivoBuscado(string &, list~ProgramaAcademico*~ &, vector~string~)
+        +bool crearArchivoExtra(string &, vector~vector~string~~)
+    }
+    class GestorJson {
+        <<Abstract>>
+        +GestorJson()
+        +bool crearArchivo(string &, map~int, ProgramaAcademico*~ &, vector~string~)
+        +bool crearArchivoBuscado(string &, list~ProgramaAcademico*~ &, vector~string~)
+        +bool crearArchivoExtra(string &, vector~vector~string~~)
+    }
+    class GestorTxt {
+        <<Abstract>>
+        +GestorTxt()
+        +bool crearArchivo(string &, map~int, ProgramaAcademico*~ &, vector~string~)
+        +bool crearArchivoBuscado(string &, list~ProgramaAcademico*~ &, vector~string~)
+        +bool crearArchivoExtra(string &, vector~vector~string~~)
+    }
+    class Settings {
+        +static const string BASE_PATH
+        +static const string OUT_PATH
+        +static const string LOGS_FILE_PATH
+        +static const string PROGRAMAS_FILTRAR_FILE_PATH
+        +static const string ADMITIDOS_FILE_PATH
+        +static const string MATRICULADOS_FILE_PATH
+        +static const string MATRICULADOS_PRIMERSEMESTRE_FILE_PATH
+        +static const string INSCRITOS_FILE_PATH
+        +static const string GRADUADOS_FILE_PATH
+        +static const string INFORME_FILE_PATH
+        +static const char DELIMITADOR
+        +static const int COLUMNAS_CONSOLIDADOS
+        +static const int DATOS_ACADEMICOS
     }
     class SNIESController {
-        -map <int, ProgramaAcademico*> programasAcademicos
-        -GestorCsv gestorCsvObj
-        -vector<string> etiquetasColumnas
-        -string rutaProgramasCsv
+        -map~long, ProgramaAcademico*~ programasAcademicos
+        -vector~string~ etiquetasColumnas
+        -GestorCsv* gestorCsvObj
+        -GestorJson* gestorJsonObj
+        -GestorTxt* gestorTxtObj
+        -Settings settings
+        -string rutaProgramasCSV
         -string rutaAdmitidos
         -string rutaGraduados
         -string rutaInscritos
         -string rutaMatriculados
         -string rutaMatriculadosPrimerSemestre
         -string rutaOutput
-        +SNIESController("incializar con strings de rutas")
+        +SNIESController()
         +~SNIESController()
-        +void procesarDatosCsv(string &ano1, string &ano2)
+        +void setProgramasAcademicos(vector~vector~string~~ &, string &, string &, vector~int~ &, int)
+        +void procesarDatos(string &, string &)
         +void calcularDatosExtra(bool)
         +void buscarProgramas(bool, string &, int)
     }
     class View {
-        SNIESController controlador
+        -SNIESController controlador
+        -bool isConvetibleToInt(const string &)
+        -bool mostrarPantallaBienvenido()
+        -void mostrarDatosProgramaAcademico()
+        -void filtrarPorPalabrasClaveYFormacion()
+        -static void salirDePrograma()
+        -string obtenerAnoValido(const string &)
+        -void ordenarAnios(string &, string &)
+        -bool preguntarSiConvertirCSV()
+        -string obtenerPalabraClave()
+        -int obtenerIdFormacionAcademica()
         +View()
-        +~View()
-        +bool pantallaBienvenido()
-        +void visualizacionDatosExtra()
-        +void buscarPorPalabraClaveYFormacion()
-        +void salir()
-        +bool isConvetibleToInt()
+        +~View() = default
+        +void mostrarMenu()
     }
     class Main {
         + int main()
     }
-
 ProgramaAcademico o-- Consolidado : tiene varios
 View <.. Main : usa
 View --> SNIESController : tiene un
+SNIESController --> Settings: tiene un
 SNIESController --> GestorCsv: tiene un
+SNIESController --> GestorJson: tiene un
+SNIESController --> GestorTxt: tiene un
 SNIESController o-- Consolidado
 Consolidado <.. GestorCsv: usa
+GestorArchivo<|--GestorCsv: Hereda
+GestorCsv --> Settings : tiene un
+GestorArchivo<|--GestorJson: Hereda
+GestorArchivo<|--GestorTxt: Hereda
 ```
