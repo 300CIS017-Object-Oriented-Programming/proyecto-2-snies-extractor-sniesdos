@@ -18,7 +18,7 @@ string View::obtenerAnoValido(const string& mensaje) {
         cout << mensaje << endl;
         cin >> ano;
         intento++;
-    } while (!(isConvetibleToInt(ano)));
+    } while (!isConvetibleToInt(ano));
     return ano;
 }
 
@@ -155,6 +155,7 @@ bool View::isConvetibleToInt(const string &str)
     try
     {
         size_t pos = 0;
+        stoi(str, &pos);
         // Verificamos si se ha convertido toda la cadena
         return pos == str.length();
     }
