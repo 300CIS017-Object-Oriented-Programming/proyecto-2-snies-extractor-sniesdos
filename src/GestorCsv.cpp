@@ -43,8 +43,9 @@ bool GestorCsv::filaRelevante(const vector<string>&fila, vector<int>&codigoSnies
     if(fila[12] == "Sin programa especifico") return false;
     try{
         int codigo = stoi(fila[12]);
-        return find(codigoSnies.begin(), codigoSnies.end(), codigo) != codigoSnies.end();;
+        return find(codigoSnies.begin(), codigoSnies.end(), codigo) != codigoSnies.end();
     }catch(const invalid_argument &e){
+        cout << e.what()<<endl;
         return false;
     }
 }
@@ -60,7 +61,7 @@ vector<int> GestorCsv::leerProgramasCsv( string &ruta){
     ifstream archivo(ruta);
     if (!archivo.is_open()){
         return codigosSniesRetorno;
-    }   
+    }
     string linea, dato;
     getline(archivo, linea);// salta los encabezados
     while (getline(archivo, linea)){

@@ -56,6 +56,10 @@ int Consolidado::getAdmitidos()
     return admitidos;
 }
 
+void Consolidado::setAdmitidos(int admitidos)
+{
+    this->admitidos = admitidos;
+}
 
 int Consolidado::getMatriculados()
 {
