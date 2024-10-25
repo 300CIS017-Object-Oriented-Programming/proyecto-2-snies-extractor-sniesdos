@@ -2,7 +2,7 @@
 #include <fstream>
 #include <iostream>
 
-bool GestorTxt::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico, vector<string> *etiquetasColumnas) {
+bool GestorTxt::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaProgramaAcademico, vector<string> etiquetasColumnas) {
     bool estadoCreacion = false;
     string rutaCompleta = ruta + "resultados.txt";
     ofstream archivoResultados(rutaCompleta);
@@ -31,7 +31,7 @@ bool GestorTxt::crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapaPr
     return estadoCreacion;
 }
 
-bool GestorTxt::crearArchivoBuscado(string &ruta, list<ProgramaAcademico *> &programasBuscados, vector<string> *etiquetasColumnas) {
+bool GestorTxt::crearArchivoBuscado(string &ruta, list<ProgramaAcademico *> &programasBuscados, vector<string> etiquetasColumnas) {
     bool estadoCreacion = false;
     string rutaCompleta = ruta + "buscados.txt";
     ofstream archivoBuscados(rutaCompleta);
@@ -60,7 +60,7 @@ bool GestorTxt::crearArchivoBuscado(string &ruta, list<ProgramaAcademico *> &pro
     return estadoCreacion;
 }
 
-bool GestorTxt::crearArchivoExtra(string &ruta, vector<vector<string>> *datosAImprimir) {
+bool GestorTxt::crearArchivoExtra(string &ruta, vector<vector<string>> datosAImprimir) {
     bool estadoCreacion = false;
     string rutaCompleta = ruta + "extras.txt";
     ofstream archivoExtra(rutaCompleta);

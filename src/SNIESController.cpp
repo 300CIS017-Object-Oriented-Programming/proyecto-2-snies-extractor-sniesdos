@@ -134,8 +134,8 @@ void SNIESController::procesarDatos(string &ano1, string &ano2)
         {
             ProgramaAcademico *programa = it->second;
 
-            Consolidado *consolidado[4];
-            for (int m = 0; m < Settings::DATOS_ACADEMICOS; ++m)
+            vector<Consolidado*> consolidado(Settings::DATOS_ACADEMICOS);
+            for (int m = 0; m < consolidado.size(); ++m)
             {
                 consolidado[m] = new Consolidado();
                 consolidado[m]->setIdSexo(stoi(programasAcademicosVector[j + m][1]));
@@ -148,8 +148,8 @@ void SNIESController::procesarDatos(string &ano1, string &ano2)
         }
     }
 
-    // cout << "despues crear todos los consolidados" << endl;
-    
+     //cout << "despues crear todos los consolidados" << endl;
+
     setProgramasAcademicos(programasAcademicosVector, rutaGraduados, ano1, codigosSnies, 0);
     setProgramasAcademicos(programasAcademicosVector, rutaGraduados, ano2, codigosSnies, 4);
     
