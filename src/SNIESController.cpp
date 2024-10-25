@@ -108,9 +108,11 @@ void SNIESController::procesarDatos(string &ano1, string &ano2)
         programaAcademico->setDepartamentoDeOfertaDelPrograma(programasAcademicosVector[i][31]);     // DEPARTAMENTO DE OFERTA DEL PROGRAMA
         programaAcademico->setCodigoDelMunicipioPrograma(stoi(programasAcademicosVector[i][32]));    // CÓDIGO DEL MUNICIPIO (PROGRAMA)
         programaAcademico->setMunicipioDeOfertaDelPrograma(programasAcademicosVector[i][33]);        // MUNICIPIO DE OFERTA DEL PROGRAMA
-        Consolidado *consolidado[Settings::DATOS_ACADEMICOS];
 
-        for (int m = 0; m < Settings::DATOS_ACADEMICOS; ++m)
+        vector<Consolidado*> consolidado(Settings::DATOS_ACADEMICOS);
+
+
+        for (int m = 0; m < consolidado.size(); ++m)
         {
 
             consolidado[m] = new Consolidado();
@@ -134,8 +136,8 @@ void SNIESController::procesarDatos(string &ano1, string &ano2)
         {
             ProgramaAcademico *programa = it->second;
 
-            vector<Consolidado*> consolidado(Settings::DATOS_ACADEMICOS);
-            for (int m = 0; m < consolidado.size(); ++m)
+            Consolidado *consolidado[Settings::DATOS_ACADEMICOS];
+            for (int m = 0; m < Settings::DATOS_ACADEMICOS; ++m)
             {
                 consolidado[m] = new Consolidado();
                 consolidado[m]->setIdSexo(stoi(programasAcademicosVector[j + m][1]));
