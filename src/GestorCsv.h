@@ -1,25 +1,32 @@
 #ifndef GESTOR_CSV_H
 #define GESTOR_CSV_H
 
-#include <string>
-#include <vector>
-#include <map>
-#include <fstream>
+#include "ProgramaAcademico.h"
+#include "GestorArchivo.h"
+#include "Consolidado.h"
+#include "Settings.h"
 
-// Recomendación Linter: Se debe evitar el uso de using namespace en archivos de cabecera
-using std::string;
+const int LIMIT_COLUMNAS_FILA = 13;
 
-class GestorCsv {
+class GestorCsv: public GestorArchivo {
+private:
+    Settings settings;
+    string DELIMITADOR;
+    vector<string> leerEncabezado(ifstream &archivo);
+    vector<string> leerFila(ifstream &archivo, int limitecolumnas = LIMIT_COLUMNAS_FILA);
+    bool abrirArchivo(string &ruta, ifstream &archivo);
+    bool filaRelevante(const vector<string> &fila, vector<int> &codigoSnies);
+    void leerFilasAdicionales(ifstream &archivo, vector<vector<string>> &matrizResult);
+
 public:
-    GestorCsv() = default;
+    GestorCsv();
     vector<int> leerProgramasCsv(string &ruta);
     // Mantenimiento: Se puede mejorar la firma y nombre de los metodos para que sea más descriptiva
-    vector<vector<string>> leerArchivoPrimera(string &rutaBase, string &ano, vector<int> &codigosSnies);
-    vector<vector<string>> leerArchivoSegunda(string &rutaBase, string &ano, vector<int> &codigosSnies);
-    vector<vector<string>> leerArchivo(string &rutaBase, string &ano, vector<int> &codigosSnies, int colmunaCodigoSnies);
-    bool crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapadeProgramasAcademicos, vector<string> etiquetasColumnas);
-    bool crearArchivoBuscados(string &ruta, list<ProgramaAcademico *> &programasBuscados, vector<string> etiquetasColumnas);
-    bool crearArchivoExtra(string &ruta, vector<vector<string>> datosAImprimir);
+    vector<vector<string>> leerArchivo(string &rutaBase, string &ano, vector<int> &codigosSnies);
+    bool crearArchivo(string &ruta, map<int, ProgramaAcademico *> &mapadeProgramasAcademicos, vector<string> etiquetasColumnas)override;
+    bool crearArchivoBuscado(string &ruta, list<ProgramaAcademico *> &programasBuscados, vector<string> etiquetasColumnas) override;
+    bool crearArchivoExtra(string &ruta, vector<vector<string>> datosAImprimir) override;
+
 };
 
 #endif
